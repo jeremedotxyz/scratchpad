@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Animated Landing</title>
+  <meta name="description" content="A smooth, scroll-animated landing page." />
+
+  <style>
+    :root{
+      --bg: #07090f;
+      --ink: #eef2ff;
+      --muted: rgba(238,242,255,.72);
+      --line: rgba(238,242,255,.10);
+      --card: rgba(255,255,255,.06);
+      --blur: blur(18px);
+      --r: 20px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(124,58,237,.25), transparent 60%),
+                  radial-gradient(900px 500px at 75% 20%, rgba(59,130,246,.22), transparent 60%),
+                  radial-gradient(800px 500px at 50% 85%, rgba(16,185,129,.16), transparent 60%),
+                  var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      overflow-x:hidden;
+    }
+
+    /* top nav */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 20px;
+      backdrop-filter: var(--blur);
+      background: rgba(7,9,15,.55);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand{ letter-spacing:.12em; font-size:12px; opacity:.9; text-transform:lowercase; }
+    .nav a{
+      color:var(--muted); text-decoration:none; font-size:13px;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{ border-color: var(--line); color:var(--ink); }
+
+    /* hero */
+    .wrap{ width:min(1100px, 92vw); margin:0 auto; }
+    .hero{
+      position:relative;
+      padding:72px 0 44px;
+      min-height: 72vh;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 28px;
+      align-items:center;
+    }
+    @media (max-width: 860px){
+      .hero{ grid-template-columns: 1fr; padding:56px 0 30px; }
+    }
+
+    .kicker{
+      color: var(--muted);
+      letter-spacing:.14em;
+      font-size:12px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+    h1{
+      font-size: clamp(38px, 5.2vw, 64px);
+      line-height:1.02;
+      margin:0 0 14px;
+      letter-spacing:-0.02em;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height:1.55;
+      max-width: 52ch;
+      margin: 0 0 22px;
+    }
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 14px;
+      border-radius:999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--ink);
+      text-decoration:none;
+      font-weight:600;
+      font-size:13px;
+      backdrop-filter: var(--blur);
+      transition: transform .18s ease, background .18s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
+    .btn.secondary{ color: var(--muted); font-weight:600; }
+
+    /* floating “demo card” */
+    .demo{
+      position:relative;
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border: 1px solid var(--line);
+      overflow:hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      min-height: 360px;
+    }
+    .demo::before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(124,58,237,.55), transparent 52%),
+        radial-gradient(circle at 70% 55%, rgba(59,130,246,.45), transparent 56%),
+        radial-gradient(circle at 45% 75%, rgba(16,185,129,.35), transparent 55%);
+      filter: blur(24px);
+      opacity:.7;
+      transform: translate3d(0,0,0);
+    }
+    .demoInner{
+      position:relative;
+      padding:18px;
+    }
+    .pillRow{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .pill{
+      font-size:12px;
+      color: rgba(255,255,255,.86);
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.14);
+      padding:8px 10px;
+      border-radius:999px;
+      backdrop-filter: var(--blur);
+    }
+    .miniCardGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .mini{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.20);
+      padding: 14px;
+      min-height: 86px;
+    }
+    .mini .t{ font-size:12px; color: var(--muted); margin-bottom:8px; }
+    .mini .v{ font-size:16px; font-weight:700; letter-spacing:-.02em; }
+
+    /* sections */
+    section{
+      padding: 62px 0;
+      border-top: 1px solid var(--line);
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 860px){
+      .grid3{ grid-template-columns: 1fr; }
+    }
+    .card{
+      border-radius: var(--r);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      padding: 18px;
+      backdrop-filter: var(--blur);
+      transform: translateY(18px);
+      opacity: 0;
+    }
+    .card h3{ margin: 0 0 8px; letter-spacing:-.01em; }
+    .card p{ margin:0; color: var(--muted); line-height:1.5; }
+
+    /* reveal helpers */
+    .reveal{ opacity:0; transform: translateY(18px); }
+    .fade{ opacity:0; }
+
+    /* footer */
+    footer{
+      padding: 34px 0 60px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="brand">nrthrn / demo</div>
+    <div style="display:flex; gap:6px;">
+      <a href="#features">features</a>
+      <a href="#how">how</a>
+      <a href="#end">end</a>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <header class="hero">
+      <div>
+        <div class="kicker reveal">quiet motion. loud results.</div>
+        <h1 class="reveal">Build pages that feel expensive.</h1>
+        <p class="sub reveal">
+          Smooth scroll reveals, subtle parallax, and calm UI motion — the Phantom-style
+          vibe without the chaos. Ship it as a static site.
+        </p>
+        <div class="ctaRow reveal">
+          <a class="btn" href="#features">See features →</a>
+          <a class="btn secondary" href="#how">How it works</a>
+        </div>
+      </div>
+
+      <div class="demo" aria-hidden="true">
+        <div class="demoInner">
+          <div class="pillRow">
+            <div class="pill">scroll-triggered</div>
+            <div class="pill">soft parallax</div>
+            <div class="pill">glass + blur</div>
+          </div>
+
+          <div class="miniCardGrid">
+            <div class="mini floatA">
+              <div class="t">status</div>
+              <div class="v">shipping</div>
+            </div>
+            <div class="mini floatB">
+              <div class="t">latency</div>
+              <div class="v">quiet</div>
+            </div>
+            <div class="mini floatC">
+              <div class="t">vibe</div>
+              <div class="v">premium</div>
+            </div>
+            <div class="mini floatD">
+              <div class="t">notes</div>
+              <div class="v">none</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="features">
+      <div class="kicker fade">features</div>
+      <h2 class="reveal" style="margin:10px 0 8px; letter-spacing:-.02em;">Scroll, but make it cinematic.</h2>
+      <p class="sub reveal" style="max-width:60ch;">
+        Everything here is tiny and deliberate: reveal timing, easing, spacing, and restraint.
+        That’s the secret sauce.
+      </p>
+
+      <div class="grid3" style="margin-top:18px;">
+        <div class="card">
+          <h3>Reveal on scroll</h3>
+          <p>Cards and headers slide in with soft easing. Nothing jumpy.</p>
+        </div>
+        <div class="card">
+          <h3>Floating elements</h3>
+          <p>Micro motion adds “alive” without turning into a screensaver.</p>
+        </div>
+        <div class="card">
+          <h3>Depth + glow</h3>
+          <p>Blurred gradients + glass panels create that “premium app” feel.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="kicker fade">how</div>
+      <h2 class="reveal" style="margin:10px 0 8px; letter-spacing:-.02em;">Keep it simple.</h2>
+      <p class="sub reveal" style="max-width:60ch;">
+        Use GSAP ScrollTrigger for the big beats. Use CSS for the small ones. Keep motion
+        under control: fewer elements, better timing.
+      </p>
+
+      <div class="grid3" style="margin-top:18px;">
+        <div class="card">
+          <h3>Step 1</h3>
+          <p>Design the static layout first. Motion comes last.</p>
+        </div>
+        <div class="card">
+          <h3>Step 2</h3>
+          <p>Animate only what improves comprehension or feel.</p>
+        </div>
+        <div class="card">
+          <h3>Step 3</h3>
+          <p>Ship. Then trim motion until it’s tasteful.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer id="end">
+      <div class="fade" style="margin-bottom:10px;">—</div>
+      <div class="reveal">low drama. high signal.</div>
+    </footer>
+  </main>
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // hero reveals
+    gsap.to(".reveal", {
+      opacity: 1,
+      y: 0,
+      duration: 0.85,
+      ease: "power2.out",
+      stagger: 0.08
+    });
+
+    gsap.to(".fade", {
+      opacity: 1,
+      duration: 0.9,
+      ease: "power2.out",
+      delay: 0.15
+    });
+
+    // floating mini cards
+    const floats = [
+      [".floatA", 12, 3.2],
+      [".floatB", 10, 2.7],
+      [".floatC", 14, 3.6],
+      [".floatD", 11, 2.9],
+    ];
+    floats.forEach(([sel, amt, dur], i) => {
+      gsap.to(sel, {
+        y: amt,
+        duration: dur,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: i * 0.15
+      });
+    });
+
+    // section cards reveal
+    document.querySelectorAll("section").forEach((section) => {
+      const cards = section.querySelectorAll(".card");
+      if (!cards.length) return;
+
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+        }
+      });
+    });
+
+    // subtle parallax on the demo glow
+    gsap.to(".demo::before", {}); // (can't target pseudo-element directly)
+    // Instead: parallax the demo container a tiny bit
+    gsap.to(".demo", {
+      y: -12,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.6
+      }
+    });
+  </script>
+</body>
+</html>
