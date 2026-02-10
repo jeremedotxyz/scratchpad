@@ -13,9 +13,9 @@
   --card:rgba(255,255,255,.78);
   --line:rgba(11,15,26,.08);
 
-  --c1: 139,140,246;  /* indigo */
-  --c2: 110,231,183;  /* mint */
-  --c3: 249,168,212;  /* pink */
+  --c1: 139,140,246;
+  --c2: 110,231,183;
+  --c3: 249,168,212;
 }
 
 *{box-sizing:border-box}
@@ -31,7 +31,7 @@ body{
   overflow-x:hidden;
 }
 
-/* subtle floating background blobs */
+/* blobs */
 .blob{
   position:fixed;
   width:520px;
@@ -43,13 +43,13 @@ body{
   pointer-events:none;
   animation: blobFloat 14s ease-in-out infinite;
 }
-.blob.b1{ left:-160px; top:140px; background: rgba(var(--c1),.85); animation-delay: 0s; }
-.blob.b2{ right:-200px; top:60px; background: rgba(var(--c2),.85); animation-delay: -4s; }
-.blob.b3{ left:20%; bottom:-260px; background: rgba(var(--c3),.85); animation-delay: -8s; }
+.blob.b1{ left:-160px; top:140px; background: rgba(var(--c1),.85); }
+.blob.b2{ right:-200px; top:60px; background: rgba(var(--c2),.85); animation-delay:-4s; }
+.blob.b3{ left:20%; bottom:-260px; background: rgba(var(--c3),.85); animation-delay:-8s; }
 
 @keyframes blobFloat{
-  0%,100%{ transform: translate3d(0,0,0) scale(1); }
-  50%{ transform: translate3d(20px,-18px,0) scale(1.04); }
+  0%,100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(20px,-18px) scale(1.04); }
 }
 
 /* nav */
@@ -79,21 +79,11 @@ body{
   grid-template-columns:1.1fr .9fr;
   gap:28px;
   align-items:center;
-  grid-template-areas:"left phone";
 }
-.heroLeft{ grid-area:left }
-.phone{ grid-area:phone }
-
 @media (max-width:980px){
-  .hero{
-    grid-template-columns:1fr;
-    grid-template-areas:
-      "phone"
-      "left";
-  }
+  .hero{ grid-template-columns:1fr; }
 }
 
-/* copy */
 .eyebrow{
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   color:rgba(11,15,26,.62);
@@ -104,12 +94,11 @@ h1{
   font-size:clamp(32px,5vw,54px);
   line-height:1.05;
   margin:0 0 14px;
-  letter-spacing:-.02em;
 }
 .sub{
   color:var(--muted);
   max-width:560px;
-  margin:0 0 12px;
+  margin-bottom:12px;
   line-height:1.6;
 }
 
@@ -122,98 +111,38 @@ h1{
   color:rgba(11,15,26,.56);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
-.divider:before,
-.divider:after{
+.divider:before,.divider:after{
   content:"";
   flex:1;
   height:1px;
   background:var(--line);
 }
 
-/* ---------- phone / window ---------- */
-.phone{
-  perspective:1100px;
-}
+/* phone */
 .phoneFrame{
-  position:relative;
   background:rgba(255,255,255,.70);
   border:1px solid rgba(11,15,26,.10);
   border-radius:26px;
   padding:14px;
   box-shadow:0 34px 90px rgba(0,0,0,.14);
-  transform-style:preserve-3d;
-  will-change: transform;
-  overflow:hidden;
 }
-
-/* shimmer overlay */
-.phoneFrame::before{
-  content:"";
-  position:absolute; inset:-2px;
-  border-radius:26px;
-  background:
-    radial-gradient(520px 240px at 20% 20%, rgba(var(--c1),.20), transparent 62%),
-    radial-gradient(520px 240px at 80% 70%, rgba(var(--c2),.14), transparent 62%),
-    radial-gradient(520px 240px at 50% 100%, rgba(var(--c3),.12), transparent 65%);
-  opacity:.9;
-  pointer-events:none;
-}
-.phoneFrame::after{
-  content:"";
-  position:absolute;
-  inset:-40%;
-  background: linear-gradient(90deg, transparent 40%, rgba(255,255,255,.25) 50%, transparent 60%);
-  transform: rotate(8deg) translateX(-20%);
-  animation: sheen 6.5s ease-in-out infinite;
-  pointer-events:none;
-  opacity:.35;
-}
-@keyframes sheen{
-  0%,100%{ transform: rotate(8deg) translateX(-25%); }
-  50%{ transform: rotate(8deg) translateX(25%); }
-}
-
 .windowTop{
-  position:relative;
-  z-index:1;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:12px;
-  padding:10px 10px 12px;
+  align-items:center;
+  padding:10px;
   border-radius:18px;
   background: rgba(255,255,255,.55);
-  border: 1px solid rgba(11,15,26,.08);
+  border:1px solid rgba(11,15,26,.08);
   margin-bottom:12px;
 }
-.stoplights{
-  display:flex;
-  gap:7px;
-  align-items:center;
-}
-.light{
-  width:10px; height:10px;
-  border-radius:999px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.10);
-  border: 1px solid rgba(0,0,0,.12);
-}
-.light.red{ background: #ff5f57; }
-.light.yellow{ background: #febc2e; }
-.light.green{ background: #28c840; }
+.stoplights{ display:flex; gap:7px; }
+.light{ width:10px; height:10px; border-radius:999px; }
+.light.red{ background:#ff5f57 }
+.light.yellow{ background:#febc2e }
+.light.green{ background:#28c840 }
 
-.windowTitle{
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size:12px;
-  letter-spacing:.03em;
-  color: rgba(11,15,26,.62);
-  text-transform: lowercase;
-}
-.windowSpacer{ width:40px; }
-
-/* screen */
 .screen{
-  position:relative;
-  z-index:1;
   background: rgba(255,255,255,.86);
   border-radius:20px;
   padding:14px;
@@ -222,48 +151,15 @@ h1{
   border:1px solid rgba(11,15,26,.08);
 }
 .screenLeft{ flex:1 }
-
-/* rows */
 .row{
-  position:relative;
   border:1px solid rgba(11,15,26,.08);
   border-radius:16px;
   padding:12px 14px;
   margin-bottom:10px;
-  background:
-    radial-gradient(240px 120px at 10% 20%, rgba(var(--c1),.10), transparent 60%),
-    rgba(250,250,252,.92);
-  overflow:hidden;
+  background:#fafafa;
 }
-.row::after{
-  content:"";
-  position:absolute; inset:-1px;
-  border-radius:16px;
-  background: linear-gradient(90deg, transparent 45%, rgba(255,255,255,.25) 50%, transparent 55%);
-  transform: translateX(-30%);
-  opacity:.0;
-  pointer-events:none;
-}
-.phoneFrame:hover .row::after{
-  opacity:.35;
-  animation: rowSheen 2.4s ease-in-out infinite;
-}
-@keyframes rowSheen{
-  0%,100%{ transform: translateX(-30%); }
-  50%{ transform: translateX(30%); }
-}
-
-.label{
-  font-size:12px;
-  color:rgba(11,15,26,.56);
-  text-transform: lowercase;
-}
-.value{
-  font-size:18px;
-  font-weight:650;
-  letter-spacing:-.01em;
-  text-transform: lowercase;
-}
+.label{ font-size:12px; color:rgba(11,15,26,.56); }
+.value{ font-size:18px; font-weight:600; }
 
 /* thermometers */
 .thermoStack{
@@ -276,211 +172,66 @@ h1{
   flex:1;
   border-radius:999px;
   background:#f1f2f7;
-  overflow:hidden;
   position:relative;
-  border:1px solid rgba(11,15,26,.08);
 }
 .fill{
   position:absolute;
   bottom:0; left:0; right:0;
   height:60%;
-  background:linear-gradient(to top, rgba(var(--c1),.72), rgba(var(--c1),.24));
-  animation: breathe 3.8s ease-in-out infinite;
-}
-.thermo:nth-child(2) .fill{
-  background:linear-gradient(to top, rgba(var(--c2),.60), rgba(var(--c2),.20));
-  animation-delay:-1.2s;
-}
-.thermo:nth-child(3) .fill{
-  background:linear-gradient(to top, rgba(var(--c3),.60), rgba(var(--c3),.18));
-  animation-delay:-2.1s;
-}
-@keyframes breathe{
-  0%,100%{ filter:saturate(1); transform: translateY(0); }
-  50%{ filter:saturate(1.06); transform: translateY(-1px); }
+  background:linear-gradient(to top, rgba(var(--c1),.7), rgba(var(--c1),.25));
 }
 
-/* ---------- bottom bubble sections ---------- */
+/* bubbles */
 .section{
   max-width:1100px;
   margin:0 auto;
   padding:0 20px;
 }
-
 .bubbleGrid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:18px;
-  padding:10px 0 50px;
 }
 @media (max-width:900px){
   .bubbleGrid{ grid-template-columns:1fr; }
 }
-
 .bubble{
-  position:relative;
   border-radius:26px;
   border:1px solid rgba(11,15,26,.08);
   background: rgba(255,255,255,.70);
-  box-shadow: 0 26px 80px rgba(8,12,26,.10);
-  padding:18px 18px 16px;
-  overflow:hidden;
-
-  /* reveal animation base state */
-  opacity:0;
-  transform: translateY(14px) scale(.99);
-  transition: opacity .6s ease, transform .6s ease;
+  box-shadow:0 26px 80px rgba(8,12,26,.10);
+  padding:18px;
 }
-.bubble.is-in{
-  opacity:1;
-  transform: translateY(0) scale(1);
-}
-
-.bubble::before{
-  content:"";
-  position:absolute; inset:-1px;
-  border-radius:26px;
-  background:
-    radial-gradient(520px 220px at 20% 20%, rgba(var(--c1),.18), transparent 60%),
-    radial-gradient(520px 220px at 80% 65%, rgba(var(--c2),.14), transparent 62%),
-    radial-gradient(520px 220px at 50% 90%, rgba(var(--c3),.12), transparent 65%);
-  opacity:.92;
-  pointer-events:none;
-}
-.bubble::after{
-  content:"";
-  position:absolute;
-  inset:-60%;
-  background: linear-gradient(90deg, transparent 42%, rgba(255,255,255,.22) 50%, transparent 58%);
-  transform: rotate(10deg) translateX(-30%);
-  opacity:0;
-  pointer-events:none;
-}
-.bubble:hover{
-  transform: translateY(-2px) scale(1.002);
-  box-shadow: 0 34px 98px rgba(8,12,26,.12);
-}
-.bubble:hover::after{
-  opacity:.35;
-  animation: bubbleSheen 2.8s ease-in-out infinite;
-}
-@keyframes bubbleSheen{
-  0%,100%{ transform: rotate(10deg) translateX(-30%); }
-  50%{ transform: rotate(10deg) translateX(30%); }
-}
-
-.bubble > *{ position:relative; z-index:1; }
-
-.bubbleHead{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  margin-bottom:10px;
-}
-.bubbleTag{
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size:12px;
-  letter-spacing:.03em;
-  color: rgba(11,15,26,.62);
-  text-transform: lowercase;
-}
-.pill{
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size:11px;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid rgba(11,15,26,.10);
-  background: rgba(255,255,255,.72);
-  color: rgba(11,15,26,.62);
-  white-space:nowrap;
-}
-.bubble h3{
-  margin:0 0 8px;
-  font-weight:650;
-  letter-spacing:-.01em;
-  text-transform:lowercase;
-}
-.bubble p{
-  margin:0;
-  color: var(--muted);
-  line-height:1.6;
-  max-width: 68ch;
-}
-
-/* mini bubbles inside */
-.miniBubbles{
-  display:grid;
-  gap:10px;
-  margin-top:12px;
-}
+.bubble h3{ margin:0 0 8px; }
+.bubble p{ color:var(--muted); line-height:1.6; }
 .mini{
+  margin-top:12px;
   border-radius:18px;
   border:1px solid rgba(11,15,26,.08);
   background: rgba(255,255,255,.66);
-  padding:12px 12px 11px;
-  transition: transform .2s ease;
+  padding:12px;
 }
-.mini:hover{ transform: translateY(-1px); }
-.mini ul{
-  margin:0;
-  padding-left:18px;
-  color: var(--muted);
-  line-height:1.55;
-}
-.mini li{ margin:4px 0; }
 
-/* closing quote bubbles */
+/* closing */
 .quoteBubble{
   padding:0 20px;
   max-width:1100px;
-  margin: 10px auto 80px;
+  margin:60px auto 80px;
 }
 .quote{
-  position:relative;
   border-radius:999px;
   border:1px solid rgba(11,15,26,.08);
   background: rgba(255,255,255,.62);
-  box-shadow: 0 26px 80px rgba(8,12,26,.10);
-  padding: 18px 20px;
-  overflow:hidden;
+  box-shadow:0 26px 80px rgba(8,12,26,.10);
+  padding:18px 20px;
   text-align:center;
-
-  opacity:0;
-  transform: translateY(14px);
-  transition: opacity .6s ease, transform .6s ease;
 }
-.quote.is-in{ opacity:1; transform: translateY(0); }
-
-.quote::before{
-  content:"";
-  position:absolute; inset:-1px;
-  border-radius:999px;
-  background:
-    radial-gradient(520px 200px at 30% 30%, rgba(var(--c1),.16), transparent 60%),
-    radial-gradient(520px 200px at 75% 70%, rgba(var(--c3),.12), transparent 62%);
-  opacity:.9;
-  pointer-events:none;
-}
-.quote span{
-  position:relative;
-  z-index:1;
-  display:block;
-  font-size:18px;
-  letter-spacing:-.01em;
-}
+.quote span{ font-size:18px; }
 .quote small{
-  position:relative;
-  z-index:1;
   display:block;
   margin-top:8px;
-  color: var(--muted);
+  color:var(--muted);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-@media (prefers-reduced-motion: reduce){
-  .blob, .phoneFrame::after, .fill, .bubble::after{ animation:none !important; }
-  .bubble, .quote{ opacity:1 !important; transform:none !important; transition:none !important; }
 }
 </style>
 </head>
@@ -498,61 +249,35 @@ h1{
 </nav>
 
 <section class="hero">
-  <div class="heroLeft">
+  <div>
     <div class="eyebrow">mirrors · scaffolding · translation</div>
     <h1>Mirrors, scaffolding,<br>and translation for unfinished ideas.</h1>
-
-    <p class="sub">
-      A human-first idea lab that reflects what you mean, adds light structure,
-      and translates the fuzzy into something buildable.
-    </p>
-    <p class="sub">
-      Moyogi exists for the moment right before things click —
-      when you know there’s something there,
-      but the shape hasn’t revealed itself yet.
-    </p>
-    <p class="sub">
-      We don’t chase scale.
-      We don’t rush outcomes.
-      We help ideas become legible to the people who carry them.
-    </p>
-
+    <p class="sub">A human-first idea lab that reflects what you mean, adds light structure, and translates the fuzzy into something buildable.</p>
+    <p class="sub">Moyogi exists for the moment right before things click.</p>
     <div class="divider">/ pillars</div>
   </div>
 
-  <div class="phone">
-    <div class="phoneFrame" id="phoneFrame">
-      <div class="windowTop">
-        <div class="stoplights" aria-hidden="true">
-          <span class="light red"></span>
-          <span class="light yellow"></span>
-          <span class="light green"></span>
-        </div>
-        <div class="windowTitle">moyogi</div>
-        <div class="windowSpacer"></div>
+  <div class="phoneFrame">
+    <div class="windowTop">
+      <div class="stoplights">
+        <span class="light red"></span>
+        <span class="light yellow"></span>
+        <span class="light green"></span>
       </div>
+      <div>moyogi</div>
+      <div style="width:40px"></div>
+    </div>
 
-      <div class="screen">
-        <div class="screenLeft">
-          <div class="row">
-            <div class="label">input</div>
-            <div class="value">zero latency</div>
-          </div>
-          <div class="row">
-            <div class="label">output</div>
-            <div class="value">clear</div>
-          </div>
-          <div class="row" style="margin-bottom:0;">
-            <div class="label">signal</div>
-            <div class="value">strong fit</div>
-          </div>
-        </div>
-
-        <div class="thermoStack" aria-hidden="true">
-          <div class="thermo"><div class="fill" style="height:70%"></div></div>
-          <div class="thermo"><div class="fill" style="height:45%"></div></div>
-          <div class="thermo"><div class="fill" style="height:85%"></div></div>
-        </div>
+    <div class="screen">
+      <div class="screenLeft">
+        <div class="row"><div class="label">input</div><div class="value">zero latency</div></div>
+        <div class="row"><div class="label">output</div><div class="value">clear</div></div>
+        <div class="row"><div class="label">signal</div><div class="value">strong fit</div></div>
+      </div>
+      <div class="thermoStack">
+        <div class="thermo"><div class="fill"></div></div>
+        <div class="thermo"><div class="fill"></div></div>
+        <div class="thermo"><div class="fill"></div></div>
       </div>
     </div>
   </div>
@@ -560,174 +285,19 @@ h1{
 
 <section class="section">
   <div class="bubbleGrid">
-
-    <article class="bubble reveal">
-      <div class="bubbleHead">
-        <div class="bubbleTag">01 / mirrors</div>
-        <div class="pill">signal: clarified</div>
-      </div>
-      <h3>mirrors</h3>
-      <p>
-        Most ideas fail from misalignment, not lack of intelligence.
-        Mirrors reduce distortion — between thought and language,
-        between intention and interpretation.
-      </p>
-      <div class="miniBubbles">
-        <div class="mini">
-          <ul>
-            <li>reflect meaning</li>
-            <li>cut noise</li>
-            <li>sharpen intent</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="bubble reveal">
-      <div class="bubbleHead">
-        <div class="bubbleTag">02 / scaffolding</div>
-        <div class="pill">signal: stabilized</div>
-      </div>
-      <h3>scaffolding</h3>
-      <p>
-        Structure should disappear once momentum returns.
-        We add just enough shape to move forward —
-        never so much that it becomes the work.
-      </p>
-      <div class="miniBubbles">
-        <div class="mini">
-          <ul>
-            <li>light structure</li>
-            <li>next steps</li>
-            <li>momentum</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="bubble reveal">
-      <div class="bubbleHead">
-        <div class="bubbleTag">03 / translation</div>
-        <div class="pill">signal: shippable</div>
-      </div>
-      <h3>translation</h3>
-      <p>
-        Translation is where private intuition becomes shared reality.
-        When language clicks, teams move, products ship,
-        and decisions stop wobbling.
-      </p>
-      <div class="miniBubbles">
-        <div class="mini">
-          <ul>
-            <li>fuzzy → buildable</li>
-            <li>shared language</li>
-            <li>ship-ready</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="bubble reveal">
-      <div class="bubbleHead">
-        <div class="bubbleTag">context</div>
-        <div class="pill">calm clarity</div>
-      </div>
-      <h3>what this is / what this isn’t</h3>
-
-      <div class="miniBubbles">
-        <div class="mini">
-          <div class="bubbleTag" style="margin-bottom:8px;">what this is</div>
-          <ul>
-            <li>clarity work</li>
-            <li>idea alignment</li>
-            <li>lightweight systems</li>
-            <li>thinking made visible</li>
-          </ul>
-        </div>
-
-        <div class="mini">
-          <div class="bubbleTag" style="margin-bottom:8px;">what this isn’t</div>
-          <ul>
-            <li>a framework factory</li>
-            <li>consulting theater</li>
-            <li>speed for its own sake</li>
-            <li>ideas finished for you</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
+    <div class="bubble"><h3>mirrors</h3><p>Reduce distortion. Clarify intent.</p><div class="mini">reflect meaning · cut noise · sharpen intent</div></div>
+    <div class="bubble"><h3>scaffolding</h3><p>Enough structure to move forward.</p><div class="mini">light structure · next steps · momentum</div></div>
+    <div class="bubble"><h3>translation</h3><p>From intuition to shared reality.</p><div class="mini">fuzzy → buildable · ship-ready</div></div>
+    <div class="bubble"><h3>what this is / isn’t</h3><p>Clarity without theater.</p><div class="mini">human-first · no consulting cosplay</div></div>
   </div>
 </section>
 
 <section class="quoteBubble">
-  <div class="quote reveal">
-    <span>Unfinished doesn’t mean broken. It means alive.</span>
-    <small>moyogi</small>
-  </div>
-
-  <div class="quote reveal" style="margin-top:14px;">
+  <div class="quote">
     <span>Moyogi helps ideas stand on their own — without rushing them into costumes they’re not ready to wear.</span>
     <small>quiet builders change everything</small>
   </div>
 </section>
-
-<script>
-/* 1) Subtle phone tilt based on mouse + gentle scroll */
-(function(){
-  const phone = document.getElementById('phoneFrame');
-  if(!phone) return;
-
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(reduce) return;
-
-  let targetRX = 0, targetRY = 0, curRX = 0, curRY = 0;
-
-  function animate(){
-    curRX += (targetRX - curRX) * 0.08;
-    curRY += (targetRY - curRY) * 0.08;
-    phone.style.transform = `rotateX(${curRX}deg) rotateY(${curRY}deg) translateY(-1px)`;
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  window.addEventListener('mousemove', (e)=>{
-    const r = phone.getBoundingClientRect();
-    const cx = r.left + r.width/2;
-    const cy = r.top + r.height/2;
-    const dx = (e.clientX - cx) / (r.width/2);
-    const dy = (e.clientY - cy) / (r.height/2);
-    targetRX = Math.max(-6, Math.min(6, -dy * 5));
-    targetRY = Math.max(-8, Math.min(8, dx * 6));
-  });
-
-  window.addEventListener('scroll', ()=>{
-    const scrollTilt = Math.max(-2, Math.min(2, (window.scrollY / 800) * 1.6));
-    targetRX = targetRX + scrollTilt;
-  }, { passive:true });
-})();
-
-/* 2) Reveal bubbles on scroll (IntersectionObserver) */
-(function(){
-  const els = document.querySelectorAll('.reveal');
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(reduce){
-    els.forEach(el => el.classList.add('is-in'));
-    return;
-  }
-
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach((entry)=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('is-in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.18 });
-
-  els.forEach(el => io.observe(el));
-})();
-</script>
 
 </body>
 </html>
