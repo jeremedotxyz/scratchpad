@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Phantom-ish Scroll Page</title>
-  <meta name="description" content="Bright, sticky-demo, scroll-driven landing page." />
+  <title>moyogi — mirrors, scaffolding, translation</title>
+  <meta name="description" content="Mirrors, scaffolding, and translation for unfinished ideas." />
 
   <style>
     :root{
@@ -12,10 +12,7 @@
       --ink: #0b0f1a;
       --muted: rgba(11,15,26,.65);
       --line: rgba(11,15,26,.10);
-      --card: rgba(255,255,255,.72);
-      --glass: rgba(255,255,255,.55);
       --shadow: 0 30px 80px rgba(8,12,26,.12);
-      --r: 24px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
@@ -34,7 +31,6 @@
       overflow-x:hidden;
     }
 
-    /* Top nav */
     .nav{
       position:sticky; top:0; z-index:50;
       display:flex; align-items:center; justify-content:space-between;
@@ -59,7 +55,6 @@
 
     .wrap{ width:min(1120px, 92vw); margin: 0 auto; }
 
-    /* HERO */
     .hero{
       padding: 70px 0 36px;
       display:grid;
@@ -88,7 +83,7 @@
       font-size: clamp(15px, 1.7vw, 18px);
       line-height:1.6;
       color: var(--muted);
-      max-width: 60ch;
+      max-width: 62ch;
     }
     .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .btn{
@@ -112,7 +107,6 @@
     }
 
     /* Phone mock */
-    .phoneWrap{ position:relative; }
     .phone{
       border-radius: 30px;
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
@@ -198,28 +192,14 @@
       .pinCol{ position: relative !important; top:auto !important; }
     }
 
-    .steps{
-      padding: 8px 0;
-    }
+    .steps{ padding: 8px 0; }
     .step{
       padding: 26px 0;
       border-top: 1px solid var(--line);
+      opacity: .55;
+      transform: translateY(8px);
+      transition: opacity .25s ease, transform .25s ease;
     }
-    .step:first-child{ border-top: 1px solid var(--line); }
-    .step h3{
-      margin: 0 0 8px;
-      font-size: 22px;
-      letter-spacing: -.02em;
-    }
-    .step p{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 62ch;
-    }
-
-    /* Active step styling */
-    .step{ opacity: .55; transform: translateY(8px); }
     .step.is-active{ opacity: 1; transform: translateY(0); }
     .step .tag{
       display:inline-block;
@@ -232,22 +212,28 @@
       color: rgba(11,15,26,.70);
       margin-bottom: 10px;
     }
+    .step h3{
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: -.02em;
+    }
+    .step p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 64ch;
+    }
 
-    /* Pin column (Phantom vibe) */
     .pinCol{
       position: sticky;
       top: 86px;
       align-self: start;
     }
 
-    /* Screen states */
     .state{ position:absolute; inset:0; padding:16px; opacity:0; transform: translateY(10px); }
     .state.is-on{ opacity:1; transform: translateY(0); }
 
-    /* Subtle float */
-    .floaty{
-      animation: floaty 5s ease-in-out infinite;
-    }
+    .floaty{ animation: floaty 5s ease-in-out infinite; }
     @keyframes floaty{
       0%,100%{ transform: translateY(0); }
       50%{ transform: translateY(10px); }
@@ -266,9 +252,9 @@
 <body>
 
   <div class="nav">
-    <div class="brand">scratchpad / phantom-ish</div>
+    <div class="brand">moyogi / unfinished ideas</div>
     <div style="display:flex; gap:6px;">
-      <a href="#story">story</a>
+      <a href="#story">pillars</a>
       <a href="#end">end</a>
     </div>
   </div>
@@ -276,173 +262,183 @@
   <main class="wrap">
     <section class="hero">
       <div>
-        <div class="kicker">quiet motion · high signal</div>
-        <h1>Money pages that feel expensive.</h1>
+        <div class="kicker">mirrors · scaffolding · translation</div>
+
+        <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
+
         <p class="sub">
-          Bright layout, sticky demo, scroll-driven story beats — the “Phantom Cash” vibe:
-          calm, premium, and intentionally animated.
+          Not templates. Not noise. A human-first idea lab that reflects what you mean, adds light structure,
+          and translates the fuzzy into something buildable.
         </p>
+
         <div class="ctaRow">
-          <a class="btn" href="#story">See it in motion →</a>
+          <a class="btn" href="#story">See the pillars →</a>
           <a class="btn secondary" href="#end">No notes</a>
         </div>
       </div>
 
-      <div class="phoneWrap">
-        <div class="phone floaty" aria-hidden="true">
-          <div class="phoneTop">
-            <div class="dots">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <div class="phone floaty" aria-hidden="true">
+        <div class="phoneTop">
+          <div class="dots">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="phoneTitle">moyogi / demo</div>
+          <div style="width:34px;"></div>
+        </div>
+
+        <div class="screen" id="screen">
+          <!-- State 1: Mirrors -->
+          <div class="state is-on" data-state="1">
+            <div class="chipRow">
+              <span class="chip">clarity</span>
+              <span class="chip">reflection</span>
+              <span class="chip">truthful</span>
             </div>
-            <div class="phoneTitle">cash / demo</div>
-            <div style="width:34px;"></div>
+            <div class="card">
+              <div class="row">
+                <div class="label">input</div>
+                <div class="value">messy</div>
+              </div>
+              <div class="miniBar"><span></span></div>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="label">output</div>
+                <div class="value">clear</div>
+              </div>
+              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
+                no invention · no distortion
+              </div>
+            </div>
           </div>
 
-          <div class="screen" id="screen">
-            <!-- State 1 -->
-            <div class="state is-on" data-state="1">
-              <div class="chipRow">
-                <span class="chip">instant</span>
-                <span class="chip">low fees</span>
-                <span class="chip">quiet</span>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">available</div>
-                  <div class="value">$1,842.10</div>
-                </div>
-                <div class="miniBar"><span></span></div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">last send</div>
-                  <div class="value">$42.00</div>
-                </div>
+          <!-- State 2: Scaffolding -->
+          <div class="state" data-state="2">
+            <div class="chipRow">
+              <span class="chip">light structure</span>
+              <span class="chip">momentum</span>
+              <span class="chip">enough</span>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="label">next step</div>
+                <div class="value">defined</div>
               </div>
             </div>
-
-            <!-- State 2 -->
-            <div class="state" data-state="2">
-              <div class="chipRow">
-                <span class="chip">tap</span>
-                <span class="chip">send</span>
-                <span class="chip">done</span>
+            <div class="card">
+              <div class="row">
+                <div class="label">friction</div>
+                <div class="value">lower</div>
               </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">to</div>
-                  <div class="value">amy</div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">amount</div>
-                  <div class="value">$25.00</div>
-                </div>
-                <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                  no drama · instant receipt
-                </div>
+              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
+                guidance without gravity
               </div>
             </div>
+          </div>
 
-            <!-- State 3 -->
-            <div class="state" data-state="3">
-              <div class="chipRow">
-                <span class="chip">global</span>
-                <span class="chip">smooth fx</span>
-                <span class="chip">transparent</span>
+          <!-- State 3: Translation -->
+          <div class="state" data-state="3">
+            <div class="chipRow">
+              <span class="chip">fuzzy → buildable</span>
+              <span class="chip">language</span>
+              <span class="chip">interface</span>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="label">instinct</div>
+                <div class="value">→ plan</div>
               </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">usd → aud</div>
-                  <div class="value">1.52</div>
-                </div>
-                <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                  real rate · no “surprise” math
-                </div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">delivery</div>
-                  <div class="value">seconds</div>
-                </div>
+              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
+                from “i know what i mean” to “now others do too”
               </div>
             </div>
-
-            <!-- State 4 -->
-            <div class="state" data-state="4">
-              <div class="chipRow">
-                <span class="chip">control</span>
-                <span class="chip">limits</span>
-                <span class="chip">locks</span>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">spend</div>
-                  <div class="value">on</div>
-                </div>
-                <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                  calm defaults · fast overrides
-                </div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="label">notes</div>
-                  <div class="value">none</div>
-                </div>
+            <div class="card">
+              <div class="row">
+                <div class="label">concept</div>
+                <div class="value">→ demo</div>
               </div>
             </div>
+          </div>
 
-          </div><!-- /screen -->
-        </div><!-- /phone -->
-      </div>
+          <!-- State 4: Close -->
+          <div class="state" data-state="4">
+            <div class="chipRow">
+              <span class="chip">human-first</span>
+              <span class="chip">no hustle</span>
+              <span class="chip">no gatekeeping</span>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="label">unfinished</div>
+                <div class="value">alive</div>
+              </div>
+              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
+                we don’t finish ideas for people — we help them stand up on their own
+              </div>
+            </div>
+            <div class="card">
+              <div class="row">
+                <div class="label">notes</div>
+                <div class="value">none</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /screen -->
+      </div><!-- /phone -->
     </section>
 
     <section class="story" id="story">
       <div class="steps">
         <div class="step is-active" data-step="1">
-          <div class="tag">01 / simple</div>
-          <h3>Make the first screen obvious.</h3>
+          <div class="tag">01 / mirrors</div>
+          <h3>Mirrors</h3>
           <p>
-            Phantom-style pages don’t start loud. They start clear: one promise, one UI, one calm motion.
+            We reflect your idea back to you — cleaner, sharper, and truer than it arrived.
+            No invention. No distortion. Just clarity.
           </p>
         </div>
 
         <div class="step" data-step="2">
-          <div class="tag">02 / send</div>
-          <h3>Scroll to progress.</h3>
+          <div class="tag">02 / scaffolding</div>
+          <h3>Scaffolding</h3>
           <p>
-            As the copy changes, the demo changes. It feels like a story, not a brochure.
+            Light structure where momentum stalls. Enough form to move forward —
+            never so much it calcifies. Guidance without gravity.
           </p>
         </div>
 
         <div class="step" data-step="3">
-          <div class="tag">03 / global</div>
-          <h3>Keep it airy.</h3>
+          <div class="tag">03 / translation</div>
+          <h3>Translation</h3>
           <p>
-            Bright background, soft gradients, restrained shadows. “Expensive” is mostly spacing + restraint.
+            From instinct to interface. From concept to something buildable.
+            From “I know what I mean” to “now others do too.”
           </p>
         </div>
 
         <div class="step" data-step="4">
-          <div class="tag">04 / control</div>
-          <h3>End with confidence.</h3>
+          <div class="tag">04 / close</div>
+          <h3>Unfinished doesn’t mean broken.</h3>
           <p>
-            Close with a clean statement. No pleading. No clutter. Just: this works.
+            It means alive. We don’t finish ideas for people — we help them stand up on their own.
+            Start where you are. We’ll meet you there.
           </p>
         </div>
       </div>
 
       <div class="pinCol">
-        <!-- We pin the phone itself by sticky; states change with ScrollTrigger -->
         <div style="font-family:var(--mono); font-size:12px; color:rgba(11,15,26,.62); margin-bottom:10px;">
-          scroll → updates demo
+          scroll → updates the demo
+        </div>
+        <div style="font-size:13px; color:rgba(11,15,26,.70); line-height:1.55; max-width:40ch;">
+          A small, calm idea lab for people who don’t need hype — they need mirrors,
+          scaffolding, and translation.
         </div>
       </div>
     </section>
 
     <footer id="end">
-      low drama · high signal · no notes
+      low drama · high signal · quiet builders change everything
     </footer>
   </main>
 
@@ -456,20 +452,40 @@
     const steps = Array.from(document.querySelectorAll(".step"));
     const states = Array.from(document.querySelectorAll(".state"));
 
-    function setActive(stepNum){
+    function baseSet(stepNum){
       steps.forEach(s => s.classList.toggle("is-active", s.dataset.step === String(stepNum)));
       states.forEach(st => st.classList.toggle("is-on", st.dataset.state === String(stepNum)));
     }
 
-    // Initial state
-    setActive(1);
+    // Initial
+    baseSet(1);
 
-    // Animate in the hero a bit
-    gsap.from(".hero h1", { y: 14, opacity: 0, duration: .7, ease: "power2.out" });
-    gsap.from(".hero .sub", { y: 10, opacity: 0, duration: .7, delay: .08, ease: "power2.out" });
-    gsap.from(".hero .btn", { y: 8, opacity: 0, duration: .5, delay: .16, stagger: .06, ease: "power2.out" });
+    // Hero entrance
+    gsap.from(".hero .kicker", { y: 10, opacity: 0, duration: .6, ease: "power2.out" });
+    gsap.from(".hero h1", { y: 14, opacity: 0, duration: .7, delay: .06, ease: "power2.out" });
+    gsap.from(".hero .sub", { y: 10, opacity: 0, duration: .7, delay: .12, ease: "power2.out" });
+    gsap.from(".hero .btn", { y: 8, opacity: 0, duration: .5, delay: .18, stagger: .06, ease: "power2.out" });
 
-    // Scroll triggers for steps
+    // Smooth transitions between screen states
+    let current = 1;
+    function tweenTo(stepNum){
+      if (stepNum === current) return;
+
+      const prev = states.find(s => s.dataset.state === String(current));
+      const next = states.find(s => s.dataset.state === String(stepNum));
+
+      gsap.to(prev, { opacity: 0, y: 10, duration: .30, ease: "power2.out" });
+      gsap.fromTo(next, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .42, ease: "power2.out", delay: .05 });
+
+      current = stepNum;
+    }
+
+    function setActive(n){
+      baseSet(n);
+      tweenTo(Number(n));
+    }
+
+    // Step triggers
     steps.forEach((stepEl) => {
       const n = stepEl.dataset.step;
       ScrollTrigger.create({
@@ -480,31 +496,6 @@
         onEnterBack: () => setActive(n),
       });
     });
-
-    // Smooth transitions for screen states
-    states.forEach((st) => {
-      gsap.set(st, { opacity: st.classList.contains("is-on") ? 1 : 0, y: st.classList.contains("is-on") ? 0 : 10 });
-    });
-
-    // When class changes, we want a little tween; do it by watching scroll and tweening to correct state
-    let current = 1;
-    function tweenTo(stepNum){
-      if (stepNum === current) return;
-      const prev = states.find(s => s.dataset.state === String(current));
-      const next = states.find(s => s.dataset.state === String(stepNum));
-
-      gsap.to(prev, { opacity: 0, y: 10, duration: .35, ease: "power2.out" });
-      gsap.fromTo(next, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .45, ease: "power2.out", delay: .06 });
-
-      current = stepNum;
-    }
-
-    // Hook tweenTo into setActive (wrap)
-    const _setActive = setActive;
-    setActive = (n) => {
-      _setActive(n);
-      tweenTo(Number(n));
-    };
   </script>
 </body>
 </html>
