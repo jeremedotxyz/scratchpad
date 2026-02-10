@@ -13,8 +13,7 @@
       --muted:rgba(11,15,26,.65);
       --line:rgba(11,15,26,.10);
       --shadow:0 30px 80px rgba(8,12,26,.12);
-
-      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
       --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
 
       --bubble: rgba(99,102,241,.38);
@@ -23,6 +22,7 @@
     }
 
     *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
       font-family:var(--sans);
@@ -32,167 +32,352 @@
         radial-gradient(900px 650px at 75% 20%, rgba(16,185,129,.18), transparent 60%),
         radial-gradient(900px 650px at 50% 85%, rgba(236,72,153,.14), transparent 60%),
         var(--bg);
+      overflow-x:hidden;
     }
 
     /* NAV */
     .nav{
-      position:sticky; top:0; z-index:10;
+      position:sticky; top:0; z-index:50;
       display:flex; justify-content:space-between; align-items:center;
       padding:14px 18px;
       backdrop-filter: blur(14px);
       background: rgba(247,248,255,.65);
-      border-bottom:1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
     .brand{
       font-size:12px;
       letter-spacing:.14em;
       text-transform:lowercase;
+      color: rgba(11,15,26,.78);
+      white-space:nowrap;
     }
     .nav a{
       font-size:13px;
       text-decoration:none;
-      color:rgba(11,15,26,.7);
+      color: rgba(11,15,26,.70);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid transparent;
     }
+    .nav a:hover{ border-color: var(--line); color: var(--ink); }
 
-    .wrap{ width:min(1120px,92vw); margin:0 auto; }
+    .wrap{ width:min(1120px, 92vw); margin:0 auto; }
 
     /* HERO */
     .hero{
-      padding:64px 0 40px;
+      padding:70px 0 36px;
       display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:28px;
+      grid-template-columns: 1.1fr .9fr;
+      gap:26px;
       align-items:center;
     }
-
     .kicker{
       font-family:var(--mono);
       font-size:12px;
-      color:rgba(11,15,26,.6);
-      margin-bottom:10px;
+      letter-spacing:.06em;
+      margin-bottom:12px;
+      color: rgba(11,15,26,.68);
     }
-
     h1{
-      font-size:clamp(40px,5vw,72px);
-      line-height:.98;
-      letter-spacing:-.03em;
-      margin:0 0 14px;
+      margin:0 0 12px;
+      font-size: clamp(40px, 5.2vw, 72px);
+      line-height: .98;
+      letter-spacing: -0.03em;
     }
-
     .sub{
-      font-size:18px;
+      margin:0 0 18px;
+      font-size: clamp(15px, 1.7vw, 18px);
       line-height:1.6;
-      color:var(--muted);
-      max-width:60ch;
+      color: var(--muted);
+      max-width: 62ch;
     }
 
     /* PHONE */
     .phone{
-      border-radius:28px;
-      background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.65));
-      border:1px solid rgba(11,15,26,.12);
-      box-shadow:var(--shadow);
+      border-radius:30px;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
+      border: 1px solid rgba(11,15,26,.12);
+      box-shadow: var(--shadow);
       overflow:hidden;
-      width:100%;
+      min-height: 420px;
     }
-
     .phoneTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px;
-      border-bottom:1px solid rgba(11,15,26,.08);
-      background:rgba(255,255,255,.75);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 14px 12px;
+      border-bottom: 1px solid rgba(11,15,26,.08);
+      background: rgba(255,255,255,.75);
     }
-
     .dots{ display:flex; gap:6px; }
-    .dot{ width:8px; height:8px; border-radius:50%; background:rgba(11,15,26,.25); }
-
+    .dot{ width:8px; height:8px; border-radius:50%; background: rgba(11,15,26,.22); }
     .phoneTitle{
       font-family:var(--mono);
       font-size:12px;
-      opacity:.65;
+      color: rgba(11,15,26,.65);
     }
 
     .screen{
+      position:relative;
       padding:16px;
+      min-height:360px;
       background:
-        radial-gradient(280px 200px at 30% 30%, rgba(99,102,241,.18), transparent 60%),
-        radial-gradient(280px 200px at 70% 70%, rgba(236,72,153,.14), transparent 60%);
+        radial-gradient(320px 220px at 30% 30%, rgba(99,102,241,.18), transparent 60%),
+        radial-gradient(320px 220px at 70% 55%, rgba(16,185,129,.14), transparent 60%),
+        radial-gradient(320px 220px at 50% 80%, rgba(236,72,153,.12), transparent 60%),
+        rgba(255,255,255,.20);
     }
 
-    /* ROWS */
+    /* STATES */
+    .state{
+      position:absolute;
+      inset:0;
+      padding:16px;
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity .25s ease, transform .25s ease;
+      pointer-events:none;
+    }
+    .state.is-on{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
+    }
+
+    /* Row pills + bubble */
     .pillRow{
       display:flex;
       align-items:center;
       gap:12px;
-      margin-bottom:12px;
+      margin-bottom: 12px;
     }
-    .pillRow:last-child{ margin-bottom:0; }
 
     .pill{
-      flex:1;
+      flex: 1;
+      min-width:0;
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(11,15,26,.1);
-      background:rgba(255,255,255,.78);
-      box-shadow:0 18px 50px rgba(8,12,26,.1);
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(11,15,26,.10);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 18px 50px rgba(8,12,26,.10);
     }
-
-    .label{
+    .pill .label{
       font-size:12px;
-      color:rgba(11,15,26,.6);
+      color: rgba(11,15,26,.62);
       text-transform:lowercase;
+      letter-spacing:.01em;
+      white-space:nowrap;
     }
-
-    .value{
+    .pill .value{
       font-size:16px;
-      font-weight:700;
+      font-weight:750;
       letter-spacing:-.02em;
+      color: rgba(11,15,26,.92);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
       text-transform:lowercase;
     }
 
     .bubble{
-      width:34px;
-      height:54px;
-      border-radius:999px;
-      border:1px solid var(--bubbleBorder);
+      width: 34px;
+      height: 54px;
+      border-radius: 999px;
+      border: 1px solid var(--bubbleBorder);
       background:
-        radial-gradient(18px 18px at 35% 30%, rgba(255,255,255,.9), transparent 60%),
+        radial-gradient(18px 18px at 35% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 62%),
         var(--bubble);
-      box-shadow:0 14px 32px rgba(99,102,241,.18);
-      animation:float 4.5s ease-in-out infinite;
+      box-shadow: 0 14px 32px rgba(99,102,241,.18);
+      flex: 0 0 34px;
+      opacity:.92;
     }
 
-    .pillRow:nth-child(2) .bubble{ animation-delay:.3s; }
-    .pillRow:nth-child(3) .bubble{ animation-delay:.6s; }
+    /* subtle “expensive” motion ONLY when state is active */
+    .state.is-on .bubble{
+      animation: bubbleFloat 4.8s ease-in-out infinite, bubbleGlow 2.9s ease-in-out infinite;
+      will-change: transform, filter, box-shadow, opacity;
+    }
+    .state.is-on .pillRow:nth-child(1) .bubble{ animation-delay: 0s, 0s; }
+    .state.is-on .pillRow:nth-child(2) .bubble{ animation-delay: .25s, .35s; }
+    .state.is-on .pillRow:nth-child(3) .bubble{ animation-delay: .5s, .7s; }
 
-    @keyframes float{
-      0%,100%{ transform:translateY(0); }
-      50%{ transform:translateY(-4px); }
+    @keyframes bubbleFloat{
+      0%,100%{ transform: translateY(0) translateX(0); }
+      50%{ transform: translateY(-4px) translateX(1px); }
+    }
+    @keyframes bubbleGlow{
+      0%,100%{
+        box-shadow: 0 14px 32px rgba(99,102,241,.16), 0 0 0 rgba(0,0,0,0);
+        filter: saturate(1);
+        opacity: .92;
+      }
+      50%{
+        box-shadow: 0 18px 42px rgba(99,102,241,.22), 0 0 22px var(--bubbleGlow);
+        filter: saturate(1.05);
+        opacity: 1;
+      }
     }
 
-    /* MOBILE */
-    @media(max-width:900px){
-      .hero{ grid-template-columns:1fr; padding:44px 0 28px; }
+    /* STORY — keep the other sections on the left (2 columns) */
+    .story{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:26px;
+      padding:40px 0 80px;
+      align-items:start;
     }
 
-    @media(max-width:520px){
-      h1{ font-size:42px; }
-      .pill{ flex-direction:column; align-items:flex-start; gap:6px; }
-      .bubble{ align-self:center; height:48px; }
+    .steps{
+      border-top:1px solid var(--line);
+    }
+    .step{
+      padding:26px 0;
+      border-bottom:1px solid var(--line);
+      opacity:.55;
+      transform: translateY(8px);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    .step.is-active{ opacity:1; transform: translateY(0); }
+
+    .tag{
+      font-family: var(--mono);
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(11,15,26,.10);
+      display:inline-block;
+      margin-bottom:10px;
+      color: rgba(11,15,26,.70);
+    }
+    .step h3{ margin:0 0 8px; font-size:22px; letter-spacing:-.02em; }
+    .step p{ margin:0; color: var(--muted); line-height:1.6; max-width:64ch; }
+
+    /* right-side panel (keeps the “other sections” feel) */
+    .aside{
+      position:sticky;
+      top:84px;
+      border-radius: 22px;
+      border: 1px solid rgba(11,15,26,.10);
+      background: rgba(255,255,255,.62);
+      box-shadow: 0 26px 70px rgba(8,12,26,.10);
+      padding: 16px;
+      overflow:hidden;
+    }
+    .asideHeader{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom: 10px;
+    }
+    .asideTitle{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(11,15,26,.68);
+      letter-spacing:.04em;
+      text-transform:lowercase;
+    }
+    .badge{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,15,26,.10);
+      background: rgba(255,255,255,.7);
+      color: rgba(11,15,26,.68);
+    }
+    .asideCard{
+      border-radius: 18px;
+      border: 1px solid rgba(11,15,26,.08);
+      background: rgba(255,255,255,.72);
+      padding: 14px;
+      margin-top: 10px;
+    }
+    .asideCard h4{
+      margin:0 0 6px;
+      font-size: 16px;
+      letter-spacing:-.01em;
+    }
+    .asideCard p{
+      margin:0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .microList{
+      margin: 10px 0 0;
+      padding: 0 0 0 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:34px 0 70px;
+      font-family: var(--mono);
+      font-size:12px;
+      color: var(--muted);
+    }
+
+    /* ---------- MOBILE OPTIMIZATION ---------- */
+    @media (max-width: 980px){
+      .hero{
+        grid-template-columns: 1fr;
+        padding: 44px 0 18px;
+        gap: 18px;
+      }
+      .phone{ min-height: 0; }
+      .screen{ min-height: 260px; padding: 14px; }
+      .state{ padding: 14px; }
+      .pill{ padding: 12px 12px; }
+      .pill .value{ font-size:15px; }
+      .bubble{ width: 30px; height: 48px; flex-basis:30px; }
+
+      .story{
+        grid-template-columns: 1fr; /* stack columns on mobile */
+        padding: 24px 0 64px;
+        gap: 16px;
+      }
+      .aside{
+        position:relative;
+        top:auto;
+      }
+      .step{ padding: 18px 0; }
+    }
+
+    @media (max-width: 520px){
+      .nav{ padding: 12px 14px; }
+      .nav a{ padding: 8px 10px; font-size: 12px; }
+      h1{ font-size: clamp(34px, 10vw, 44px); }
+      .sub{ font-size: 15px; }
+
+      /* keep phone readable: stack label/value if needed */
+      .pill{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:6px;
+      }
+      .pill .value{ width:100%; text-align:left; }
+      .pillRow{ align-items:stretch; gap:10px; }
+      .bubble{ align-self:center; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .state.is-on .bubble{ animation: none !important; }
+      .step, .state{ transition: none; }
     }
   </style>
 </head>
-
 <body>
 
   <div class="nav">
     <div class="brand">moyogi</div>
-    <a href="#pillars">pillars</a>
+    <div>
+      <a href="#story">pillars</a>
+    </div>
   </div>
 
   <main class="wrap">
@@ -207,7 +392,7 @@
         </p>
       </div>
 
-      <div class="phone">
+      <div class="phone" aria-hidden="true">
         <div class="phoneTop">
           <div class="dots">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -217,34 +402,171 @@
         </div>
 
         <div class="screen">
-          <div class="pillRow">
-            <div class="pill">
-              <span class="label">input</span>
-              <span class="value">zero latency</span>
+          <!-- STATE 1 -->
+          <div class="state is-on" data-state="1">
+            <div class="pillRow">
+              <div class="pill">
+                <span class="label">input</span>
+                <span class="value">0 latency</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
             </div>
-            <div class="bubble"></div>
+
+            <div class="pillRow">
+              <div class="pill">
+                <span class="label">output</span>
+                <span class="value">clear</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
+            </div>
+
+            <div class="pillRow" style="margin-bottom:0;">
+              <div class="pill">
+                <span class="label">signal</span>
+                <span class="value">strong fit</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
+            </div>
           </div>
 
-          <div class="pillRow">
-            <div class="pill">
-              <span class="label">output</span>
-              <span class="value">clear</span>
+          <!-- STATE 2 -->
+          <div class="state" data-state="2">
+            <div class="pillRow">
+              <div class="pill">
+                <span class="label">mirror</span>
+                <span class="value">cleaner</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
             </div>
-            <div class="bubble"></div>
+
+            <div class="pillRow">
+              <div class="pill">
+                <span class="label">scaffold</span>
+                <span class="value">enough</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
+            </div>
+
+            <div class="pillRow" style="margin-bottom:0;">
+              <div class="pill">
+                <span class="label">translate</span>
+                <span class="value">buildable</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
+            </div>
           </div>
 
-          <div class="pillRow">
-            <div class="pill">
-              <span class="label">signal</span>
-              <span class="value">strong</span>
+          <!-- STATE 3 -->
+          <div class="state" data-state="3">
+            <div class="pillRow">
+              <div class="pill">
+                <span class="label">notes</span>
+                <span class="value">none</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
             </div>
-            <div class="bubble"></div>
+
+            <div class="pillRow">
+              <div class="pill">
+                <span class="label">signal</span>
+                <span class="value">high intent</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
+            </div>
+
+            <div class="pillRow" style="margin-bottom:0;">
+              <div class="pill">
+                <span class="label">mode</span>
+                <span class="value">quietly lethal</span>
+              </div>
+              <div class="bubble" aria-hidden="true"></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- KEEP THE OTHER SECTIONS (2 columns) -->
+    <section class="story" id="story">
+      <div class="steps">
+        <div class="step is-active" data-step="1">
+          <span class="tag">01 / mirrors</span>
+          <h3>Mirrors</h3>
+          <p>We reflect your idea back to you — cleaner, sharper, and truer than it arrived.</p>
+        </div>
+
+        <div class="step" data-step="2">
+          <span class="tag">02 / scaffolding</span>
+          <h3>Scaffolding</h3>
+          <p>Light structure where momentum stalls. Enough form to move forward — never so much it calcifies.</p>
+        </div>
+
+        <div class="step" data-step="3">
+          <span class="tag">03 / translation</span>
+          <h3>Translation</h3>
+          <p>From instinct to interface. From concept to something buildable. From “I know what I mean” to “now others do too.”</p>
+        </div>
+      </div>
+
+      <aside class="aside">
+        <div class="asideHeader">
+          <div class="asideTitle">how it works</div>
+          <span class="badge">human-first</span>
+        </div>
+
+        <div class="asideCard">
+          <h4>mirrors</h4>
+          <p>We clarify what you’re trying to say without adding noise.</p>
+        </div>
+
+        <div class="asideCard">
+          <h4>scaffolding</h4>
+          <p>We add just enough structure to get momentum back.</p>
+        </div>
+
+        <div class="asideCard">
+          <h4>translation</h4>
+          <p>We turn intuition into language others can build with.</p>
+        </div>
+
+        <ul class="microList">
+          <li>low drama, high signal</li>
+          <li>fast feedback loops</li>
+          <li>taste + judgment > automation</li>
+        </ul>
+      </aside>
+    </section>
+
+    <footer>
+      low drama · high signal · quiet builders change everything
+    </footer>
+
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const steps = document.querySelectorAll('.step');
+    const states = document.querySelectorAll('.state');
+
+    function setActive(n){
+      steps.forEach(s => s.classList.toggle('is-active', s.dataset.step === n));
+      states.forEach(st => st.classList.toggle('is-on', st.dataset.state === n));
+    }
+
+    steps.forEach(step => {
+      ScrollTrigger.create({
+        trigger: step,
+        start: "top 60%",
+        end: "bottom 60%",
+        onEnter: () => setActive(step.dataset.step),
+        onEnterBack: () => setActive(step.dataset.step)
+      });
+    });
+  </script>
 
 </body>
 </html>
