@@ -1,895 +1,514 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>moyogi — mirrors, scaffolding, translation</title>
-  <meta name="description" content="Mirrors, scaffolding, and translation for unfinished ideas." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>moyogi</title>
 
-  <style>
-    :root{
-      --bg:#f7f8ff;
-      --ink:#0b0f1a;
-      --muted:rgba(11,15,26,.65);
-      --line:rgba(11,15,26,.10);
-      --shadow:0 30px 80px rgba(8,12,26,.12);
-      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+<style>
+:root{
+  --ink:#0b0f1a;
+  --muted:#6b7280;
+  --bg:#f7f8fc;
+  --card:rgba(255,255,255,.78);
+  --line:rgba(11,15,26,.08);
+  --r:18px;
 
-      --bubble: rgba(99,102,241,.38);
-      --bubbleBorder: rgba(99,102,241,.25);
-      --bubbleGlow: rgba(99,102,241,.22);
+  --c1: 139,140,246;  /* indigo */
+  --c2: 110,231,183;  /* mint */
+  --c3: 249,168,212;  /* pink */
+}
 
-      /* pillar tints */
-      --c1: 99,102,241;   /* mirrors (indigo) */
-      --c2: 16,185,129;   /* scaffolding (mint) */
-      --c3: 236,72,153;   /* translation (pink) */
-    }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:var(--ink);
+  background:
+    radial-gradient(700px 420px at 20% 10%, rgba(var(--c1),.18), transparent 60%),
+    radial-gradient(700px 420px at 80% 30%, rgba(var(--c2),.16), transparent 60%),
+    radial-gradient(700px 420px at 50% 90%, rgba(var(--c3),.14), transparent 60%),
+    var(--bg);
+}
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--ink);
-      background:
-        radial-gradient(900px 600px at 20% 15%, rgba(var(--c1),.22), transparent 60%),
-        radial-gradient(900px 650px at 75% 20%, rgba(var(--c2),.18), transparent 60%),
-        radial-gradient(900px 650px at 50% 85%, rgba(var(--c3),.14), transparent 60%),
-        var(--bg);
-      overflow-x:hidden;
-    }
+/* nav */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter: blur(10px);
+  background:rgba(247,248,252,.72);
+  border-bottom:1px solid var(--line);
+}
+.navInner{
+  max-width:1100px;
+  margin:auto;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  font-weight:500;
+}
 
-    /* NAV */
-    .nav{
-      position:sticky; top:0; z-index:50;
-      display:flex; justify-content:space-between; align-items:center;
-      padding:14px 18px;
-      backdrop-filter: blur(14px);
-      background: rgba(247,248,255,.65);
-      border-bottom: 1px solid var(--line);
-    }
-    .brand{
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:lowercase;
-      color: rgba(11,15,26,.78);
-      white-space:nowrap;
-    }
-    .nav a{
-      font-size:13px;
-      text-decoration:none;
-      color: rgba(11,15,26,.70);
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid transparent;
-    }
-    .nav a:hover{ border-color: var(--line); color: var(--ink); }
+/* hero */
+.hero{
+  max-width:1100px;
+  margin:0 auto;
+  padding:70px 20px 40px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+  align-items:center;
+  grid-template-areas:"left phone";
+}
+.heroLeft{ grid-area:left }
+.phone{ grid-area:phone }
 
-    .wrap{ width:min(1120px, 92vw); margin:0 auto; }
+@media (max-width:980px){
+  .hero{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "phone"
+      "left";
+  }
+}
 
-    /* HERO */
-    .hero{
-      padding:70px 0 18px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:26px;
-      align-items:center;
-    }
-    .kicker{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.06em;
-      margin-bottom:12px;
-      color: rgba(11,15,26,.68);
-    }
-    h1{
-      margin:0 0 12px;
-      font-size: clamp(40px, 5.2vw, 72px);
-      line-height: .98;
-      letter-spacing: -0.03em;
-    }
-    .sub{
-      margin:0 0 16px;
-      font-size: clamp(15px, 1.7vw, 18px);
-      line-height:1.6;
-      color: var(--muted);
-      max-width: 62ch;
-    }
+/* copy */
+.eyebrow{
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color:var(--muted);
+  letter-spacing:.04em;
+  margin-bottom:8px;
+}
+h1{
+  font-size:clamp(32px,5vw,54px);
+  line-height:1.05;
+  margin:0 0 14px;
+}
+.sub{
+  color:var(--muted);
+  max-width:520px;
+  margin-bottom:12px;
+}
 
-    .ctaRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin: 0 0 14px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 11px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(11,15,26,.12);
-      background: rgba(255,255,255,.68);
-      color: rgba(11,15,26,.92);
-      font-weight: 720;
-      font-size: 13px;
-      text-decoration:none;
-      box-shadow: 0 14px 40px rgba(8,12,26,.10);
-      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 18px 50px rgba(8,12,26,.12);
-    }
-    .btn.ghost{
-      background: transparent;
-      box-shadow: none;
-      color: rgba(11,15,26,.74);
-    }
-    .btn.ghost:hover{
-      background: rgba(255,255,255,.55);
-      box-shadow: none;
-    }
+/* divider */
+.divider{
+  margin:60px 0 24px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.divider:before,
+.divider:after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
 
-    /* bring back the “other columns on the left underneath” */
-    .divider{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin: 16px 0 12px;
-    }
-    .divider .rule{
-      height:1px;
-      flex: 1;
-      background: rgba(11,15,26,.10);
-    }
-    .divider .label{
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(11,15,26,.62);
-      letter-spacing:.04em;
-      text-transform: lowercase;
-      white-space:nowrap;
-    }
+/* phone */
+.phoneFrame{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:14px;
+  box-shadow:0 30px 80px rgba(0,0,0,.12);
+}
+.phoneTitle{
+  text-align:center;
+  font-weight:500;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.screen{
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  gap:14px;
+}
+.screenLeft{ flex:1 }
 
-    .heroGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-      max-width: 680px;
-    }
-    .miniCol{
-      border-radius: 18px;
-      border: 1px solid rgba(11,15,26,.10);
-      background: rgba(255,255,255,.64);
-      box-shadow: 0 18px 50px rgba(8,12,26,.08);
-      padding: 12px 12px 10px;
-      overflow:hidden;
-      position:relative;
-    }
-    .miniCol::before{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius:18px;
-      background:
-        radial-gradient(240px 120px at 10% 20%, rgba(var(--c1),.16), transparent 55%),
-        radial-gradient(240px 120px at 90% 80%, rgba(var(--c2),.12), transparent 55%),
-        radial-gradient(240px 120px at 60% 10%, rgba(var(--c3),.10), transparent 60%);
-      pointer-events:none;
-      z-index:0;
-    }
-    .miniCol > *{ position:relative; z-index:1; }
-    .miniHead{
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom: 8px;
-    }
-    .miniTitle{
-      font-family: var(--mono);
-      font-size: 11px;
-      color: rgba(11,15,26,.68);
-      text-transform: lowercase;
-      letter-spacing:.04em;
-    }
-    .miniPip{
-      width: 10px; height:10px; border-radius:999px;
-      background: rgba(11,15,26,.18);
-    }
-    .miniList{
-      margin:0;
-      padding:0;
-      list-style:none;
-      display:grid;
-      gap:6px;
-      color: rgba(11,15,26,.70);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-    .miniList li{
-      display:flex; gap:8px; align-items:flex-start;
-    }
-    .dash{
-      width:10px; height:2px; border-radius:2px; margin-top: 9px;
-      background: rgba(11,15,26,.18);
-      flex: 0 0 10px;
-    }
+/* rows */
+.row{
+  background:#fafafa;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px 14px;
+  margin-bottom:10px;
+}
+.label{
+  font-size:12px;
+  color:var(--muted);
+}
+.value{
+  font-size:18px;
+  font-weight:600;
+}
 
-    /* PHONE */
-    .phone{
-      border-radius:30px;
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
-      border: 1px solid rgba(11,15,26,.12);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      min-height: 420px;
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
-    .phoneTop{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:14px 14px 12px;
-      border-bottom: 1px solid rgba(11,15,26,.08);
-      background: rgba(255,255,255,.75);
-    }
-    .dots{ display:flex; gap:6px; }
-    .dot{ width:8px; height:8px; border-radius:50%; background: rgba(11,15,26,.22); }
-    .phoneTitle{
-      font-family:var(--mono);
-      font-size:12px;
-      color: rgba(11,15,26,.65);
-    }
+/* thermometers */
+.thermoStack{
+  width:40px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.thermo{
+  flex:1;
+  border-radius:999px;
+  background:#f1f2f7;
+  overflow:hidden;
+  position:relative;
+}
+.fill{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:60%;
+  background:linear-gradient(
+    to top,
+    rgba(var(--c1),.70),
+    rgba(var(--c1),.28)
+  );
+}
 
-    .screen{
-      position:relative;
-      padding:16px;
-      min-height:360px;
-      background:
-        radial-gradient(320px 220px at 30% 30%, rgba(var(--c1),.18), transparent 60%),
-        radial-gradient(320px 220px at 70% 55%, rgba(var(--c2),.14), transparent 60%),
-        radial-gradient(320px 220px at 50% 80%, rgba(var(--c3),.12), transparent 60%),
-        rgba(255,255,255,.20);
-    }
+/* ---------- BUBBLE SECTIONS (bottom content) ---------- */
+.section{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px;
+}
 
-    /* STATES */
-    .state{
-      position:absolute;
-      inset:0;
-      padding:16px;
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity .25s ease, transform .25s ease;
-      pointer-events:none;
-    }
-    .state.is-on{
-      opacity:1;
-      transform: translateY(0);
-      pointer-events:auto;
-    }
+.bubbleGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  padding:10px 0 50px;
+}
 
-    /* Row pills + bubble */
-    .pillRow{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom: 12px;
-    }
+@media (max-width:900px){
+  .bubbleGrid{ grid-template-columns:1fr; }
+}
 
-    .pill{
-      flex: 1;
-      min-width:0;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(11,15,26,.10);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 18px 50px rgba(8,12,26,.10);
-    }
-    .pill .label{
-      font-size:12px;
-      color: rgba(11,15,26,.62);
-      text-transform:lowercase;
-      letter-spacing:.01em;
-      white-space:nowrap;
-    }
-    .pill .value{
-      font-size:16px;
-      font-weight:750;
-      letter-spacing:-.02em;
-      color: rgba(11,15,26,.92);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      text-transform:lowercase;
-    }
+/* big soft bubble */
+.bubble{
+  position:relative;
+  border-radius:26px;
+  border:1px solid rgba(11,15,26,.08);
+  background: rgba(255,255,255,.70);
+  box-shadow: 0 24px 70px rgba(8,12,26,.10);
+  padding:18px 18px 16px;
+  overflow:hidden;
+}
 
-    .bubble{
-      width: 34px;
-      height: 54px;
-      border-radius: 999px;
-      border: 1px solid var(--bubbleBorder);
-      background:
-        radial-gradient(18px 18px at 35% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 62%),
-        var(--bubble);
-      box-shadow: 0 14px 32px rgba(var(--c1),.18);
-      flex: 0 0 34px;
-      opacity:.92;
-    }
+.bubble::before{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius:26px;
+  background:
+    radial-gradient(520px 220px at 20% 20%, rgba(var(--c1),.18), transparent 60%),
+    radial-gradient(520px 220px at 80% 65%, rgba(var(--c2),.14), transparent 62%),
+    radial-gradient(520px 220px at 50% 90%, rgba(var(--c3),.12), transparent 65%);
+  opacity:.9;
+  pointer-events:none;
+}
 
-    /* subtle “expensive” motion ONLY when state is active */
-    .state.is-on .bubble{
-      animation: bubbleFloat 4.8s ease-in-out infinite, bubbleGlow 2.9s ease-in-out infinite;
-      will-change: transform, filter, box-shadow, opacity;
-    }
-    .state.is-on .pillRow:nth-child(1) .bubble{ animation-delay: 0s, 0s; }
-    .state.is-on .pillRow:nth-child(2) .bubble{ animation-delay: .25s, .35s; }
-    .state.is-on .pillRow:nth-child(3) .bubble{ animation-delay: .5s, .7s; }
+.bubble > *{ position:relative; z-index:1; }
 
-    @keyframes bubbleFloat{
-      0%,100%{ transform: translateY(0) translateX(0); }
-      50%{ transform: translateY(-4px) translateX(1px); }
-    }
-    @keyframes bubbleGlow{
-      0%,100%{
-        box-shadow: 0 14px 32px rgba(var(--c1),.16), 0 0 0 rgba(0,0,0,0);
-        filter: saturate(1);
-        opacity: .92;
-      }
-      50%{
-        box-shadow: 0 18px 42px rgba(var(--c1),.22), 0 0 22px var(--bubbleGlow);
-        filter: saturate(1.08);
-        opacity: 1;
-      }
-    }
+.bubbleHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:10px;
+}
 
-    /* STORY — 2 columns */
-    .story{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:26px;
-      padding:40px 0 80px;
-      align-items:start;
-    }
+.bubbleTag{
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size:12px;
+  letter-spacing:.03em;
+  color: rgba(11,15,26,.62);
+  text-transform: lowercase;
+}
 
-    .steps{
-      border-top:1px solid var(--line);
-    }
-    .step{
-      padding:26px 0;
-      border-bottom:1px solid var(--line);
-      opacity:.55;
-      transform: translateY(8px);
-      transition: opacity .25s ease, transform .25s ease;
-    }
-    .step.is-active{ opacity:1; transform: translateY(0); }
+.pill{
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(11,15,26,.10);
+  background: rgba(255,255,255,.72);
+  color: rgba(11,15,26,.62);
+  white-space:nowrap;
+}
 
-    .tag{
-      font-family: var(--mono);
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.62);
-      border: 1px solid rgba(11,15,26,.10);
-      display:inline-block;
-      margin-bottom:10px;
-      color: rgba(11,15,26,.70);
-    }
-    .step h3{ margin:0 0 8px; font-size:22px; letter-spacing:-.02em; }
-    .step p{ margin:0; color: var(--muted); line-height:1.6; max-width:64ch; }
+.bubble h3{
+  margin:0 0 8px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  text-transform:lowercase;
+}
+.bubble p{
+  margin:0;
+  color: var(--muted);
+  line-height:1.6;
+  max-width: 68ch;
+}
 
-    /* right-side panel, gradient morphs by active step */
-    .aside{
-      position:sticky;
-      top:84px;
-      border-radius: 22px;
-      border: 1px solid rgba(11,15,26,.10);
-      background: rgba(255,255,255,.62);
-      box-shadow: 0 26px 70px rgba(8,12,26,.10);
-      padding: 16px;
-      overflow:hidden;
-    }
-    .aside::before{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius:22px;
-      opacity:.9;
-      transition: opacity .35s ease;
-      pointer-events:none;
-      z-index:0;
-    }
-    .aside > *{ position:relative; z-index:1; }
+/* list bubbles inside bubble */
+.miniBubbles{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+.mini{
+  border-radius:18px;
+  border:1px solid rgba(11,15,26,.08);
+  background: rgba(255,255,255,.66);
+  padding:12px 12px 11px;
+}
+.mini ul{
+  margin:0;
+  padding-left:18px;
+  color: var(--muted);
+  line-height:1.55;
+}
+.mini li{ margin:4px 0; }
 
-    .aside.aside-1::before{
-      background:
-        radial-gradient(520px 240px at 25% 20%, rgba(var(--c1),.24), transparent 60%),
-        radial-gradient(520px 240px at 80% 70%, rgba(var(--c1),.10), transparent 62%),
-        rgba(255,255,255,.60);
-    }
-    .aside.aside-2::before{
-      background:
-        radial-gradient(520px 240px at 25% 20%, rgba(var(--c2),.22), transparent 60%),
-        radial-gradient(520px 240px at 80% 70%, rgba(var(--c2),.10), transparent 62%),
-        rgba(255,255,255,.60);
-    }
-    .aside.aside-3::before{
-      background:
-        radial-gradient(520px 240px at 25% 20%, rgba(var(--c3),.22), transparent 60%),
-        radial-gradient(520px 240px at 80% 70%, rgba(var(--c3),.10), transparent 62%),
-        rgba(255,255,255,.60);
-    }
-
-    .asideHeader{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-    .asideTitle{
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(11,15,26,.68);
-      letter-spacing:.04em;
-      text-transform:lowercase;
-      line-height:1.2;
-    }
-    .statusLine{
-      margin-top:6px;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(11,15,26,.62);
-      letter-spacing:.03em;
-      text-transform:lowercase;
-    }
-    .badge{
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(11,15,26,.10);
-      background: rgba(255,255,255,.7);
-      color: rgba(11,15,26,.68);
-      white-space:nowrap;
-    }
-    .asideCard{
-      border-radius: 18px;
-      border: 1px solid rgba(11,15,26,.08);
-      background: rgba(255,255,255,.72);
-      padding: 14px;
-      margin-top: 10px;
-    }
-    .asideCard h4{
-      margin:0 0 6px;
-      font-size: 16px;
-      letter-spacing:-.01em;
-      text-transform:lowercase;
-    }
-    .asideCard p{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 14px;
-    }
-    .microList{
-      margin: 10px 0 0;
-      padding: 0 0 0 16px;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    footer{
-      border-top:1px solid var(--line);
-      padding:22px 0 70px;
-      font-family: var(--mono);
-      font-size:12px;
-      color: var(--muted);
-    }
-    .footerRow{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-    .footerLinks{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .footerLinks a{
-      text-decoration:none;
-      color: rgba(11,15,26,.70);
-      border: 1px solid rgba(11,15,26,.10);
-      background: rgba(255,255,255,.55);
-      padding: 8px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-    }
-    .footerLinks a:hover{
-      background: rgba(255,255,255,.72);
-      color: rgba(11,15,26,.92);
-    }
-
-    /* ---------- MOBILE OPTIMIZATION ---------- */
-    @media (max-width: 980px){
-      .hero{
-        grid-template-columns: 1fr;
-        padding: 44px 0 18px;
-        gap: 18px;
-      }
-
-      .heroGrid{
-        grid-template-columns: 1fr;
-        max-width: 100%;
-      }
-
-      .phone{ min-height: 0; }
-      .screen{ min-height: 260px; padding: 14px; }
-      .state{ padding: 14px; }
-      .pill{ padding: 12px 12px; }
-      .pill .value{ font-size:15px; }
-      .bubble{ width: 30px; height: 48px; flex-basis:30px; }
-
-      .story{
-        grid-template-columns: 1fr;
-        padding: 24px 0 64px;
-        gap: 16px;
-      }
-      .aside{
-        position:relative;
-        top:auto;
-      }
-      .step{ padding: 18px 0; }
-    }
-
-    @media (max-width: 520px){
-      .nav{ padding: 12px 14px; }
-      .nav a{ padding: 8px 10px; font-size: 12px; }
-      h1{ font-size: clamp(34px, 10vw, 44px); }
-      .sub{ font-size: 15px; }
-
-      .pill{
-        align-items:flex-start;
-        flex-direction:column;
-        gap:6px;
-      }
-      .pill .value{ width:100%; text-align:left; }
-      .pillRow{ align-items:stretch; gap:10px; }
-      .bubble{ align-self:center; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .state.is-on .bubble{ animation: none !important; }
-      .step, .state{ transition: none; }
-      .phone{ transform:none !important; }
-    }
-  </style>
+/* slim “quote” bubble */
+.quoteBubble{
+  margin: 26px 0 70px;
+  padding:0 20px;
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.quote{
+  position:relative;
+  border-radius:999px;
+  border:1px solid rgba(11,15,26,.08);
+  background: rgba(255,255,255,.62);
+  box-shadow: 0 24px 70px rgba(8,12,26,.10);
+  padding: 18px 20px;
+  overflow:hidden;
+  text-align:center;
+}
+.quote::before{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius:999px;
+  background:
+    radial-gradient(520px 200px at 30% 30%, rgba(var(--c1),.16), transparent 60%),
+    radial-gradient(520px 200px at 75% 70%, rgba(var(--c3),.12), transparent 62%);
+  opacity:.9;
+  pointer-events:none;
+}
+.quote span{
+  position:relative;
+  z-index:1;
+  display:block;
+  font-size:18px;
+  letter-spacing:-.01em;
+}
+.quote small{
+  position:relative;
+  z-index:1;
+  display:block;
+  margin-top:8px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="nav">
-    <div class="brand">moyogi</div>
-    <div>
-      <a href="#story">pillars</a>
+<nav class="nav">
+  <div class="navInner">
+    <div>moyogi</div>
+    <div>pillars</div>
+  </div>
+</nav>
+
+<section class="hero">
+
+  <div class="heroLeft">
+    <div class="eyebrow">mirrors · scaffolding · translation</div>
+    <h1>Mirrors, scaffolding,<br>and translation for unfinished ideas.</h1>
+
+    <p class="sub">
+      A human-first idea lab that reflects what you mean, adds light structure,
+      and translates the fuzzy into something buildable.
+    </p>
+
+    <p class="sub">
+      Moyogi exists for the moment right before things click —
+      when you know there’s something there,
+      but the shape hasn’t revealed itself yet.
+    </p>
+
+    <p class="sub">
+      We don’t chase scale.
+      We don’t rush outcomes.
+      We help ideas become legible to the people who carry them.
+    </p>
+
+    <div class="divider">/ pillars</div>
+  </div>
+
+  <div class="phone">
+    <div class="phoneFrame">
+      <div class="phoneTitle">moyogi</div>
+      <div class="screen">
+        <div class="screenLeft">
+          <div class="row">
+            <div class="label">input</div>
+            <div class="value">zero latency</div>
+          </div>
+          <div class="row">
+            <div class="label">output</div>
+            <div class="value">clear</div>
+          </div>
+          <div class="row">
+            <div class="label">signal</div>
+            <div class="value">strong fit</div>
+          </div>
+        </div>
+        <div class="thermoStack" aria-hidden="true">
+          <div class="thermo"><div class="fill" style="height:70%"></div></div>
+          <div class="thermo"><div class="fill" style="height:45%"></div></div>
+          <div class="thermo"><div class="fill" style="height:85%"></div></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <main class="wrap">
+</section>
 
-    <section class="hero" id="top">
-      <div>
-        <div class="kicker">mirrors · scaffolding · translation</div>
-        <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
-        <p class="sub">
-          A human-first idea lab that reflects what you mean, adds light structure,
-          and translates the fuzzy into something buildable.
-        </p>
+<!-- bottom content wrapped into aesthetic bubbles -->
+<section class="section">
+  <div class="bubbleGrid">
 
-        <!-- CTAs -->
-        <div class="ctaRow">
-          <a class="btn" href="#story">enter the lab →</a>
-          <a class="btn ghost" href="#story">how it works</a>
-        </div>
-
-        <!-- Divider -->
-        <div class="divider" aria-hidden="true">
-          <span class="rule"></span>
-          <span class="label">/ pillars</span>
-          <span class="rule"></span>
-        </div>
-
-        <!-- Pillar mini columns -->
-        <div class="heroGrid" aria-label="moyogi pillars at a glance">
-          <div class="miniCol">
-            <div class="miniHead">
-              <div class="miniTitle">mirrors</div>
-              <div class="miniPip" style="background: rgba(var(--c1),.55)"></div>
-            </div>
-            <ul class="miniList">
-              <li><span class="dash"></span><span>reflect meaning</span></li>
-              <li><span class="dash"></span><span>cut noise</span></li>
-              <li><span class="dash"></span><span>sharpen intent</span></li>
-            </ul>
-          </div>
-
-          <div class="miniCol">
-            <div class="miniHead">
-              <div class="miniTitle">scaffolding</div>
-              <div class="miniPip" style="background: rgba(var(--c2),.55)"></div>
-            </div>
-            <ul class="miniList">
-              <li><span class="dash"></span><span>light structure</span></li>
-              <li><span class="dash"></span><span>next steps</span></li>
-              <li><span class="dash"></span><span>momentum</span></li>
-            </ul>
-          </div>
-
-          <div class="miniCol">
-            <div class="miniHead">
-              <div class="miniTitle">translation</div>
-              <div class="miniPip" style="background: rgba(var(--c3),.55)"></div>
-            </div>
-            <ul class="miniList">
-              <li><span class="dash"></span><span>fuzzy → buildable</span></li>
-              <li><span class="dash"></span><span>shared language</span></li>
-              <li><span class="dash"></span><span>ship-ready</span></li>
-            </ul>
-          </div>
-        </div>
+    <!-- Mirrors bubble -->
+    <article class="bubble">
+      <div class="bubbleHead">
+        <div class="bubbleTag">01 / mirrors</div>
+        <div class="pill">signal: clarified</div>
       </div>
+      <h3>mirrors</h3>
+      <p>
+        Most ideas fail from misalignment, not lack of intelligence.
+        Mirrors reduce distortion — between thought and language,
+        between intention and interpretation.
+      </p>
 
-      <!-- Phone -->
-      <div class="phone" id="phone" aria-hidden="true">
-        <div class="phoneTop">
-          <div class="dots">
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          </div>
-          <div class="phoneTitle">moyogi</div>
-          <div style="width:24px"></div>
-        </div>
-
-        <div class="screen">
-          <!-- STATE 1 -->
-          <div class="state is-on" data-state="1">
-            <div class="pillRow">
-              <div class="pill">
-                <span class="label">input</span>
-                <span class="value">zero latency</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-
-            <div class="pillRow">
-              <div class="pill">
-                <span class="label">output</span>
-                <span class="value">clear</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-
-            <div class="pillRow" style="margin-bottom:0;">
-              <div class="pill">
-                <span class="label">signal</span>
-                <span class="value">strong fit</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-          </div>
-
-          <!-- STATE 2 -->
-          <div class="state" data-state="2">
-            <div class="pillRow">
-              <div class="pill">
-                <span class="label">mirror</span>
-                <span class="value">cleaner</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-
-            <div class="pillRow">
-              <div class="pill">
-                <span class="label">scaffold</span>
-                <span class="value">enough</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-
-            <div class="pillRow" style="margin-bottom:0;">
-              <div class="pill">
-                <span class="label">translate</span>
-                <span class="value">buildable</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-          </div>
-
-          <!-- STATE 3 -->
-          <div class="state" data-state="3">
-            <div class="pillRow">
-              <div class="pill">
-                <span class="label">notes</span>
-                <span class="value">none</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-
-            <div class="pillRow">
-              <div class="pill">
-                <span class="label">signal</span>
-                <span class="value">high intent</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-
-            <div class="pillRow" style="margin-bottom:0;">
-              <div class="pill">
-                <span class="label">mode</span>
-                <span class="value">quietly lethal</span>
-              </div>
-              <div class="bubble" aria-hidden="true"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Story -->
-    <section class="story" id="story">
-      <div class="steps">
-        <div class="step is-active" data-step="1">
-          <span class="tag">01 / mirrors</span>
-          <h3>Mirrors</h3>
-          <p>We reflect your idea back to you — cleaner, sharper, and truer than it arrived.</p>
-        </div>
-
-        <div class="step" data-step="2">
-          <span class="tag">02 / scaffolding</span>
-          <h3>Scaffolding</h3>
-          <p>Light structure where momentum stalls. Enough form to move forward — never so much it calcifies.</p>
-        </div>
-
-        <div class="step" data-step="3">
-          <span class="tag">03 / translation</span>
-          <h3>Translation</h3>
-          <p>From instinct to interface. From concept to something buildable. From “I know what I mean” to “now others do too.”</p>
-        </div>
-      </div>
-
-      <aside class="aside aside-1" id="aside">
-        <div class="asideHeader">
-          <div>
-            <div class="asideTitle">how it works</div>
-            <div class="statusLine" id="statusLine">signal: clarified</div>
-          </div>
-          <span class="badge">human-first</span>
-        </div>
-
-        <div class="asideCard">
-          <h4 id="asideH">mirrors</h4>
-          <p id="asideP">We clarify what you’re trying to say without adding noise.</p>
-        </div>
-
-        <div class="asideCard">
-          <h4>you get</h4>
-          <ul class="microList" id="asideList">
-            <li>a cleaner statement</li>
-            <li>a sharper constraint</li>
-            <li>a next action you trust</li>
+      <div class="miniBubbles">
+        <div class="mini">
+          <ul>
+            <li>reflect meaning</li>
+            <li>cut noise</li>
+            <li>sharpen intent</li>
           </ul>
         </div>
-      </aside>
-    </section>
+      </div>
+    </article>
 
-    <footer>
-      <div class="footerRow">
-        <div>low drama · high signal · quiet builders change everything</div>
-        <div class="footerLinks">
-          <a href="mailto:hello@moyogi.xyz">hello@moyogi.xyz</a>
-          <a href="#top">book a session</a>
+    <!-- Scaffolding bubble -->
+    <article class="bubble">
+      <div class="bubbleHead">
+        <div class="bubbleTag">02 / scaffolding</div>
+        <div class="pill">signal: stabilized</div>
+      </div>
+      <h3>scaffolding</h3>
+      <p>
+        Structure should disappear once momentum returns.
+        We add just enough shape to move forward —
+        never so much that it becomes the work.
+      </p>
+
+      <div class="miniBubbles">
+        <div class="mini">
+          <ul>
+            <li>light structure</li>
+            <li>next steps</li>
+            <li>momentum</li>
+          </ul>
         </div>
       </div>
-    </footer>
+    </article>
 
-  </main>
+    <!-- Translation bubble -->
+    <article class="bubble">
+      <div class="bubbleHead">
+        <div class="bubbleTag">03 / translation</div>
+        <div class="pill">signal: shippable</div>
+      </div>
+      <h3>translation</h3>
+      <p>
+        Translation is where private intuition becomes shared reality.
+        When language clicks, teams move, products ship,
+        and decisions stop wobbling.
+      </p>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+      <div class="miniBubbles">
+        <div class="mini">
+          <ul>
+            <li>fuzzy → buildable</li>
+            <li>shared language</li>
+            <li>ship-ready</li>
+          </ul>
+        </div>
+      </div>
+    </article>
 
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+    <!-- What this is / isn’t bubble -->
+    <article class="bubble">
+      <div class="bubbleHead">
+        <div class="bubbleTag">context</div>
+        <div class="pill">calm clarity</div>
+      </div>
+      <h3>what this is / what this isn’t</h3>
 
-    const steps = document.querySelectorAll('.step');
-    const states = document.querySelectorAll('.state');
+      <div class="miniBubbles">
+        <div class="mini">
+          <div class="bubbleTag" style="margin-bottom:8px;">what this is</div>
+          <ul>
+            <li>clarity work</li>
+            <li>idea alignment</li>
+            <li>lightweight systems</li>
+            <li>thinking made visible</li>
+          </ul>
+        </div>
 
-    const aside = document.getElementById('aside');
-    const asideH = document.getElementById('asideH');
-    const asideP = document.getElementById('asideP');
-    const asideList = document.getElementById('asideList');
-    const statusLine = document.getElementById('statusLine');
+        <div class="mini">
+          <div class="bubbleTag" style="margin-bottom:8px;">what this isn’t</div>
+          <ul>
+            <li>a framework factory</li>
+            <li>consulting theater</li>
+            <li>speed for its own sake</li>
+            <li>ideas finished for you</li>
+          </ul>
+        </div>
+      </div>
+    </article>
 
-    const phone = document.getElementById('phone');
+  </div>
+</section>
 
-    const asideContent = {
-      "1": {
-        cls: "aside-1",
-        h: "mirrors",
-        p: "We clarify what you’re trying to say without adding noise.",
-        status: "signal: clarified",
-        list: ["a cleaner statement","a sharper constraint","a next action you trust"],
-        tilt: { r: -1.2, y: -3 }
-      },
-      "2": {
-        cls: "aside-2",
-        h: "scaffolding",
-        p: "We add just enough structure to restore momentum — without calcifying the idea.",
-        status: "signal: stabilized",
-        list: ["light structure","a sequence of next steps","friction removed"],
-        tilt: { r: 0.6, y: -2 }
-      },
-      "3": {
-        cls: "aside-3",
-        h: "translation",
-        p: "We turn intuition into language other people can build with.",
-        status: "signal: shippable",
-        list: ["shared vocabulary","a buildable brief","ship-ready direction"],
-        tilt: { r: 1.2, y: -3 }
-      }
-    };
+<!-- closing quote bubble -->
+<section class="quoteBubble">
+  <div class="quote">
+    <span>Unfinished doesn’t mean broken. It means alive.</span>
+    <small>moyogi</small>
+  </div>
 
-    function setActive(n){
-      steps.forEach(s => s.classList.toggle('is-active', s.dataset.step === n));
-      states.forEach(st => st.classList.toggle('is-on', st.dataset.state === n));
-
-      const cfg = asideContent[n];
-      if(cfg){
-        aside.classList.remove('aside-1','aside-2','aside-3');
-        aside.classList.add(cfg.cls);
-        asideH.textContent = cfg.h;
-        asideP.textContent = cfg.p;
-        statusLine.textContent = cfg.status;
-        asideList.innerHTML = cfg.list.map(x => `<li>${x}</li>`).join('');
-
-        // subtle phone tilt / parallax
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-        gsap.to(phone, {
-          rotate: cfg.tilt.r,
-          y: cfg.tilt.y,
-          duration: 0.6,
-          ease: "power2.out"
-        });
-      }
-    }
-
-    // Create ScrollTriggers
-    steps.forEach(step => {
-      ScrollTrigger.create({
-        trigger: step,
-        start: "top 60%",
-        end: "bottom 60%",
-        onEnter: () => setActive(step.dataset.step),
-        onEnterBack: () => setActive(step.dataset.step)
-      });
-    });
-
-    // Also add a gentle scroll-based micro tilt (very subtle)
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-      gsap.to(phone, {
-        rotate: 1.2,
-        scrollTrigger: {
-          trigger: document.body,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true
-        }
-      });
-    }
-  </script>
+  <div class="quote" style="margin-top:14px;">
+    <span>Moyogi helps ideas stand on their own — without rushing them into costumes they’re not ready to wear.</span>
+    <small>quiet builders change everything</small>
+  </div>
+</section>
 
 </body>
 </html>
