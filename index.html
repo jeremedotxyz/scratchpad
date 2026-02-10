@@ -17,7 +17,7 @@
       --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family:var(--sans);
@@ -32,258 +32,310 @@
 
     /* NAV */
     .nav{
-      position:sticky;top:0;z-index:50;
-      display:flex;justify-content:space-between;align-items:center;
+      position:sticky; top:0; z-index:50;
+      display:flex; justify-content:space-between; align-items:center;
       padding:14px 18px;
-      backdrop-filter:blur(14px);
-      background:rgba(247,248,255,.65);
-      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(14px);
+      background: rgba(247,248,255,.65);
+      border-bottom: 1px solid var(--line);
     }
-    .brand{font-size:12px;letter-spacing:.14em;text-transform:lowercase}
+    .brand{
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:lowercase;
+      color: rgba(11,15,26,.78);
+    }
     .nav a{
       font-size:13px;
       text-decoration:none;
-      color:rgba(11,15,26,.7);
-      padding:8px 12px;border-radius:999px;
+      color: rgba(11,15,26,.70);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid transparent;
     }
+    .nav a:hover{ border-color: var(--line); color: var(--ink); }
 
-    .wrap{width:min(1120px,92vw);margin:0 auto}
+    .wrap{ width:min(1120px, 92vw); margin:0 auto; }
 
     /* HERO */
     .hero{
       padding:70px 0 36px;
       display:grid;
-      grid-template-columns:1.1fr .9fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:26px;
       align-items:center;
     }
-    @media(max-width:980px){.hero{grid-template-columns:1fr}}
+    @media(max-width:980px){ .hero{ grid-template-columns:1fr; padding:56px 0 18px; } }
 
     .kicker{
       font-family:var(--mono);
       font-size:12px;
       letter-spacing:.06em;
       margin-bottom:12px;
-      color:rgba(11,15,26,.68);
+      color: rgba(11,15,26,.68);
     }
     h1{
       margin:0 0 12px;
-      font-size:clamp(42px,5.4vw,72px);
-      line-height:.98;
-      letter-spacing:-.03em;
+      font-size: clamp(42px, 5.4vw, 72px);
+      line-height: .98;
+      letter-spacing: -0.03em;
     }
     .sub{
-      max-width:62ch;
-      color:var(--muted);
+      margin:0 0 18px;
+      font-size: clamp(15px, 1.7vw, 18px);
       line-height:1.6;
-      margin-bottom:18px;
+      color: var(--muted);
+      max-width: 62ch;
     }
 
     /* PHONE */
     .phone{
       border-radius:30px;
-      background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.62));
-      border:1px solid rgba(11,15,26,.12);
-      box-shadow:var(--shadow);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
+      border: 1px solid rgba(11,15,26,.12);
+      box-shadow: var(--shadow);
       overflow:hidden;
-      min-height:420px;
-      position:relative;
+      min-height: 420px;
     }
     .phoneTop{
-      display:flex;justify-content:space-between;align-items:center;
-      padding:14px;
-      border-bottom:1px solid rgba(11,15,26,.08);
-      background:rgba(255,255,255,.75);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 14px 12px;
+      border-bottom: 1px solid rgba(11,15,26,.08);
+      background: rgba(255,255,255,.75);
     }
-    .dots{display:flex;gap:6px}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(11,15,26,.22)}
-    .phoneTitle{font-family:var(--mono);font-size:12px}
+    .dots{ display:flex; gap:6px; }
+    .dot{ width:8px; height:8px; border-radius:50%; background: rgba(11,15,26,.22); }
+    .phoneTitle{ font-family:var(--mono); font-size:12px; color: rgba(11,15,26,.65); }
 
+    /* SCREEN: 2-column layout (content + thermometers), no overlap */
     .screen{
       position:relative;
       padding:16px;
       min-height:360px;
+
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+
       background:
         radial-gradient(320px 220px at 30% 30%, rgba(99,102,241,.18), transparent 60%),
         radial-gradient(320px 220px at 70% 55%, rgba(16,185,129,.14), transparent 60%),
         radial-gradient(320px 220px at 50% 80%, rgba(236,72,153,.12), transparent 60%),
-        rgba(255,255,255,.2);
+        rgba(255,255,255,.20);
     }
 
-    /* THERMOMETERS */
+    .screenLeft{
+      position:relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Thermometers column */
     .thermoStack{
-      position:absolute;
-      right:14px;
-      top:58px;
+      width:44px;
       display:flex;
       flex-direction:column;
       gap:10px;
-      width:44px;
+      flex: 0 0 44px;
       pointer-events:none;
     }
     .thermo{
       height:74px;
       border-radius:999px;
       border:1px solid rgba(11,15,26,.12);
-      background:rgba(255,255,255,.68);
-      box-shadow:0 10px 28px rgba(8,12,26,.08);
+      background: rgba(255,255,255,.68);
+      box-shadow: 0 10px 28px rgba(8,12,26,.08);
       overflow:hidden;
       position:relative;
     }
     .thermo .fill{
       position:absolute;
-      bottom:0;left:0;right:0;
+      left:0; right:0; bottom:0;
       height:60%;
-      background:rgba(99,102,241,.55);
       border-radius:999px;
+      background: rgba(99,102,241,.55);
     }
 
-    /* STATES */
-    .state{position:absolute;inset:0;padding:16px;opacity:0;transform:translateY(10px)}
-    .state.is-on{opacity:1;transform:translateY(0)}
+    /* States (absolute within screenLeft only) */
+    .state{
+      position:absolute;
+      inset:0;
+      padding:0; /* we'll pad via cards */
+      opacity:0;
+      transform: translateY(10px);
+    }
+    .state.is-on{
+      opacity:1;
+      transform: translateY(0);
+    }
 
     .card{
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(11,15,26,.1);
-      border-radius:18px;
-      padding:14px;
-      margin-bottom:10px;
-      box-shadow:0 18px 50px rgba(8,12,26,.1);
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(11,15,26,.10);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 18px 50px rgba(8,12,26,.10);
     }
-    .row{display:flex;justify-content:space-between}
-    .label{font-size:12px;color:var(--muted)}
-    .value{font-size:18px;font-weight:750}
+    .row{ display:flex; justify-content:space-between; gap:12px; }
+    .label{ font-size:12px; color: rgba(11,15,26,.62); }
+    .value{ font-size:18px; font-weight:750; letter-spacing:-.02em; }
 
     /* STORY */
     .story{
       display:grid;
-      grid-template-columns:1.1fr .9fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:26px;
       padding:40px 0 80px;
     }
-    @media(max-width:980px){.story{grid-template-columns:1fr}}
+    @media(max-width:980px){ .story{ grid-template-columns:1fr; } }
 
     .step{
       padding:26px 0;
       border-top:1px solid var(--line);
       opacity:.55;
-      transform:translateY(8px);
-      transition:.25s;
+      transform: translateY(8px);
+      transition: opacity .25s ease, transform .25s ease;
     }
-    .step.is-active{opacity:1;transform:none}
+    .step.is-active{ opacity:1; transform: translateY(0); }
+
     .tag{
-      font-family:var(--mono);
+      font-family: var(--mono);
       font-size:12px;
       padding:6px 10px;
       border-radius:999px;
-      background:rgba(255,255,255,.62);
-      border:1px solid rgba(11,15,26,.1);
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(11,15,26,.10);
       display:inline-block;
       margin-bottom:10px;
+      color: rgba(11,15,26,.70);
     }
+    .step h3{ margin:0 0 8px; font-size:22px; letter-spacing:-.02em; }
+    .step p{ margin:0; color: var(--muted); line-height:1.6; max-width:64ch; }
 
     footer{
       border-top:1px solid var(--line);
       padding:34px 0 70px;
-      font-family:var(--mono);
+      font-family: var(--mono);
       font-size:12px;
-      color:var(--muted);
+      color: var(--muted);
     }
   </style>
 </head>
 <body>
 
-<div class="nav">
-  <div class="brand">moyogi</div>
-  <div>
-    <a href="#story">pillars</a>
-  </div>
-</div>
-
-<main class="wrap">
-
-<section class="hero">
-  <div>
-    <div class="kicker">mirrors · scaffolding · translation</div>
-    <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
-    <p class="sub">
-      A human-first idea lab that reflects what you mean, adds light structure,
-      and translates the fuzzy into something buildable.
-    </p>
-  </div>
-
-  <div class="phone">
-    <div class="phoneTop">
-      <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-      <div class="phoneTitle">moyogi</div>
-      <div style="width:24px"></div>
-    </div>
-
-    <div class="screen">
-      <!-- thermometers -->
-      <div class="thermoStack">
-        <div class="thermo"><div class="fill" style="height:70%"></div></div>
-        <div class="thermo"><div class="fill" style="height:45%"></div></div>
-        <div class="thermo"><div class="fill" style="height:85%"></div></div>
-      </div>
-
-      <!-- states -->
-      <div class="state is-on" data-state="1">
-        <div class="card"><div class="row"><span class="label">input</span><span class="value">messy</span></div></div>
-        <div class="card"><div class="row"><span class="label">output</span><span class="value">clear</span></div></div>
-      </div>
-
-      <div class="state" data-state="2">
-        <div class="card"><div class="row"><span class="label">structure</span><span class="value">light</span></div></div>
-        <div class="card"><div class="row"><span class="label">momentum</span><span class="value">up</span></div></div>
-      </div>
-
-      <div class="state" data-state="3">
-        <div class="card"><div class="row"><span class="label">concept</span><span class="value">→ demo</span></div></div>
-        <div class="card"><div class="row"><span class="label">language</span><span class="value">shared</span></div></div>
-      </div>
+  <div class="nav">
+    <div class="brand">moyogi</div>
+    <div>
+      <a href="#story">pillars</a>
     </div>
   </div>
-</section>
 
-<section class="story" id="story">
-  <div>
-    <div class="step is-active" data-step="1"><span class="tag">01 / mirrors</span><h3>Mirrors</h3><p>Reflect ideas clearly. No distortion.</p></div>
-    <div class="step" data-step="2"><span class="tag">02 / scaffolding</span><h3>Scaffolding</h3><p>Light structure where momentum stalls.</p></div>
-    <div class="step" data-step="3"><span class="tag">03 / translation</span><h3>Translation</h3><p>From instinct to something buildable.</p></div>
-  </div>
-</section>
+  <main class="wrap">
 
-<footer>
-  low drama · high signal · quiet builders change everything
-</footer>
+    <section class="hero">
+      <div>
+        <div class="kicker">mirrors · scaffolding · translation</div>
+        <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
+        <p class="sub">
+          A human-first idea lab that reflects what you mean, adds light structure,
+          and translates the fuzzy into something buildable.
+        </p>
+      </div>
 
-</main>
+      <div class="phone" aria-hidden="true">
+        <div class="phoneTop">
+          <div class="dots">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="phoneTitle">moyogi</div>
+          <div style="width:24px"></div>
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <div class="screen">
+          <!-- LEFT: content states -->
+          <div class="screenLeft">
+            <div class="state is-on" data-state="1">
+              <div class="card"><div class="row"><span class="label">input</span><span class="value">messy</span></div></div>
+              <div class="card"><div class="row"><span class="label">output</span><span class="value">clear</span></div></div>
+              <div class="card"><div class="row"><span class="label">signal</span><span class="value">truthful</span></div></div>
+            </div>
 
-<script>
-  gsap.registerPlugin(ScrollTrigger);
+            <div class="state" data-state="2">
+              <div class="card"><div class="row"><span class="label">structure</span><span class="value">light</span></div></div>
+              <div class="card"><div class="row"><span class="label">next step</span><span class="value">defined</span></div></div>
+              <div class="card"><div class="row"><span class="label">friction</span><span class="value">lower</span></div></div>
+            </div>
 
-  const steps=document.querySelectorAll('.step');
-  const states=document.querySelectorAll('.state');
+            <div class="state" data-state="3">
+              <div class="card"><div class="row"><span class="label">concept</span><span class="value">→ demo</span></div></div>
+              <div class="card"><div class="row"><span class="label">language</span><span class="value">shared</span></div></div>
+              <div class="card"><div class="row"><span class="label">output</span><span class="value">buildable</span></div></div>
+            </div>
+          </div>
 
-  function setActive(n){
-    steps.forEach(s=>s.classList.toggle('is-active',s.dataset.step==n));
-    states.forEach(st=>st.classList.toggle('is-on',st.dataset.state==n));
-  }
+          <!-- RIGHT: thermometers column (stacked, no overlap) -->
+          <div class="thermoStack" aria-hidden="true">
+            <div class="thermo"><div class="fill" style="height:70%"></div></div>
+            <div class="thermo"><div class="fill" style="height:45%"></div></div>
+            <div class="thermo"><div class="fill" style="height:85%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  steps.forEach(step=>{
-    ScrollTrigger.create({
-      trigger:step,
-      start:"top 60%",
-      end:"bottom 60%",
-      onEnter:()=>setActive(step.dataset.step),
-      onEnterBack:()=>setActive(step.dataset.step)
+    <section class="story" id="story">
+      <div>
+        <div class="step is-active" data-step="1">
+          <span class="tag">01 / mirrors</span>
+          <h3>Mirrors</h3>
+          <p>We reflect your idea back to you — cleaner, sharper, and truer than it arrived.</p>
+        </div>
+
+        <div class="step" data-step="2">
+          <span class="tag">02 / scaffolding</span>
+          <h3>Scaffolding</h3>
+          <p>Light structure where momentum stalls. Enough form to move forward — never so much it calcifies.</p>
+        </div>
+
+        <div class="step" data-step="3">
+          <span class="tag">03 / translation</span>
+          <h3>Translation</h3>
+          <p>From instinct to interface. From concept to something buildable. From “I know what I mean” to “now others do too.”</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      low drama · high signal · quiet builders change everything
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const steps = document.querySelectorAll('.step');
+    const states = document.querySelectorAll('.state');
+
+    function setActive(n){
+      steps.forEach(s => s.classList.toggle('is-active', s.dataset.step === n));
+      states.forEach(st => st.classList.toggle('is-on', st.dataset.state === n));
+    }
+
+    steps.forEach(step => {
+      ScrollTrigger.create({
+        trigger: step,
+        start: "top 60%",
+        end: "bottom 60%",
+        onEnter: () => setActive(step.dataset.step),
+        onEnterBack: () => setActive(step.dataset.step)
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
