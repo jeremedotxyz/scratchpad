@@ -8,21 +8,20 @@
 
   <style>
     :root{
-      --bg: #f7f8ff;
-      --ink: #0b0f1a;
-      --muted: rgba(11,15,26,.65);
-      --line: rgba(11,15,26,.10);
-      --shadow: 0 30px 80px rgba(8,12,26,.12);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --bg:#f7f8ff;
+      --ink:#0b0f1a;
+      --muted:rgba(11,15,26,.65);
+      --line:rgba(11,15,26,.10);
+      --shadow:0 30px 80px rgba(8,12,26,.12);
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     }
 
-    *{ box-sizing:border-box; }
-    html, body { height:100%; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: var(--sans);
-      color: var(--ink);
+      font-family:var(--sans);
+      color:var(--ink);
       background:
         radial-gradient(900px 600px at 20% 15%, rgba(99,102,241,.22), transparent 60%),
         radial-gradient(900px 650px at 75% 20%, rgba(16,185,129,.18), transparent 60%),
@@ -31,471 +30,260 @@
       overflow-x:hidden;
     }
 
+    /* NAV */
     .nav{
-      position:sticky; top:0; z-index:50;
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 18px;
-      backdrop-filter: blur(14px);
-      background: rgba(247,248,255,.65);
-      border-bottom: 1px solid var(--line);
+      position:sticky;top:0;z-index:50;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 18px;
+      backdrop-filter:blur(14px);
+      background:rgba(247,248,255,.65);
+      border-bottom:1px solid var(--line);
     }
-    .brand{
-      font-size:12px; letter-spacing:.14em; text-transform:lowercase;
-      color: rgba(11,15,26,.78);
-    }
+    .brand{font-size:12px;letter-spacing:.14em;text-transform:lowercase}
     .nav a{
-      text-decoration:none;
-      color: rgba(11,15,26,.70);
       font-size:13px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid transparent;
+      text-decoration:none;
+      color:rgba(11,15,26,.7);
+      padding:8px 12px;border-radius:999px;
     }
-    .nav a:hover{ border-color: var(--line); color: var(--ink); }
 
-    .wrap{ width:min(1120px, 92vw); margin: 0 auto; }
+    .wrap{width:min(1120px,92vw);margin:0 auto}
 
+    /* HERO */
     .hero{
-      padding: 70px 0 36px;
+      padding:70px 0 36px;
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 26px;
+      grid-template-columns:1.1fr .9fr;
+      gap:26px;
       align-items:center;
     }
-    @media (max-width: 980px){
-      .hero{ grid-template-columns: 1fr; padding: 56px 0 18px; }
-    }
+    @media(max-width:980px){.hero{grid-template-columns:1fr}}
+
     .kicker{
-      font-family: var(--mono);
+      font-family:var(--mono);
       font-size:12px;
-      color: rgba(11,15,26,.68);
       letter-spacing:.06em;
-      margin-bottom: 12px;
+      margin-bottom:12px;
+      color:rgba(11,15,26,.68);
     }
     h1{
       margin:0 0 12px;
-      font-size: clamp(42px, 5.4vw, 72px);
-      line-height: 0.98;
-      letter-spacing: -0.03em;
+      font-size:clamp(42px,5.4vw,72px);
+      line-height:.98;
+      letter-spacing:-.03em;
     }
     .sub{
-      margin:0 0 18px;
-      font-size: clamp(15px, 1.7vw, 18px);
+      max-width:62ch;
+      color:var(--muted);
       line-height:1.6;
-      color: var(--muted);
-      max-width: 62ch;
-    }
-    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.65);
-      box-shadow: 0 10px 30px rgba(8,12,26,.08);
-      color: var(--ink);
-      font-weight:650;
-      font-size:13px;
-      text-decoration:none;
-      transition: transform .18s ease, background .18s ease;
-    }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.78); }
-    .btn.secondary{
-      background: transparent;
-      box-shadow:none;
-      color: rgba(11,15,26,.75);
+      margin-bottom:18px;
     }
 
-    /* Phone mock */
+    /* PHONE */
     .phone{
-      border-radius: 30px;
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
-      border: 1px solid rgba(11,15,26,.12);
-      box-shadow: var(--shadow);
+      border-radius:30px;
+      background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.62));
+      border:1px solid rgba(11,15,26,.12);
+      box-shadow:var(--shadow);
       overflow:hidden;
-      min-height: 420px;
+      min-height:420px;
+      position:relative;
     }
     .phoneTop{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 14px 12px;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px;
       border-bottom:1px solid rgba(11,15,26,.08);
-      background: rgba(255,255,255,.75);
+      background:rgba(255,255,255,.75);
     }
-    .dots{ display:flex; gap:6px; }
-    .dot{ width:8px; height:8px; border-radius:999px; background: rgba(11,15,26,.22); }
-    .phoneTitle{
-      font-size:12px;
-      font-family: var(--mono);
-      color: rgba(11,15,26,.65);
-    }
+    .dots{display:flex;gap:6px}
+    .dot{width:8px;height:8px;border-radius:50%;background:rgba(11,15,26,.22)}
+    .phoneTitle{font-family:var(--mono);font-size:12px}
+
     .screen{
       position:relative;
-      padding: 16px;
-      min-height: 360px;
+      padding:16px;
+      min-height:360px;
       background:
         radial-gradient(320px 220px at 30% 30%, rgba(99,102,241,.18), transparent 60%),
         radial-gradient(320px 220px at 70% 55%, rgba(16,185,129,.14), transparent 60%),
         radial-gradient(320px 220px at 50% 80%, rgba(236,72,153,.12), transparent 60%),
-        rgba(255,255,255,.20);
+        rgba(255,255,255,.2);
     }
 
-    .chipRow{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 12px; }
-    .chip{
-      padding:8px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.70);
-      border: 1px solid rgba(11,15,26,.10);
-      color: rgba(11,15,26,.72);
-      font-size:12px;
-      font-family: var(--mono);
+    /* THERMOMETERS */
+    .thermoStack{
+      position:absolute;
+      right:14px;
+      top:58px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      width:44px;
+      pointer-events:none;
     }
+    .thermo{
+      height:74px;
+      border-radius:999px;
+      border:1px solid rgba(11,15,26,.12);
+      background:rgba(255,255,255,.68);
+      box-shadow:0 10px 28px rgba(8,12,26,.08);
+      overflow:hidden;
+      position:relative;
+    }
+    .thermo .fill{
+      position:absolute;
+      bottom:0;left:0;right:0;
+      height:60%;
+      background:rgba(99,102,241,.55);
+      border-radius:999px;
+    }
+
+    /* STATES */
+    .state{position:absolute;inset:0;padding:16px;opacity:0;transform:translateY(10px)}
+    .state.is-on{opacity:1;transform:translateY(0)}
 
     .card{
-      border-radius: 18px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(11,15,26,.10);
-      box-shadow: 0 18px 50px rgba(8,12,26,.10);
-      padding: 14px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(11,15,26,.1);
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:10px;
+      box-shadow:0 18px 50px rgba(8,12,26,.1);
     }
-    .card + .card{ margin-top: 10px; }
+    .row{display:flex;justify-content:space-between}
+    .label{font-size:12px;color:var(--muted)}
+    .value{font-size:18px;font-weight:750}
 
-    .row{
-      display:flex; align-items:center; justify-content:space-between; gap: 12px;
-    }
-    .label{ font-size:12px; color: rgba(11,15,26,.62); }
-    .value{ font-size:18px; font-weight:750; letter-spacing:-.02em; }
-
-    .miniBar{
-      margin-top:10px;
-      height:10px;
-      border-radius:999px;
-      background: rgba(11,15,26,.08);
-      overflow:hidden;
-    }
-    .miniBar > span{
-      display:block;
-      height:100%;
-      width: 62%;
-      border-radius:999px;
-      background: rgba(99,102,241,.55);
-    }
-
-    /* Scroll story */
+    /* STORY */
     .story{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 26px;
-      padding: 22px 0 80px;
+      grid-template-columns:1.1fr .9fr;
+      gap:26px;
+      padding:40px 0 80px;
     }
-    @media (max-width: 980px){
-      .story{ grid-template-columns: 1fr; }
-      .pinCol{ position: relative !important; top:auto !important; }
-    }
+    @media(max-width:980px){.story{grid-template-columns:1fr}}
 
-    .steps{ padding: 8px 0; }
     .step{
-      padding: 26px 0;
-      border-top: 1px solid var(--line);
-      opacity: .55;
-      transform: translateY(8px);
-      transition: opacity .25s ease, transform .25s ease;
+      padding:26px 0;
+      border-top:1px solid var(--line);
+      opacity:.55;
+      transform:translateY(8px);
+      transition:.25s;
     }
-    .step.is-active{ opacity: 1; transform: translateY(0); }
-    .step .tag{
+    .step.is-active{opacity:1;transform:none}
+    .tag{
+      font-family:var(--mono);
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(11,15,26,.1);
       display:inline-block;
-      font-family: var(--mono);
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(11,15,26,.10);
-      background: rgba(255,255,255,.62);
-      color: rgba(11,15,26,.70);
-      margin-bottom: 10px;
-    }
-    .step h3{
-      margin: 0 0 8px;
-      font-size: 22px;
-      letter-spacing: -.02em;
-    }
-    .step p{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 64ch;
-    }
-
-    .pinCol{
-      position: sticky;
-      top: 86px;
-      align-self: start;
-    }
-
-    .state{ position:absolute; inset:0; padding:16px; opacity:0; transform: translateY(10px); }
-    .state.is-on{ opacity:1; transform: translateY(0); }
-
-    .floaty{ animation: floaty 5s ease-in-out infinite; }
-    @keyframes floaty{
-      0%,100%{ transform: translateY(0); }
-      50%{ transform: translateY(10px); }
+      margin-bottom:10px;
     }
 
     footer{
-      border-top: 1px solid var(--line);
-      padding: 34px 0 70px;
-      color: rgba(11,15,26,.62);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.02em;
+      border-top:1px solid var(--line);
+      padding:34px 0 70px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
     }
   </style>
 </head>
 <body>
 
-  <div class="nav">
-    <div class="brand">moyogi / unfinished ideas</div>
-    <div style="display:flex; gap:6px;">
-      <a href="#story">pillars</a>
-      <a href="#end">end</a>
-    </div>
+<div class="nav">
+  <div class="brand">moyogi</div>
+  <div>
+    <a href="#story">pillars</a>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section class="hero">
+  <div>
+    <div class="kicker">mirrors · scaffolding · translation</div>
+    <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
+    <p class="sub">
+      A human-first idea lab that reflects what you mean, adds light structure,
+      and translates the fuzzy into something buildable.
+    </p>
   </div>
 
-  <main class="wrap">
-    <section class="hero">
-      <div>
-        <div class="kicker">mirrors · scaffolding · translation</div>
+  <div class="phone">
+    <div class="phoneTop">
+      <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <div class="phoneTitle">moyogi</div>
+      <div style="width:24px"></div>
+    </div>
 
-        <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
-
-        <p class="sub">
-          Not templates. Not noise. A human-first idea lab that reflects what you mean, adds light structure,
-          and translates the fuzzy into something buildable.
-        </p>
-
-        <div class="ctaRow">
-          <a class="btn" href="#story">See the pillars →</a>
-          <a class="btn secondary" href="#end">No notes</a>
-        </div>
+    <div class="screen">
+      <!-- thermometers -->
+      <div class="thermoStack">
+        <div class="thermo"><div class="fill" style="height:70%"></div></div>
+        <div class="thermo"><div class="fill" style="height:45%"></div></div>
+        <div class="thermo"><div class="fill" style="height:85%"></div></div>
       </div>
 
-      <div class="phone floaty" aria-hidden="true">
-        <div class="phoneTop">
-          <div class="dots">
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          </div>
-          <div class="phoneTitle">moyogi / demo</div>
-          <div style="width:34px;"></div>
-        </div>
-
-        <div class="screen" id="screen">
-          <!-- State 1: Mirrors -->
-          <div class="state is-on" data-state="1">
-            <div class="chipRow">
-              <span class="chip">clarity</span>
-              <span class="chip">reflection</span>
-              <span class="chip">truthful</span>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">input</div>
-                <div class="value">messy</div>
-              </div>
-              <div class="miniBar"><span></span></div>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">output</div>
-                <div class="value">clear</div>
-              </div>
-              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                no invention · no distortion
-              </div>
-            </div>
-          </div>
-
-          <!-- State 2: Scaffolding -->
-          <div class="state" data-state="2">
-            <div class="chipRow">
-              <span class="chip">light structure</span>
-              <span class="chip">momentum</span>
-              <span class="chip">enough</span>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">next step</div>
-                <div class="value">defined</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">friction</div>
-                <div class="value">lower</div>
-              </div>
-              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                guidance without gravity
-              </div>
-            </div>
-          </div>
-
-          <!-- State 3: Translation -->
-          <div class="state" data-state="3">
-            <div class="chipRow">
-              <span class="chip">fuzzy → buildable</span>
-              <span class="chip">language</span>
-              <span class="chip">interface</span>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">instinct</div>
-                <div class="value">→ plan</div>
-              </div>
-              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                from “i know what i mean” to “now others do too”
-              </div>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">concept</div>
-                <div class="value">→ demo</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- State 4: Close -->
-          <div class="state" data-state="4">
-            <div class="chipRow">
-              <span class="chip">human-first</span>
-              <span class="chip">no hustle</span>
-              <span class="chip">no gatekeeping</span>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">unfinished</div>
-                <div class="value">alive</div>
-              </div>
-              <div style="margin-top:10px; font-size:12px; color:rgba(11,15,26,.62);">
-                we don’t finish ideas for people — we help them stand up on their own
-              </div>
-            </div>
-            <div class="card">
-              <div class="row">
-                <div class="label">notes</div>
-                <div class="value">none</div>
-              </div>
-            </div>
-          </div>
-        </div><!-- /screen -->
-      </div><!-- /phone -->
-    </section>
-
-    <section class="story" id="story">
-      <div class="steps">
-        <div class="step is-active" data-step="1">
-          <div class="tag">01 / mirrors</div>
-          <h3>Mirrors</h3>
-          <p>
-            We reflect your idea back to you — cleaner, sharper, and truer than it arrived.
-            No invention. No distortion. Just clarity.
-          </p>
-        </div>
-
-        <div class="step" data-step="2">
-          <div class="tag">02 / scaffolding</div>
-          <h3>Scaffolding</h3>
-          <p>
-            Light structure where momentum stalls. Enough form to move forward —
-            never so much it calcifies. Guidance without gravity.
-          </p>
-        </div>
-
-        <div class="step" data-step="3">
-          <div class="tag">03 / translation</div>
-          <h3>Translation</h3>
-          <p>
-            From instinct to interface. From concept to something buildable.
-            From “I know what I mean” to “now others do too.”
-          </p>
-        </div>
-
-        <div class="step" data-step="4">
-          <div class="tag">04 / close</div>
-          <h3>Unfinished doesn’t mean broken.</h3>
-          <p>
-            It means alive. We don’t finish ideas for people — we help them stand up on their own.
-            Start where you are. We’ll meet you there.
-          </p>
-        </div>
+      <!-- states -->
+      <div class="state is-on" data-state="1">
+        <div class="card"><div class="row"><span class="label">input</span><span class="value">messy</span></div></div>
+        <div class="card"><div class="row"><span class="label">output</span><span class="value">clear</span></div></div>
       </div>
 
-      <div class="pinCol">
-        <div style="font-family:var(--mono); font-size:12px; color:rgba(11,15,26,.62); margin-bottom:10px;">
-          scroll → updates the demo
-        </div>
-        <div style="font-size:13px; color:rgba(11,15,26,.70); line-height:1.55; max-width:40ch;">
-          A small, calm idea lab for people who don’t need hype — they need mirrors,
-          scaffolding, and translation.
-        </div>
+      <div class="state" data-state="2">
+        <div class="card"><div class="row"><span class="label">structure</span><span class="value">light</span></div></div>
+        <div class="card"><div class="row"><span class="label">momentum</span><span class="value">up</span></div></div>
       </div>
-    </section>
 
-    <footer id="end">
-      low drama · high signal · quiet builders change everything
-    </footer>
-  </main>
+      <div class="state" data-state="3">
+        <div class="card"><div class="row"><span class="label">concept</span><span class="value">→ demo</span></div></div>
+        <div class="card"><div class="row"><span class="label">language</span><span class="value">shared</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- GSAP -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<section class="story" id="story">
+  <div>
+    <div class="step is-active" data-step="1"><span class="tag">01 / mirrors</span><h3>Mirrors</h3><p>Reflect ideas clearly. No distortion.</p></div>
+    <div class="step" data-step="2"><span class="tag">02 / scaffolding</span><h3>Scaffolding</h3><p>Light structure where momentum stalls.</p></div>
+    <div class="step" data-step="3"><span class="tag">03 / translation</span><h3>Translation</h3><p>From instinct to something buildable.</p></div>
+  </div>
+</section>
 
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+<footer>
+  low drama · high signal · quiet builders change everything
+</footer>
 
-    const steps = Array.from(document.querySelectorAll(".step"));
-    const states = Array.from(document.querySelectorAll(".state"));
+</main>
 
-    function baseSet(stepNum){
-      steps.forEach(s => s.classList.toggle("is-active", s.dataset.step === String(stepNum)));
-      states.forEach(st => st.classList.toggle("is-on", st.dataset.state === String(stepNum)));
-    }
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
-    // Initial
-    baseSet(1);
+<script>
+  gsap.registerPlugin(ScrollTrigger);
 
-    // Hero entrance
-    gsap.from(".hero .kicker", { y: 10, opacity: 0, duration: .6, ease: "power2.out" });
-    gsap.from(".hero h1", { y: 14, opacity: 0, duration: .7, delay: .06, ease: "power2.out" });
-    gsap.from(".hero .sub", { y: 10, opacity: 0, duration: .7, delay: .12, ease: "power2.out" });
-    gsap.from(".hero .btn", { y: 8, opacity: 0, duration: .5, delay: .18, stagger: .06, ease: "power2.out" });
+  const steps=document.querySelectorAll('.step');
+  const states=document.querySelectorAll('.state');
 
-    // Smooth transitions between screen states
-    let current = 1;
-    function tweenTo(stepNum){
-      if (stepNum === current) return;
+  function setActive(n){
+    steps.forEach(s=>s.classList.toggle('is-active',s.dataset.step==n));
+    states.forEach(st=>st.classList.toggle('is-on',st.dataset.state==n));
+  }
 
-      const prev = states.find(s => s.dataset.state === String(current));
-      const next = states.find(s => s.dataset.state === String(stepNum));
-
-      gsap.to(prev, { opacity: 0, y: 10, duration: .30, ease: "power2.out" });
-      gsap.fromTo(next, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .42, ease: "power2.out", delay: .05 });
-
-      current = stepNum;
-    }
-
-    function setActive(n){
-      baseSet(n);
-      tweenTo(Number(n));
-    }
-
-    // Step triggers
-    steps.forEach((stepEl) => {
-      const n = stepEl.dataset.step;
-      ScrollTrigger.create({
-        trigger: stepEl,
-        start: "top 55%",
-        end: "bottom 55%",
-        onEnter: () => setActive(n),
-        onEnterBack: () => setActive(n),
-      });
+  steps.forEach(step=>{
+    ScrollTrigger.create({
+      trigger:step,
+      start:"top 60%",
+      end:"bottom 60%",
+      onEnter:()=>setActive(step.dataset.step),
+      onEnterBack:()=>setActive(step.dataset.step)
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
