@@ -19,6 +19,11 @@
       --bubble: rgba(99,102,241,.38);
       --bubbleBorder: rgba(99,102,241,.25);
       --bubbleGlow: rgba(99,102,241,.22);
+
+      /* pillar tints */
+      --c1: 99,102,241;   /* mirrors (indigo) */
+      --c2: 16,185,129;   /* scaffolding (mint) */
+      --c3: 236,72,153;   /* translation (pink) */
     }
 
     *{ box-sizing:border-box; }
@@ -28,9 +33,9 @@
       font-family:var(--sans);
       color:var(--ink);
       background:
-        radial-gradient(900px 600px at 20% 15%, rgba(99,102,241,.22), transparent 60%),
-        radial-gradient(900px 650px at 75% 20%, rgba(16,185,129,.18), transparent 60%),
-        radial-gradient(900px 650px at 50% 85%, rgba(236,72,153,.14), transparent 60%),
+        radial-gradient(900px 600px at 20% 15%, rgba(var(--c1),.22), transparent 60%),
+        radial-gradient(900px 650px at 75% 20%, rgba(var(--c2),.18), transparent 60%),
+        radial-gradient(900px 650px at 50% 85%, rgba(var(--c3),.14), transparent 60%),
         var(--bg);
       overflow-x:hidden;
     }
@@ -65,7 +70,7 @@
 
     /* HERO */
     .hero{
-      padding:70px 0 36px;
+      padding:70px 0 18px;
       display:grid;
       grid-template-columns: 1.1fr .9fr;
       gap:26px;
@@ -85,11 +90,129 @@
       letter-spacing: -0.03em;
     }
     .sub{
-      margin:0 0 18px;
+      margin:0 0 16px;
       font-size: clamp(15px, 1.7vw, 18px);
       line-height:1.6;
       color: var(--muted);
       max-width: 62ch;
+    }
+
+    .ctaRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin: 0 0 14px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,15,26,.12);
+      background: rgba(255,255,255,.68);
+      color: rgba(11,15,26,.92);
+      font-weight: 720;
+      font-size: 13px;
+      text-decoration:none;
+      box-shadow: 0 14px 40px rgba(8,12,26,.10);
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 18px 50px rgba(8,12,26,.12);
+    }
+    .btn.ghost{
+      background: transparent;
+      box-shadow: none;
+      color: rgba(11,15,26,.74);
+    }
+    .btn.ghost:hover{
+      background: rgba(255,255,255,.55);
+      box-shadow: none;
+    }
+
+    /* bring back the “other columns on the left underneath” */
+    .divider{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin: 16px 0 12px;
+    }
+    .divider .rule{
+      height:1px;
+      flex: 1;
+      background: rgba(11,15,26,.10);
+    }
+    .divider .label{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(11,15,26,.62);
+      letter-spacing:.04em;
+      text-transform: lowercase;
+      white-space:nowrap;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      max-width: 680px;
+    }
+    .miniCol{
+      border-radius: 18px;
+      border: 1px solid rgba(11,15,26,.10);
+      background: rgba(255,255,255,.64);
+      box-shadow: 0 18px 50px rgba(8,12,26,.08);
+      padding: 12px 12px 10px;
+      overflow:hidden;
+      position:relative;
+    }
+    .miniCol::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:18px;
+      background:
+        radial-gradient(240px 120px at 10% 20%, rgba(var(--c1),.16), transparent 55%),
+        radial-gradient(240px 120px at 90% 80%, rgba(var(--c2),.12), transparent 55%),
+        radial-gradient(240px 120px at 60% 10%, rgba(var(--c3),.10), transparent 60%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .miniCol > *{ position:relative; z-index:1; }
+    .miniHead{
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom: 8px;
+    }
+    .miniTitle{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(11,15,26,.68);
+      text-transform: lowercase;
+      letter-spacing:.04em;
+    }
+    .miniPip{
+      width: 10px; height:10px; border-radius:999px;
+      background: rgba(11,15,26,.18);
+    }
+    .miniList{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:6px;
+      color: rgba(11,15,26,.70);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .miniList li{
+      display:flex; gap:8px; align-items:flex-start;
+    }
+    .dash{
+      width:10px; height:2px; border-radius:2px; margin-top: 9px;
+      background: rgba(11,15,26,.18);
+      flex: 0 0 10px;
     }
 
     /* PHONE */
@@ -100,6 +223,8 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       min-height: 420px;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
     .phoneTop{
       display:flex; justify-content:space-between; align-items:center;
@@ -120,9 +245,9 @@
       padding:16px;
       min-height:360px;
       background:
-        radial-gradient(320px 220px at 30% 30%, rgba(99,102,241,.18), transparent 60%),
-        radial-gradient(320px 220px at 70% 55%, rgba(16,185,129,.14), transparent 60%),
-        radial-gradient(320px 220px at 50% 80%, rgba(236,72,153,.12), transparent 60%),
+        radial-gradient(320px 220px at 30% 30%, rgba(var(--c1),.18), transparent 60%),
+        radial-gradient(320px 220px at 70% 55%, rgba(var(--c2),.14), transparent 60%),
+        radial-gradient(320px 220px at 50% 80%, rgba(var(--c3),.12), transparent 60%),
         rgba(255,255,255,.20);
     }
 
@@ -189,7 +314,7 @@
       background:
         radial-gradient(18px 18px at 35% 30%, rgba(255,255,255,.92), rgba(255,255,255,0) 62%),
         var(--bubble);
-      box-shadow: 0 14px 32px rgba(99,102,241,.18);
+      box-shadow: 0 14px 32px rgba(var(--c1),.18);
       flex: 0 0 34px;
       opacity:.92;
     }
@@ -209,18 +334,18 @@
     }
     @keyframes bubbleGlow{
       0%,100%{
-        box-shadow: 0 14px 32px rgba(99,102,241,.16), 0 0 0 rgba(0,0,0,0);
+        box-shadow: 0 14px 32px rgba(var(--c1),.16), 0 0 0 rgba(0,0,0,0);
         filter: saturate(1);
         opacity: .92;
       }
       50%{
-        box-shadow: 0 18px 42px rgba(99,102,241,.22), 0 0 22px var(--bubbleGlow);
-        filter: saturate(1.05);
+        box-shadow: 0 18px 42px rgba(var(--c1),.22), 0 0 22px var(--bubbleGlow);
+        filter: saturate(1.08);
         opacity: 1;
       }
     }
 
-    /* STORY — keep the other sections on the left (2 columns) */
+    /* STORY — 2 columns */
     .story{
       display:grid;
       grid-template-columns: 1.1fr .9fr;
@@ -255,7 +380,7 @@
     .step h3{ margin:0 0 8px; font-size:22px; letter-spacing:-.02em; }
     .step p{ margin:0; color: var(--muted); line-height:1.6; max-width:64ch; }
 
-    /* right-side panel (keeps the “other sections” feel) */
+    /* right-side panel, gradient morphs by active step */
     .aside{
       position:sticky;
       top:84px;
@@ -266,10 +391,41 @@
       padding: 16px;
       overflow:hidden;
     }
+    .aside::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:22px;
+      opacity:.9;
+      transition: opacity .35s ease;
+      pointer-events:none;
+      z-index:0;
+    }
+    .aside > *{ position:relative; z-index:1; }
+
+    .aside.aside-1::before{
+      background:
+        radial-gradient(520px 240px at 25% 20%, rgba(var(--c1),.24), transparent 60%),
+        radial-gradient(520px 240px at 80% 70%, rgba(var(--c1),.10), transparent 62%),
+        rgba(255,255,255,.60);
+    }
+    .aside.aside-2::before{
+      background:
+        radial-gradient(520px 240px at 25% 20%, rgba(var(--c2),.22), transparent 60%),
+        radial-gradient(520px 240px at 80% 70%, rgba(var(--c2),.10), transparent 62%),
+        rgba(255,255,255,.60);
+    }
+    .aside.aside-3::before{
+      background:
+        radial-gradient(520px 240px at 25% 20%, rgba(var(--c3),.22), transparent 60%),
+        radial-gradient(520px 240px at 80% 70%, rgba(var(--c3),.10), transparent 62%),
+        rgba(255,255,255,.60);
+    }
+
     .asideHeader{
       display:flex;
       justify-content:space-between;
-      align-items:center;
+      align-items:flex-start;
+      gap:10px;
       margin-bottom: 10px;
     }
     .asideTitle{
@@ -277,6 +433,15 @@
       font-size: 12px;
       color: rgba(11,15,26,.68);
       letter-spacing:.04em;
+      text-transform:lowercase;
+      line-height:1.2;
+    }
+    .statusLine{
+      margin-top:6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(11,15,26,.62);
+      letter-spacing:.03em;
       text-transform:lowercase;
     }
     .badge{
@@ -287,6 +452,7 @@
       border: 1px solid rgba(11,15,26,.10);
       background: rgba(255,255,255,.7);
       color: rgba(11,15,26,.68);
+      white-space:nowrap;
     }
     .asideCard{
       border-radius: 18px;
@@ -299,6 +465,7 @@
       margin:0 0 6px;
       font-size: 16px;
       letter-spacing:-.01em;
+      text-transform:lowercase;
     }
     .asideCard p{
       margin:0;
@@ -316,10 +483,36 @@
 
     footer{
       border-top:1px solid var(--line);
-      padding:34px 0 70px;
+      padding:22px 0 70px;
       font-family: var(--mono);
       font-size:12px;
       color: var(--muted);
+    }
+    .footerRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .footerLinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .footerLinks a{
+      text-decoration:none;
+      color: rgba(11,15,26,.70);
+      border: 1px solid rgba(11,15,26,.10);
+      background: rgba(255,255,255,.55);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+    .footerLinks a:hover{
+      background: rgba(255,255,255,.72);
+      color: rgba(11,15,26,.92);
     }
 
     /* ---------- MOBILE OPTIMIZATION ---------- */
@@ -329,6 +522,12 @@
         padding: 44px 0 18px;
         gap: 18px;
       }
+
+      .heroGrid{
+        grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+
       .phone{ min-height: 0; }
       .screen{ min-height: 260px; padding: 14px; }
       .state{ padding: 14px; }
@@ -337,7 +536,7 @@
       .bubble{ width: 30px; height: 48px; flex-basis:30px; }
 
       .story{
-        grid-template-columns: 1fr; /* stack columns on mobile */
+        grid-template-columns: 1fr;
         padding: 24px 0 64px;
         gap: 16px;
       }
@@ -354,7 +553,6 @@
       h1{ font-size: clamp(34px, 10vw, 44px); }
       .sub{ font-size: 15px; }
 
-      /* keep phone readable: stack label/value if needed */
       .pill{
         align-items:flex-start;
         flex-direction:column;
@@ -368,6 +566,7 @@
     @media (prefers-reduced-motion: reduce){
       .state.is-on .bubble{ animation: none !important; }
       .step, .state{ transition: none; }
+      .phone{ transform:none !important; }
     }
   </style>
 </head>
@@ -382,7 +581,7 @@
 
   <main class="wrap">
 
-    <section class="hero">
+    <section class="hero" id="top">
       <div>
         <div class="kicker">mirrors · scaffolding · translation</div>
         <h1>Mirrors, scaffolding, and translation for unfinished ideas.</h1>
@@ -390,9 +589,62 @@
           A human-first idea lab that reflects what you mean, adds light structure,
           and translates the fuzzy into something buildable.
         </p>
+
+        <!-- CTAs -->
+        <div class="ctaRow">
+          <a class="btn" href="#story">enter the lab →</a>
+          <a class="btn ghost" href="#story">how it works</a>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider" aria-hidden="true">
+          <span class="rule"></span>
+          <span class="label">/ pillars</span>
+          <span class="rule"></span>
+        </div>
+
+        <!-- Pillar mini columns -->
+        <div class="heroGrid" aria-label="moyogi pillars at a glance">
+          <div class="miniCol">
+            <div class="miniHead">
+              <div class="miniTitle">mirrors</div>
+              <div class="miniPip" style="background: rgba(var(--c1),.55)"></div>
+            </div>
+            <ul class="miniList">
+              <li><span class="dash"></span><span>reflect meaning</span></li>
+              <li><span class="dash"></span><span>cut noise</span></li>
+              <li><span class="dash"></span><span>sharpen intent</span></li>
+            </ul>
+          </div>
+
+          <div class="miniCol">
+            <div class="miniHead">
+              <div class="miniTitle">scaffolding</div>
+              <div class="miniPip" style="background: rgba(var(--c2),.55)"></div>
+            </div>
+            <ul class="miniList">
+              <li><span class="dash"></span><span>light structure</span></li>
+              <li><span class="dash"></span><span>next steps</span></li>
+              <li><span class="dash"></span><span>momentum</span></li>
+            </ul>
+          </div>
+
+          <div class="miniCol">
+            <div class="miniHead">
+              <div class="miniTitle">translation</div>
+              <div class="miniPip" style="background: rgba(var(--c3),.55)"></div>
+            </div>
+            <ul class="miniList">
+              <li><span class="dash"></span><span>fuzzy → buildable</span></li>
+              <li><span class="dash"></span><span>shared language</span></li>
+              <li><span class="dash"></span><span>ship-ready</span></li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-      <div class="phone" aria-hidden="true">
+      <!-- Phone -->
+      <div class="phone" id="phone" aria-hidden="true">
         <div class="phoneTop">
           <div class="dots">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -407,7 +659,7 @@
             <div class="pillRow">
               <div class="pill">
                 <span class="label">input</span>
-                <span class="value">0 latency</span>
+                <span class="value">zero latency</span>
               </div>
               <div class="bubble" aria-hidden="true"></div>
             </div>
@@ -486,7 +738,7 @@
       </div>
     </section>
 
-    <!-- KEEP THE OTHER SECTIONS (2 columns) -->
+    <!-- Story -->
     <section class="story" id="story">
       <div class="steps">
         <div class="step is-active" data-step="1">
@@ -508,37 +760,39 @@
         </div>
       </div>
 
-      <aside class="aside">
+      <aside class="aside aside-1" id="aside">
         <div class="asideHeader">
-          <div class="asideTitle">how it works</div>
+          <div>
+            <div class="asideTitle">how it works</div>
+            <div class="statusLine" id="statusLine">signal: clarified</div>
+          </div>
           <span class="badge">human-first</span>
         </div>
 
         <div class="asideCard">
-          <h4>mirrors</h4>
-          <p>We clarify what you’re trying to say without adding noise.</p>
+          <h4 id="asideH">mirrors</h4>
+          <p id="asideP">We clarify what you’re trying to say without adding noise.</p>
         </div>
 
         <div class="asideCard">
-          <h4>scaffolding</h4>
-          <p>We add just enough structure to get momentum back.</p>
+          <h4>you get</h4>
+          <ul class="microList" id="asideList">
+            <li>a cleaner statement</li>
+            <li>a sharper constraint</li>
+            <li>a next action you trust</li>
+          </ul>
         </div>
-
-        <div class="asideCard">
-          <h4>translation</h4>
-          <p>We turn intuition into language others can build with.</p>
-        </div>
-
-        <ul class="microList">
-          <li>low drama, high signal</li>
-          <li>fast feedback loops</li>
-          <li>taste + judgment > automation</li>
-        </ul>
       </aside>
     </section>
 
     <footer>
-      low drama · high signal · quiet builders change everything
+      <div class="footerRow">
+        <div>low drama · high signal · quiet builders change everything</div>
+        <div class="footerLinks">
+          <a href="mailto:hello@moyogi.xyz">hello@moyogi.xyz</a>
+          <a href="#top">book a session</a>
+        </div>
+      </div>
     </footer>
 
   </main>
@@ -552,11 +806,67 @@
     const steps = document.querySelectorAll('.step');
     const states = document.querySelectorAll('.state');
 
+    const aside = document.getElementById('aside');
+    const asideH = document.getElementById('asideH');
+    const asideP = document.getElementById('asideP');
+    const asideList = document.getElementById('asideList');
+    const statusLine = document.getElementById('statusLine');
+
+    const phone = document.getElementById('phone');
+
+    const asideContent = {
+      "1": {
+        cls: "aside-1",
+        h: "mirrors",
+        p: "We clarify what you’re trying to say without adding noise.",
+        status: "signal: clarified",
+        list: ["a cleaner statement","a sharper constraint","a next action you trust"],
+        tilt: { r: -1.2, y: -3 }
+      },
+      "2": {
+        cls: "aside-2",
+        h: "scaffolding",
+        p: "We add just enough structure to restore momentum — without calcifying the idea.",
+        status: "signal: stabilized",
+        list: ["light structure","a sequence of next steps","friction removed"],
+        tilt: { r: 0.6, y: -2 }
+      },
+      "3": {
+        cls: "aside-3",
+        h: "translation",
+        p: "We turn intuition into language other people can build with.",
+        status: "signal: shippable",
+        list: ["shared vocabulary","a buildable brief","ship-ready direction"],
+        tilt: { r: 1.2, y: -3 }
+      }
+    };
+
     function setActive(n){
       steps.forEach(s => s.classList.toggle('is-active', s.dataset.step === n));
       states.forEach(st => st.classList.toggle('is-on', st.dataset.state === n));
+
+      const cfg = asideContent[n];
+      if(cfg){
+        aside.classList.remove('aside-1','aside-2','aside-3');
+        aside.classList.add(cfg.cls);
+        asideH.textContent = cfg.h;
+        asideP.textContent = cfg.p;
+        statusLine.textContent = cfg.status;
+        asideList.innerHTML = cfg.list.map(x => `<li>${x}</li>`).join('');
+
+        // subtle phone tilt / parallax
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        gsap.to(phone, {
+          rotate: cfg.tilt.r,
+          y: cfg.tilt.y,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+      }
     }
 
+    // Create ScrollTriggers
     steps.forEach(step => {
       ScrollTrigger.create({
         trigger: step,
@@ -566,6 +876,19 @@
         onEnterBack: () => setActive(step.dataset.step)
       });
     });
+
+    // Also add a gentle scroll-based micro tilt (very subtle)
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+      gsap.to(phone, {
+        rotate: 1.2,
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true
+        }
+      });
+    }
   </script>
 
 </body>
