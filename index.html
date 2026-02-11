@@ -1,651 +1,284 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>iamamyeliza</title>
-  <meta name="description" content="iamamyeliza — morning rooms. a small internet room for quiet sentences." />
-
+  <title>Employee Login</title>
+  <meta name="description" content="Demo employee login (not affiliated with any company)." />
   <style>
     :root{
       --bg:#0b0c10;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.085);
-      --line: rgba(255,255,255,.10);
+      --panel:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.10);
       --ink:#f3f4f7;
-      --muted: rgba(243,244,247,.68);
-      --muted2: rgba(243,244,247,.52);
-
-      --sun1: 245, 158, 11;  /* amber */
-      --sun2: 236, 72, 153;  /* pink */
-      --sun3: 99, 102, 241;  /* indigo */
-
-      --r-xl: 28px;
-      --r-lg: 22px;
-      --r-md: 16px;
-
-      --shadow: 0 30px 80px rgba(0,0,0,.45);
-      --shadow2: 0 18px 40px rgba(0,0,0,.36);
-
-      --serif: ui-serif, Georgia, "Times New Roman", Times, serif;
-      --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --muted:rgba(243,244,247,.62);
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+      --r:20px;
+      --shadow: 0 30px 90px rgba(0,0,0,.55);
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
+      font-family:var(--sans);
       color:var(--ink);
       background:
-        radial-gradient(900px 600px at 20% 10%, rgba(var(--sun3), .18), transparent 60%),
-        radial-gradient(900px 650px at 75% 18%, rgba(var(--sun2), .16), transparent 60%),
-        radial-gradient(900px 700px at 45% 90%, rgba(var(--sun1), .14), transparent 62%),
+        radial-gradient(900px 600px at 20% 10%, rgba(99,102,241,.18), transparent 60%),
+        radial-gradient(900px 650px at 80% 25%, rgba(236,72,153,.14), transparent 60%),
+        radial-gradient(900px 700px at 50% 95%, rgba(245,158,11,.12), transparent 62%),
         var(--bg);
-      font-family: var(--sans);
-      overflow-x:hidden;
+      display:grid;
+      place-items:center;
+      padding:24px;
     }
 
-    /* soft grain */
-    .grain{
-      position:fixed;
-      inset:-20%;
-      pointer-events:none;
-      opacity:.12;
-      z-index:0;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      background-size: 220px 220px;
-      mix-blend-mode: overlay;
-      transform: translateZ(0);
-      animation: grainDrift 10s steps(10) infinite;
+    .card{
+      width:min(980px, 100%);
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
     }
-    @keyframes grainDrift{
-      0%{ transform: translate3d(0,0,0); }
-      20%{ transform: translate3d(-2%,1%,0); }
-      40%{ transform: translate3d(1%,-2%,0); }
-      60%{ transform: translate3d(2%,1%,0); }
-      80%{ transform: translate3d(-1%,-1%,0); }
-      100%{ transform: translate3d(0,0,0); }
+    @media (max-width:900px){
+      .card{ grid-template-columns:1fr; }
     }
 
-    .wrap{
+    .left{
+      padding:26px;
+      border-right:1px solid rgba(255,255,255,.08);
       position:relative;
-      z-index:1;
-      width:min(1100px, 92vw);
-      margin:0 auto;
-      padding: 18px 0 90px;
+      overflow:hidden;
+    }
+    @media (max-width:900px){
+      .left{ border-right:0; border-bottom:1px solid rgba(255,255,255,.08); }
     }
 
-    /* top nav */
-    .nav{
+    .windowTop{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      padding: 14px 0 8px;
+      gap:12px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      border-radius:16px;
+      margin-bottom:16px;
     }
-    .brand{
-      font-family: var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:lowercase;
-      color: rgba(243,244,247,.86);
-      opacity:.9;
-    }
-    .navlinks{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-    .navlinks a{
-      text-decoration:none;
-      color: rgba(243,244,247,.72);
-      font-size:13px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      transition: background .18s ease, border-color .18s ease, transform .18s ease, color .18s ease;
-    }
-    .navlinks a:hover{
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.10);
-      color: rgba(243,244,247,.92);
-      transform: translateY(-1px);
-    }
-
-    /* hero room */
-    .hero{
-      margin-top: 18px;
-      border-radius: var(--r-xl);
-      border: 1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(900px 520px at 15% 0%, rgba(var(--sun1), .18), transparent 58%),
-        radial-gradient(900px 520px at 85% 10%, rgba(var(--sun2), .14), transparent 58%),
-        rgba(255,255,255,.05);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .hero::before{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius: var(--r-xl);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.08), transparent 50%),
-        radial-gradient(700px 360px at 50% 100%, rgba(var(--sun3), .16), transparent 60%);
-      opacity:.85;
-      pointer-events:none;
-    }
-    .heroInner{
-      position:relative;
-      z-index:1;
-      padding: 38px 34px 30px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 20px;
-      align-items: end;
-    }
-
-    .kicker{
-      font-family: var(--mono);
+    .lights{display:flex; gap:7px}
+    .dot{width:10px;height:10px;border-radius:999px}
+    .dot.red{background:#ff5f57}
+    .dot.yellow{background:#febc2e}
+    .dot.green{background:#28c840}
+    .title{
+      font-family:var(--mono);
       font-size:12px;
       letter-spacing:.06em;
-      color: rgba(243,244,247,.70);
+      color:rgba(243,244,247,.70);
       text-transform:lowercase;
-      margin-bottom: 10px;
+    }
+
+    .hero{
+      margin-top:14px;
+    }
+    .kicker{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:lowercase;
+      color:rgba(243,244,247,.62);
+      margin-bottom:10px;
     }
     h1{
       margin:0 0 10px;
-      font-family: var(--serif);
-      font-weight: 520;
-      font-size: clamp(34px, 4.7vw, 62px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing:-.02em;
+      line-height:1.05;
     }
     .lede{
       margin:0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.7;
-      max-width: 62ch;
-    }
-    .tagline{
-      margin-top: 10px;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.04em;
-      color: rgba(243,244,247,.62);
-      text-transform: lowercase;
+      color:var(--muted);
+      line-height:1.6;
+      max-width:52ch;
     }
 
-    /* “sunrise” ornament */
-    .sun{
-      justify-self:end;
-      width: 280px;
-      height: 160px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(140px 100px at 50% 70%, rgba(var(--sun1), .45), transparent 68%),
-        radial-gradient(160px 120px at 40% 40%, rgba(var(--sun2), .32), transparent 65%),
-        radial-gradient(180px 140px at 60% 40%, rgba(var(--sun3), .26), transparent 65%),
-        rgba(255,255,255,.04);
-      box-shadow: 0 18px 55px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-      transform: translateZ(0);
-      animation: slowDrift 9.5s ease-in-out infinite;
+    .badges{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:16px;
     }
-    .sun::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: linear-gradient(90deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
-      transform: rotate(12deg) translateX(-18%);
-      animation: sheen 6.8s ease-in-out infinite;
-      opacity:.45;
-    }
-    @keyframes slowDrift{
-      0%,100%{ transform: translate3d(0,0,0); }
-      50%{ transform: translate3d(0,-6px,0); }
-    }
-    @keyframes sheen{
-      0%,100%{ transform: rotate(12deg) translateX(-26%); }
-      50%{ transform: rotate(12deg) translateX(26%); }
-    }
-
-    /* section heading line */
-    .sectionHead{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin: 26px 0 14px;
-      color: rgba(243,244,247,.58);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.04em;
-      text-transform: lowercase;
-    }
-    .sectionHead::before,
-    .sectionHead::after{
-      content:"";
-      height:1px;
-      flex:1;
-      background: rgba(255,255,255,.10);
-    }
-
-    /* grid cards */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 10px;
-    }
-    .card{
-      border-radius: var(--r-lg);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      position:relative;
-      transform: translateZ(0);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius: var(--r-lg);
-      background:
-        radial-gradient(520px 240px at 20% 20%, rgba(var(--sun3), .14), transparent 60%),
-        radial-gradient(520px 240px at 85% 65%, rgba(var(--sun2), .10), transparent 62%),
-        radial-gradient(520px 240px at 50% 95%, rgba(var(--sun1), .10), transparent 65%);
-      opacity:.85;
-      pointer-events:none;
-    }
-    .cardInner{
-      position:relative;
-      z-index:1;
-      padding: 18px 18px 16px;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 26px 64px rgba(0,0,0,.46);
-      border-color: rgba(255,255,255,.14);
-    }
-
-    .cardTitle{
-      font-family: var(--serif);
-      font-size: 22px;
-      letter-spacing: -0.01em;
-      margin:0 0 10px;
-      font-weight: 540;
-      text-transform: lowercase;
-    }
-    .cardText{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 14.5px;
-    }
-
-    /* pills */
-    .pills{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top: 14px;
-    }
-    .pill{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.03em;
-      text-transform: lowercase;
-      color: rgba(243,244,247,.70);
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-    }
-    .pill a{
-      color: inherit;
-      text-decoration:none;
-    }
-    .pill:hover{
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.07);
-    }
-
-    /* featured spotlight */
-    .spotlight{
-      margin-top: 16px;
-      border-radius: var(--r-xl);
-      border: 1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(900px 420px at 10% 0%, rgba(var(--sun2), .14), transparent 58%),
-        radial-gradient(900px 520px at 80% 30%, rgba(var(--sun1), .12), transparent 62%),
-        rgba(255,255,255,.05);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .spotlight::before{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius: var(--r-xl);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.06), transparent 45%),
-        radial-gradient(700px 380px at 50% 100%, rgba(var(--sun3), .14), transparent 60%);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .spotInner{
-      position:relative;
-      z-index:1;
-      padding: 18px 18px 18px;
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-    }
-    .meta{
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing:.04em;
-      text-transform: lowercase;
-      color: rgba(243,244,247,.60);
-      margin-bottom: 8px;
-    }
-    .spotTitle{
-      margin:0 0 8px;
-      font-family: var(--serif);
-      font-weight: 560;
-      font-size: 22px;
-      letter-spacing: -0.01em;
-      text-transform: lowercase;
-    }
-    .spotDesc{
-      margin:0;
-      color: var(--muted);
-      line-height: 1.65;
-      max-width: 70ch;
-      font-size: 14.5px;
-    }
-    .cta{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(243,244,247,.84);
-      text-decoration:none;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.03em;
-      text-transform: lowercase;
-      transition: transform .2s ease, background .2s ease, border-color .2s ease;
-      white-space: nowrap;
-    }
-    .cta:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.09);
-      border-color: rgba(255,255,255,.18);
-    }
-    .arrow{
-      width:20px; height:20px;
-      display:inline-grid; place-items:center;
+    .badge{
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(243,244,247,.68);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      padding:8px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.15);
     }
 
-    /* email form */
-    .form{
-      margin-top: 14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    .right{
+      padding:26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
     }
-    .input{
-      flex:1 1 220px;
-      min-width: 180px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color: rgba(243,244,247,.92);
+
+    .panel{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.18);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .panel h2{
+      margin:0 0 10px;
+      font-size:16px;
+      font-weight:600;
+      letter-spacing:-.01em;
+    }
+    .panel p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:13px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+    }
+    label{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.05em;
+      text-transform:lowercase;
+      color:rgba(243,244,247,.70);
+    }
+    input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:rgba(243,244,247,.92);
       outline:none;
     }
-    .input::placeholder{ color: rgba(243,244,247,.42); }
+    input::placeholder{ color: rgba(243,244,247,.38); }
+
+    .row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-top:12px;
+    }
     .btn{
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
-      color: rgba(243,244,247,.92);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.03em;
-      text-transform: lowercase;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.08);
+      color:rgba(243,244,247,.92);
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.04em;
+      text-transform:lowercase;
       cursor:pointer;
       transition: transform .18s ease, background .18s ease, border-color .18s ease;
     }
     .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.18);
-    }
-    .hint{
-      margin-top: 10px;
-      color: rgba(243,244,247,.50);
-      font-size: 12px;
-      line-height: 1.5;
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.18);
     }
 
-    /* footer */
-    footer{
-      margin-top: 34px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      color: rgba(243,244,247,.55);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing:.03em;
-      text-transform: lowercase;
+    .alt{
+      margin-top:12px;
+      display:grid;
+      gap:10px;
     }
-    footer a{
-      color: rgba(243,244,247,.72);
-      text-decoration:none;
-      border: 1px solid rgba(255,255,255,.12);
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.05);
-    }
-    footer a:hover{
-      background: rgba(255,255,255,.08);
-      border-color: rgba(255,255,255,.18);
+    .btn.secondary{
+      background:rgba(255,255,255,.04);
     }
 
-    /* reveal */
-    .reveal{
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity .7s ease, transform .7s ease;
+    .fineprint{
+      margin-top:14px;
+      color:rgba(243,244,247,.50);
+      font-size:12px;
+      line-height:1.5;
     }
-    .reveal.is-in{
-      opacity:1;
-      transform: translateY(0);
-    }
-
-    /* responsive */
-    @media (max-width: 940px){
-      .heroInner{ grid-template-columns: 1fr; }
-      .sun{ justify-self:start; width: 240px; height: 140px; margin-top: 12px; }
-      .grid{ grid-template-columns: 1fr; }
-      .spotInner{ grid-template-columns: 1fr; }
-    }
-    @media (max-width: 520px){
-      .wrap{ padding: 12px 0 70px; }
-      .heroInner{ padding: 30px 18px 22px; }
-      .sectionHead{ margin: 22px 0 12px; }
-      .cardInner{ padding: 16px 16px 14px; }
-      .spotInner{ padding: 16px 16px 16px; }
-      .cta{ width: fit-content; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .grain{ animation:none; }
-      .sun, .sun::after{ animation:none; }
-      .reveal{ opacity:1; transform:none; transition:none; }
-      .card, .cta, .navlinks a, .btn{ transition:none; }
-    }
+    .fineprint strong{ color: rgba(243,244,247,.72); font-weight:600; }
+    a{ color: rgba(243,244,247,.78); }
   </style>
 </head>
 
 <body>
-  <div class="grain" aria-hidden="true"></div>
-
-  <div class="wrap">
-    <header class="nav">
-      <div class="brand">iamamyeliza</div>
-      <nav class="navlinks" aria-label="primary">
-        <a href="#writing">writing</a>
-        <a href="#updates">updates</a>
-        <a href="mailto:iamamyeliza@gmail.com?subject=inquiry%20—%20iamamyeliza.xyz">inquiries →</a>
-      </nav>
-    </header>
-
-    <section class="hero reveal" id="top">
-      <div class="heroInner">
-        <div>
-          <div class="kicker">morning rooms</div>
-          <h1>quiet sentences, kept warm.</h1>
-          <p class="lede">
-            A place for writing that doesn’t rush itself.
-            For stories that arrive like light through blinds.
-            For softness with teeth.
-          </p>
-          <div class="tagline">a small internet room for quiet sentences.</div>
+  <main class="card" role="main" aria-label="Employee Login (Demo)">
+    <section class="left">
+      <div class="windowTop">
+        <div class="lights" aria-hidden="true">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
         </div>
+        <div class="title">employee access • demo</div>
+        <div style="width:32px"></div>
+      </div>
 
-        <div class="sun" aria-hidden="true"></div>
+      <div class="hero">
+        <div class="kicker">secure sign-in</div>
+        <h1>Quiet access.<br/>High intent.</h1>
+        <p class="lede">
+          This is a <strong>demo login UI</strong> for internal prototypes and screenshots.
+          It does not authenticate and is not affiliated with any company.
+        </p>
+
+        <div class="badges" aria-label="features">
+          <span class="badge">sso-ready layout</span>
+          <span class="badge">device-friendly</span>
+          <span class="badge">no data collected</span>
+        </div>
       </div>
     </section>
 
-    <div class="sectionHead reveal">/ rooms</div>
+    <section class="right">
+      <div class="panel">
+        <h2>Sign in</h2>
+        <p>Use your work email to continue. (Demo only — button does nothing.)</p>
 
-    <section class="grid" aria-label="main cards">
-      <article class="card reveal" id="writing">
-        <div class="cardInner">
-          <h2 class="cardTitle">writing</h2>
-          <p class="cardText">
-            Essays, scenes, and small truths — filed gently, not loudly.
-            If it reads like a sunrise and a bruise, it belongs here.
-          </p>
-
-          <div class="pills" aria-label="writing categories">
-            <span class="pill"><a href="#featured">featured</a></span>
-            <span class="pill"><a href="#">essays</a></span>
-            <span class="pill"><a href="#">fiction</a></span>
-            <span class="pill"><a href="#">poems</a></span>
-            <span class="pill"><a href="#">archive</a></span>
+        <form onsubmit="return false;">
+          <div class="field">
+            <label for="email">work email</label>
+            <input id="email" type="email" placeholder="name@company.com" autocomplete="email" />
           </div>
-        </div>
-      </article>
 
-      <article class="card reveal" id="updates">
-        <div class="cardInner">
-          <h2 class="cardTitle">get updates</h2>
-          <p class="cardText">
-            Low volume. High intention.
-            A note when something new is posted — no feed-chasing, no noise.
-          </p>
+          <div class="field">
+            <label for="password">password</label>
+            <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" />
+          </div>
 
-          <!-- Mailto-based “subscribe” (works on static hosting).
-               If you already have a real subscription backend, swap this form action later. -->
-          <form class="form" onsubmit="return mailSubscribe(event)">
-            <input class="input" id="email" type="email" placeholder="email address" required />
-            <button class="btn" type="submit">subscribe</button>
-          </form>
-          <div class="hint">If your mail app doesn’t open, just email “subscribe” to iamamyeliza@gmail.com.</div>
-        </div>
-      </article>
-    </section>
+          <div class="row">
+            <button class="btn" type="button">continue →</button>
+          </div>
 
-    <div class="sectionHead reveal">/ spotlight</div>
+          <div class="alt" aria-label="SSO options">
+            <button class="btn secondary" type="button">sign in with sso</button>
+            <button class="btn secondary" type="button">use passkey</button>
+          </div>
 
-    <section class="spotlight reveal" id="featured" aria-label="featured piece">
-      <div class="spotInner">
-        <div>
-          <div class="meta">featured · 4–6 min</div>
-          <h3 class="spotTitle">the one you read when you need to breathe</h3>
-          <p class="spotDesc">
-            A short piece about leaving quietly, returning gently, and letting the day be
-            a little less sharp than it used to be.
-          </p>
-        </div>
-
-        <!-- swap href to your actual featured link -->
-        <a class="cta" href="#" aria-label="read the highlight">
-          read the highlight
-          <span class="arrow" aria-hidden="true">→</span>
-        </a>
+          <div class="fineprint">
+            <strong>Demo notice:</strong> This page is for UI prototyping only. Don’t use real credentials.
+            Need a real auth flow? I can wire this to your own backend (Firebase/Auth0/Supabase/etc.).
+          </div>
+        </form>
       </div>
     </section>
-
-    <footer class="reveal">
-      <div>© <span id="year"></span> iamamyeliza</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <a href="mailto:iamamyeliza@gmail.com?subject=hello%20—%20iamamyeliza.xyz">email</a>
-        <a href="#top">back to top</a>
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    // year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // reveal on scroll
-    (function(){
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const els = document.querySelectorAll('.reveal');
-
-      if (reduce){
-        els.forEach(el => el.classList.add('is-in'));
-        return;
-      }
-
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach((e)=>{
-          if (e.isIntersecting){
-            e.target.classList.add('is-in');
-            io.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.16 });
-
-      els.forEach(el => io.observe(el));
-    })();
-
-    // mailto “subscribe”
-    function mailSubscribe(e){
-      e.preventDefault();
-      const email = (document.getElementById('email').value || '').trim();
-      const subject = encodeURIComponent('subscribe — iamamyeliza.xyz');
-      const body = encodeURIComponent(`subscribe\n\nemail: ${email}\n`);
-      window.location.href = `mailto:iamamyeliza@gmail.com?subject=${subject}&body=${body}`;
-      return false;
-    }
-  </script>
+  </main>
 </body>
 </html>
