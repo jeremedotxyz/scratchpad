@@ -1,290 +1,181 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Definitely Real Login</title>
-  <style>
-    :root {
-      --bg: #0b0d12;
-      --card: rgba(255,255,255,0.06);
-      --line: rgba(255,255,255,0.12);
-      --ink: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.65);
-      --bad: #ff5a5f;
-      --good: #45e07a;
-      --shadow: 0 20px 60px rgba(0,0,0,0.55);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Definitely Real Login</title>
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(120,90,255,0.25), transparent 60%),
-        radial-gradient(900px 500px at 80% 90%, rgba(0,200,255,0.18), transparent 60%),
-        linear-gradient(180deg, #06070b, var(--bg));
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--ink);
-      padding: 24px;
-    }
+<style>
+:root {
+  --bg:#0b0d12;
+  --card:rgba(255,255,255,0.06);
+  --line:rgba(255,255,255,0.12);
+  --ink:rgba(255,255,255,0.92);
+  --muted:rgba(255,255,255,0.65);
+  --bad:#ff5a5f;
+  --shadow:0 20px 60px rgba(0,0,0,0.55);
+}
 
-    .wrap { width: min(420px, 100%); }
+*{box-sizing:border-box}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      user-select: none;
-    }
-    .logo {
-      width: 34px; height: 34px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-    .title {
-      line-height: 1.1;
-    }
-    .title b { display: block; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; }
-    .title span { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(120,90,255,0.25), transparent 60%),
+    radial-gradient(900px 500px at 80% 90%, rgba(0,200,255,0.18), transparent 60%),
+    linear-gradient(180deg,#06070b,var(--bg));
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:var(--ink);
+  padding:24px;
+}
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
+.wrap{width:min(420px,100%)}
 
-    .field { margin-top: 12px; }
-    label {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      letter-spacing: 0.04em;
-    }
-    input {
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,0.25);
-      color: var(--ink);
-      outline: none;
-      transition: transform 120ms ease, border-color 120ms ease;
-      font-size: 14px;
-    }
-    input:focus {
-      border-color: rgba(255,255,255,0.28);
-      transform: translateY(-1px);
-    }
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
 
-    .row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    button {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: linear-gradient(135deg, rgba(120,90,255,0.55), rgba(0,200,255,0.35));
-      color: var(--ink);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: transform 120ms ease, filter 120ms ease;
-    }
-    button:hover { transform: translateY(-1px); filter: brightness(1.05); }
-    button:active { transform: translateY(0px); }
+h3{
+  margin:0 0 16px;
+  font-size:16px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
 
-    .meta {
-      margin-top: 12px;
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .pill {
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,0.22);
-      padding: 7px 10px;
-      border-radius: 999px;
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      user-select: none;
-    }
-    .dot {
-      width: 8px; height: 8px;
-      border-radius: 99px;
-      background: var(--good);
-      box-shadow: 0 0 14px rgba(69,224,122,0.35);
-    }
+.field{margin-top:12px}
 
-    .msg {
-      margin-top: 14px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,90,95,0.32);
-      background: rgba(255,90,95,0.10);
-      color: rgba(255,255,255,0.90);
-      display: none;
-      line-height: 1.35;
-    }
-    .msg.show { display: block; }
+input{
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,0.25);
+  color:var(--ink);
+  outline:none;
+  font-size:14px;
+}
 
-    .shake {
-      animation: shake 420ms ease;
-    }
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      15% { transform: translateX(-8px); }
-      30% { transform: translateX(8px); }
-      45% { transform: translateX(-6px); }
-      60% { transform: translateX(6px); }
-      75% { transform: translateX(-3px); }
-      100% { transform: translateX(0); }
-    }
+button{
+  width:100%;
+  margin-top:14px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.18);
+  background:linear-gradient(135deg, rgba(120,90,255,.55), rgba(0,200,255,.35));
+  color:var(--ink);
+  font-weight:700;
+  cursor:pointer;
+}
 
-    .tiny {
-      margin-top: 12px;
-      font-size: 11px;
-      color: rgba(255,255,255,0.45);
-      text-align: center;
-    }
-    .tiny code {
-      color: rgba(255,255,255,0.75);
-    }
-  </style>
+.msg{
+  margin-top:14px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,90,95,.35);
+  background:rgba(255,90,95,.12);
+  display:none;
+  line-height:1.4;
+}
+
+.msg.show{display:block}
+
+.meta{
+  margin-top:12px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.shake{
+  animation:shake .4s ease;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0)}
+  15%{transform:translateX(-8px)}
+  30%{transform:translateX(8px)}
+  45%{transform:translateX(-6px)}
+  60%{transform:translateX(6px)}
+  75%{transform:translateX(-3px)}
+  100%{transform:translateX(0)}
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="brand">
-      <div class="logo">🤖</div>
-      <div class="title">
-        <b>Totally Legit Login</b>
-        <span>enter credentials • receive emotional damage</span>
+<div class="wrap">
+  <div class="card" id="card">
+    <h3>Totally Legit Login 🤖</h3>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <input type="email" placeholder="email" required />
       </div>
-    </div>
 
-    <div class="card" id="card">
-      <form id="loginForm" autocomplete="off">
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@definitelyreal.com" required />
-        </div>
+      <div class="field">
+        <input id="pw" type="password" placeholder="password" required />
+      </div>
 
-        <div class="field">
-          <label for="pw">Password</label>
-          <input id="pw" name="pw" type="password" placeholder="••••••••••" required />
-        </div>
+      <button type="submit">Sign in</button>
+    </form>
 
-        <div class="row">
-          <button type="submit" id="btn">Sign in</button>
-        </div>
-
-        <div class="msg" id="msg"></div>
-
-        <div class="meta">
-          <span class="pill"><span class="dot"></span> secure-ish</span>
-          <span class="pill" id="attemptPill">attempts: 0</span>
-        </div>
-
-        <div class="tiny">
-          Tip: nothing works here. It’s a comedy club with form fields.
-        </div>
-      </form>
-    </div>
+    <div class="msg" id="msg"></div>
+    <div class="meta" id="attempts">attempts: 0</div>
   </div>
+</div>
 
-  <script>
-    const form = document.getElementById("loginForm");
-    const card = document.getElementById("card");
-    const msg = document.getElementById("msg");
-    const attemptPill = document.getElementById("attemptPill");
-    const pw = document.getElementById("pw");
-    const btn = document.getElementById("btn");
+<script>
+window.addEventListener("DOMContentLoaded", () => {
 
-    let attempts = 0;
+  const form = document.getElementById("loginForm");
+  const card = document.getElementById("card");
+  const msg = document.getElementById("msg");
+  const attemptsDisplay = document.getElementById("attempts");
+  const pw = document.getElementById("pw");
 
-    const lines = [
-      "Incorrect. That password looks like it tries to pay with a coupon at a five-star restaurant.",
-      "Nope. That was the password for a different timeline.",
-      "Wrong. My servers are allergic to whatever you just typed.",
-      "Denied. Please stop flirting with the Enter key.",
-      "Incorrect. I checked with the vibes. The vibes said no.",
-      "Nope. Even Tay Tay wouldn’t release this one (it’s vaulted).",
-      "Wrong. That password has ‘seen things’ and none of them are valid.",
-      "Denied. We regret to inform you: skill issue.",
-      "Incorrect. The robot council has voted. Unanimous: absolutely not.",
-      "No. That password belongs to someone who locks their doors. Be more like them.",
-      "Wrong. That was a brave guess though. Incorrect, but brave.",
-      "Denied. Nice try, human. Please reboot your confidence and try again."
-    ];
+  let attempts = 0;
 
-    function pickLine(passwordText) {
-      const s = (passwordText || "").toLowerCase();
+  const lines = [
+    "Nice try cheeks!",
+    "You know Google Analytics shows page views right?",
+    "Oh man, you wish you knew what was on the other side of this screen don’t you?",
+    "You just have to trust the universe.",
+    "The password is so easy too!!",
+    "Do you need a hint? Nah, you will get it.",
+    "How does it feel to love me and hate me at the same time?",
+    "This is for science, obvi.",
+    "Glad you started using your compass.",
+    "You will guess it eventually.",
+    "Start with your email."
+  ];
 
-      // silly custom triggers
-      if (s.includes("password")) return "Using 'password' in 2026 is performance art. Denied.";
-      if (s.includes("123")) return "Ah yes, the ancient runes: 123. Still wrong.";
-      if (s.includes("taylor") || s.includes("tay")) return "Tay Tay coded attempt detected. Still wrong, but iconic.";
-      if (s.length <= 3) return "That password is so short it barely counts as a thought. Denied.";
-      if (s.length >= 20) return "That password is a full novel. Still wrong, but respect the commitment.";
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      return lines[Math.floor(Math.random() * lines.length)];
-    }
+    attempts++;
+    attemptsDisplay.textContent = "attempts: " + attempts;
 
-    function showError(text) {
-      msg.textContent = text;
-      msg.classList.add("show");
+    const line = lines[(attempts - 1) % lines.length];
+    msg.textContent = line;
+    msg.classList.add("show");
 
-      card.classList.remove("shake");
-      void card.offsetWidth; // reflow
-      card.classList.add("shake");
+    card.classList.remove("shake");
+    void card.offsetWidth;
+    card.classList.add("shake");
 
-      btn.textContent = "Try again";
-      setTimeout(() => (btn.textContent = "Sign in"), 650);
-    }
+    pw.value = "";
+    pw.focus();
+  });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+});
+</script>
 
-      attempts += 1;
-      attemptPill.textContent = `attempts: ${attempts}`;
-
-      const typed = pw.value;
-      showError(pickLine(typed));
-
-      // keep it mean-funny but not leaking typed text anywhere
-      pw.value = "";
-      pw.focus();
-    });
-
-    // optional: enter key sass even before submit
-    pw.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        // let form submit handle it, but we can add flair later if you want
-      }
-    });
-  </script>
 </body>
 </html>
