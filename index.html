@@ -3,282 +3,288 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Employee Login</title>
-  <meta name="description" content="Demo employee login (not affiliated with any company)." />
+  <title>Definitely Real Login</title>
   <style>
-    :root{
-      --bg:#0b0c10;
-      --panel:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.10);
-      --ink:#f3f4f7;
-      --muted:rgba(243,244,247,.62);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
-      --r:20px;
-      --shadow: 0 30px 90px rgba(0,0,0,.55);
+    :root {
+      --bg: #0b0d12;
+      --card: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.12);
+      --ink: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.65);
+      --bad: #ff5a5f;
+      --good: #45e07a;
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--ink);
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
       background:
-        radial-gradient(900px 600px at 20% 10%, rgba(99,102,241,.18), transparent 60%),
-        radial-gradient(900px 650px at 80% 25%, rgba(236,72,153,.14), transparent 60%),
-        radial-gradient(900px 700px at 50% 95%, rgba(245,158,11,.12), transparent 62%),
-        var(--bg);
-      display:grid;
-      place-items:center;
-      padding:24px;
+        radial-gradient(1200px 600px at 20% 10%, rgba(120,90,255,0.25), transparent 60%),
+        radial-gradient(900px 500px at 80% 90%, rgba(0,200,255,0.18), transparent 60%),
+        linear-gradient(180deg, #06070b, var(--bg));
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--ink);
+      padding: 24px;
     }
 
-    .card{
-      width:min(980px, 100%);
-      border-radius:28px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
+    .wrap { width: min(420px, 100%); }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      user-select: none;
     }
-    @media (max-width:900px){
-      .card{ grid-template-columns:1fr; }
+    .logo {
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .title {
+      line-height: 1.1;
+    }
+    .title b { display: block; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .title span { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
-    .left{
-      padding:26px;
-      border-right:1px solid rgba(255,255,255,.08);
-      position:relative;
-      overflow:hidden;
+    .field { margin-top: 12px; }
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
     }
-    @media (max-width:900px){
-      .left{ border-right:0; border-bottom:1px solid rgba(255,255,255,.08); }
+    input {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.25);
+      color: var(--ink);
+      outline: none;
+      transition: transform 120ms ease, border-color 120ms ease;
+      font-size: 14px;
     }
-
-    .windowTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      border-radius:16px;
-      margin-bottom:16px;
-    }
-    .lights{display:flex; gap:7px}
-    .dot{width:10px;height:10px;border-radius:999px}
-    .dot.red{background:#ff5f57}
-    .dot.yellow{background:#febc2e}
-    .dot.green{background:#28c840}
-    .title{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.06em;
-      color:rgba(243,244,247,.70);
-      text-transform:lowercase;
+    input:focus {
+      border-color: rgba(255,255,255,0.28);
+      transform: translateY(-1px);
     }
 
-    .hero{
-      margin-top:14px;
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 14px;
     }
-    .kicker{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:lowercase;
-      color:rgba(243,244,247,.62);
-      margin-bottom:10px;
+    button {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(135deg, rgba(120,90,255,0.55), rgba(0,200,255,0.35));
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 120ms ease, filter 120ms ease;
     }
-    h1{
-      margin:0 0 10px;
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing:-.02em;
-      line-height:1.05;
+    button:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    button:active { transform: translateY(0px); }
+
+    .meta {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .lede{
-      margin:0;
-      color:var(--muted);
-      line-height:1.6;
-      max-width:52ch;
+    .pill {
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.22);
+      padding: 7px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      user-select: none;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 99px;
+      background: var(--good);
+      box-shadow: 0 0 14px rgba(69,224,122,0.35);
     }
 
-    .badges{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:16px;
+    .msg {
+      margin-top: 14px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,90,95,0.32);
+      background: rgba(255,90,95,0.10);
+      color: rgba(255,255,255,0.90);
+      display: none;
+      line-height: 1.35;
     }
-    .badge{
-      font-family:var(--mono);
-      font-size:11px;
-      color:rgba(243,244,247,.68);
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      padding:8px 10px;
-      border-radius:999px;
+    .msg.show { display: block; }
+
+    .shake {
+      animation: shake 420ms ease;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      15% { transform: translateX(-8px); }
+      30% { transform: translateX(8px); }
+      45% { transform: translateX(-6px); }
+      60% { transform: translateX(6px); }
+      75% { transform: translateX(-3px); }
+      100% { transform: translateX(0); }
     }
 
-    .right{
-      padding:26px;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+    .tiny {
+      margin-top: 12px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
     }
-
-    .panel{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18);
-      border-radius:22px;
-      padding:18px;
+    .tiny code {
+      color: rgba(255,255,255,0.75);
     }
-
-    .panel h2{
-      margin:0 0 10px;
-      font-size:16px;
-      font-weight:600;
-      letter-spacing:-.01em;
-    }
-    .panel p{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:13px;
-    }
-
-    .field{
-      display:grid;
-      gap:8px;
-      margin-top:10px;
-    }
-    label{
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.05em;
-      text-transform:lowercase;
-      color:rgba(243,244,247,.70);
-    }
-    input{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:rgba(243,244,247,.92);
-      outline:none;
-    }
-    input::placeholder{ color: rgba(243,244,247,.38); }
-
-    .row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-top:12px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      width:100%;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.08);
-      color:rgba(243,244,247,.92);
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.04em;
-      text-transform:lowercase;
-      cursor:pointer;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-    }
-    .btn:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.10);
-      border-color:rgba(255,255,255,.18);
-    }
-
-    .alt{
-      margin-top:12px;
-      display:grid;
-      gap:10px;
-    }
-    .btn.secondary{
-      background:rgba(255,255,255,.04);
-    }
-
-    .fineprint{
-      margin-top:14px;
-      color:rgba(243,244,247,.50);
-      font-size:12px;
-      line-height:1.5;
-    }
-    .fineprint strong{ color: rgba(243,244,247,.72); font-weight:600; }
-    a{ color: rgba(243,244,247,.78); }
   </style>
 </head>
 
 <body>
-  <main class="card" role="main" aria-label="Employee Login (Demo)">
-    <section class="left">
-      <div class="windowTop">
-        <div class="lights" aria-hidden="true">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo">🤖</div>
+      <div class="title">
+        <b>Totally Legit Login</b>
+        <span>enter credentials • receive emotional damage</span>
+      </div>
+    </div>
+
+    <div class="card" id="card">
+      <form id="loginForm" autocomplete="off">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@definitelyreal.com" required />
         </div>
-        <div class="title">employee access • demo</div>
-        <div style="width:32px"></div>
-      </div>
 
-      <div class="hero">
-        <div class="kicker">secure sign-in</div>
-        <h1>Quiet access.<br/>High intent.</h1>
-        <p class="lede">
-          This is a <strong>demo login UI</strong> for internal prototypes and screenshots.
-          It does not authenticate and is not affiliated with any company.
-        </p>
-
-        <div class="badges" aria-label="features">
-          <span class="badge">sso-ready layout</span>
-          <span class="badge">device-friendly</span>
-          <span class="badge">no data collected</span>
+        <div class="field">
+          <label for="pw">Password</label>
+          <input id="pw" name="pw" type="password" placeholder="••••••••••" required />
         </div>
-      </div>
-    </section>
 
-    <section class="right">
-      <div class="panel">
-        <h2>Sign in</h2>
-        <p>Use your work email to continue. (Demo only — button does nothing.)</p>
+        <div class="row">
+          <button type="submit" id="btn">Sign in</button>
+        </div>
 
-        <form onsubmit="return false;">
-          <div class="field">
-            <label for="email">work email</label>
-            <input id="email" type="email" placeholder="name@company.com" autocomplete="email" />
-          </div>
+        <div class="msg" id="msg"></div>
 
-          <div class="field">
-            <label for="password">password</label>
-            <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" />
-          </div>
+        <div class="meta">
+          <span class="pill"><span class="dot"></span> secure-ish</span>
+          <span class="pill" id="attemptPill">attempts: 0</span>
+        </div>
 
-          <div class="row">
-            <button class="btn" type="button">continue →</button>
-          </div>
+        <div class="tiny">
+          Tip: nothing works here. It’s a comedy club with form fields.
+        </div>
+      </form>
+    </div>
+  </div>
 
-          <div class="alt" aria-label="SSO options">
-            <button class="btn secondary" type="button">sign in with sso</button>
-            <button class="btn secondary" type="button">use passkey</button>
-          </div>
+  <script>
+    const form = document.getElementById("loginForm");
+    const card = document.getElementById("card");
+    const msg = document.getElementById("msg");
+    const attemptPill = document.getElementById("attemptPill");
+    const pw = document.getElementById("pw");
+    const btn = document.getElementById("btn");
 
-          <div class="fineprint">
-            <strong>Demo notice:</strong> This page is for UI prototyping only. Don’t use real credentials.
-            Need a real auth flow? I can wire this to your own backend (Firebase/Auth0/Supabase/etc.).
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
+    let attempts = 0;
+
+    const lines = [
+      "Incorrect. That password looks like it tries to pay with a coupon at a five-star restaurant.",
+      "Nope. That was the password for a different timeline.",
+      "Wrong. My servers are allergic to whatever you just typed.",
+      "Denied. Please stop flirting with the Enter key.",
+      "Incorrect. I checked with the vibes. The vibes said no.",
+      "Nope. Even Tay Tay wouldn’t release this one (it’s vaulted).",
+      "Wrong. That password has ‘seen things’ and none of them are valid.",
+      "Denied. We regret to inform you: skill issue.",
+      "Incorrect. The robot council has voted. Unanimous: absolutely not.",
+      "No. That password belongs to someone who locks their doors. Be more like them.",
+      "Wrong. That was a brave guess though. Incorrect, but brave.",
+      "Denied. Nice try, human. Please reboot your confidence and try again."
+    ];
+
+    function pickLine(passwordText) {
+      const s = (passwordText || "").toLowerCase();
+
+      // silly custom triggers
+      if (s.includes("password")) return "Using 'password' in 2026 is performance art. Denied.";
+      if (s.includes("123")) return "Ah yes, the ancient runes: 123. Still wrong.";
+      if (s.includes("taylor") || s.includes("tay")) return "Tay Tay coded attempt detected. Still wrong, but iconic.";
+      if (s.length <= 3) return "That password is so short it barely counts as a thought. Denied.";
+      if (s.length >= 20) return "That password is a full novel. Still wrong, but respect the commitment.";
+
+      return lines[Math.floor(Math.random() * lines.length)];
+    }
+
+    function showError(text) {
+      msg.textContent = text;
+      msg.classList.add("show");
+
+      card.classList.remove("shake");
+      void card.offsetWidth; // reflow
+      card.classList.add("shake");
+
+      btn.textContent = "Try again";
+      setTimeout(() => (btn.textContent = "Sign in"), 650);
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      attempts += 1;
+      attemptPill.textContent = `attempts: ${attempts}`;
+
+      const typed = pw.value;
+      showError(pickLine(typed));
+
+      // keep it mean-funny but not leaking typed text anywhere
+      pw.value = "";
+      pw.focus();
+    });
+
+    // optional: enter key sass even before submit
+    pw.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        // let form submit handle it, but we can add flair later if you want
+      }
+    });
+  </script>
 </body>
 </html>
