@@ -128,13 +128,13 @@ button{
     <h3>Totally Legit Login 🤖</h3>
     <div class="sub">You’re closer than you think.</div>
 
-    <form id="loginForm" autocomplete="off">
+    <form id="loginForm" autocomplete="off" data-lpignore="true">
       <div class="field">
-        <input type="email" placeholder="email" required />
+        <input type="text" placeholder="identifier" required />
       </div>
 
       <div class="field">
-        <input id="pw" type="password" placeholder="password" required />
+        <input id="pw" type="password" placeholder="access key" required autocomplete="new-password" />
       </div>
 
       <button type="submit">Sign in</button>
@@ -166,7 +166,7 @@ window.addEventListener("DOMContentLoaded", () => {
     "The password is so easy too!!",
     "Do you need a hint? Nah, you will get it.",
     "How does it feel to love me and hate me at the same time?",
-    "This is because science, obvi.",
+    "This is for science, obvi.",
     "Glad you started using your compass.",
     "You will guess it eventually.",
     "Start with your email.",
@@ -196,11 +196,9 @@ window.addEventListener("DOMContentLoaded", () => {
     let output;
 
     if (attempts % 2 === 1) {
-      // odd attempts → your custom lines
       const index = Math.floor((attempts - 1) / 2) % lines.length;
       output = lines[index];
     } else {
-      // even attempts → warmer / colder
       const hintIndex = Math.floor((attempts / 2) % hints.length);
       output = hints[hintIndex];
     }
