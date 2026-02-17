@@ -160,19 +160,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const lines = [
     "Nice try cheeks!",
-    "You know Google Analytics shows the page views and location right?",
+    "You know Google Analytics shows page views right?",
     "Oh man, you wish you knew what was on the other side of this screen don’t you?",
     "You just have to trust the universe.",
     "The password is so easy too!!",
     "Do you need a hint? Nah, you will get it.",
-    "How does it feel to love me and kinda hate me at the same time?",
+    "How does it feel to love me and hate me at the same time?",
     "This is because science, obvi.",
     "Glad you started using your compass.",
     "You will guess it eventually.",
-    "Start with your email."
+    "Start with your email.",
     "Oh man, that last one was so close!",
     "Stop cussing at the screen.",
-    "Bitches love pupies, but bitches hate passwords.",
+    "Bitches love puppies, but bitches hate passwords.",
     "Aww, are those happy tears?",
     "Come on Amy Nolan, you got this.",
     "Ask Piglet, maybe she knows.",
@@ -182,8 +182,10 @@ window.addEventListener("DOMContentLoaded", () => {
     "Way off.",
     "You know I'm enjoying this right?",
     "Okay, well have fun. I'll be around.",
-    "Evil Laugh."
+    "*evil laugh intensifies*"
   ];
+
+  const hints = ["warmer…", "colder…"];
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -191,8 +193,19 @@ window.addEventListener("DOMContentLoaded", () => {
     attempts++;
     attemptsDisplay.textContent = "attempts: " + attempts;
 
-    const line = lines[(attempts - 1) % lines.length];
-    msg.textContent = line;
+    let output;
+
+    if (attempts % 2 === 1) {
+      // odd attempts → your custom lines
+      const index = Math.floor((attempts - 1) / 2) % lines.length;
+      output = lines[index];
+    } else {
+      // even attempts → warmer / colder
+      const hintIndex = Math.floor((attempts / 2) % hints.length);
+      output = hints[hintIndex];
+    }
+
+    msg.textContent = output;
     msg.classList.add("show");
 
     card.classList.remove("shake");
