@@ -12,7 +12,6 @@
   --line:rgba(255,255,255,0.12);
   --ink:rgba(255,255,255,0.92);
   --muted:rgba(255,255,255,0.65);
-  --bad:#ff5a5f;
   --shadow:0 20px 60px rgba(0,0,0,0.55);
 }
 
@@ -44,10 +43,17 @@ body{
 }
 
 h3{
-  margin:0 0 16px;
+  margin:0 0 10px;
   font-size:16px;
   letter-spacing:.1em;
   text-transform:uppercase;
+}
+
+.sub{
+  font-size:12px;
+  color:var(--muted);
+  margin:0 0 14px;
+  line-height:1.35;
 }
 
 .field{margin-top:12px}
@@ -88,9 +94,28 @@ button{
 .msg.show{display:block}
 
 .meta{
-  margin-top:12px;
+  margin-top:10px;
   font-size:12px;
   color:var(--muted);
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.pill{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,0.18);
+}
+
+.symbol{
+  margin-top:14px;
+  text-align:center;
+  font-size:14px;
+  opacity:.7;
+  letter-spacing:.2em;
 }
 
 .shake{
@@ -113,10 +138,11 @@ button{
 <div class="wrap">
   <div class="card" id="card">
     <h3>Totally Legit Login 🤖</h3>
+    <p class="sub">Please authenticate to access: <em>Nothing</em>. This is security theatre, starring you.</p>
 
     <form id="loginForm" autocomplete="off">
       <div class="field">
-        <input type="email" placeholder="email" required />
+        <input id="em" type="email" placeholder="email" required />
       </div>
 
       <div class="field">
@@ -127,7 +153,14 @@ button{
     </form>
 
     <div class="msg" id="msg"></div>
-    <div class="meta" id="attempts">attempts: 0</div>
+
+    <div class="meta">
+      <span class="pill" id="attempts">attempts: 0</span>
+      <span class="pill" id="security">security level: vibes-based</span>
+      <span class="pill" id="status">status: unbothered</span>
+    </div>
+
+    <div class="symbol">🖤 ♾️</div>
   </div>
 </div>
 
@@ -138,23 +171,65 @@ window.addEventListener("DOMContentLoaded", () => {
   const card = document.getElementById("card");
   const msg = document.getElementById("msg");
   const attemptsDisplay = document.getElementById("attempts");
+  const securityDisplay = document.getElementById("security");
+  const statusDisplay = document.getElementById("status");
   const pw = document.getElementById("pw");
+  const em = document.getElementById("em");
 
   let attempts = 0;
 
-  const lines = [
-    "Nice try cheeks!",
-    "You know Google Analytics shows page views right?",
-    "Oh man, you wish you knew what was on the other side of this screen don’t you?",
-    "You just have to trust the universe.",
-    "The password is so easy too!!",
-    "Do you need a hint? Nah, you will get it.",
-    "How does it feel to love me and hate me at the same time?",
-    "This is for science, obvi.",
-    "Glad you started using your compass.",
-    "You will guess it eventually.",
-    "Start with your email."
+  // Rotate through escalating "security theatre" labels
+  const securityLevels = [
+    "security level: vibes-based",
+    "security level: placebo encryption",
+    "security level: ✨manifestation✨",
+    "security level: two-factor delusion",
+    "security level: military-grade sarcasm",
+    "security level: Tay-Tay coded firewall",
+    "security level: audited by Google Analytics (allegedly)"
   ];
+
+  const statuses = [
+    "status: unbothered",
+    "status: observing",
+    "status: judging (kindly)",
+    "status: laughing quietly",
+    "status: logging this for later",
+    "status: morally superior",
+    "status: main character energy"
+  ];
+
+  const lines = [
+    "Denied. Try again, Indiana Jones — the treasure is not behind this form.",
+    "Nice try, cheeks. The vibes are incorrect.",
+    "Google Analytics saw that. It just blinked twice.",
+    "Wrong password. But I respect the confidence.",
+    "Your password isn’t it. Neither is your timing. (Still love you.)",
+    "Access denied. This is a ‘read-only’ relationship.",
+    "You’re clicking like it’s going to change the outcome. Adorable.",
+    "Hint: it’s not ‘password’. I can’t believe we have to say this in 2026.",
+    "I ran your attempt through a compass. It pointed to ‘no’.",
+    "This is for science, obvi. Please continue being the control group.",
+    "You’re one try closer to enlightenment. Not access — enlightenment.",
+    "Tay-Tay voice: *it’s me, hi, you won’t get in, it’s me.*",
+    "New rule: if you don’t know the password, simply know it.",
+    "Denied. But your perseverance is… suspiciously attractive.",
+    "Plot twist: there is no ‘other side’. Only lore.",
+    "You’ll guess it eventually. Not because you’re right — because I get bored.",
+    "Start with your email… then reflect on your choices."
+  ];
+
+  // Extra micro-roasts based on input state
+  function bonusRoast() {
+    const pwVal = pw.value || "";
+    const emVal = (em.value || "").toLowerCase();
+
+    if (pwVal.length > 0 && pwVal.length < 6) return "Also… that password length is a cry for help.";
+    if (pwVal === pwVal.toUpperCase() && /[A-Z]/.test(pwVal)) return "Caps Lock detected. Violence detected. Try peace.";
+    if (emVal.includes("+")) return "Using a plus alias? I see you, sophisticated gremlin.";
+    if (pwVal.includes("123") || pwVal.includes("qwerty")) return "You really tried the ‘museum gift shop’ password set.";
+    return "";
+  }
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -162,8 +237,12 @@ window.addEventListener("DOMContentLoaded", () => {
     attempts++;
     attemptsDisplay.textContent = "attempts: " + attempts;
 
-    const line = lines[(attempts - 1) % lines.length];
-    msg.textContent = line;
+    securityDisplay.textContent = securityLevels[(attempts - 1) % securityLevels.length];
+    statusDisplay.textContent = statuses[(attempts - 1) % statuses.length];
+
+    const base = lines[(attempts - 1) % lines.length];
+    const extra = bonusRoast();
+    msg.textContent = extra ? `${base} ${extra}` : base;
     msg.classList.add("show");
 
     card.classList.remove("shake");
