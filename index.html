@@ -1,17 +1,88 @@
-<body>
-  <div class="window">
-    <div class="window-bar">
-      <div class="dots">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-      </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>jereme.xyz</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #e5e5e5;
+      font-family: "Courier New", monospace;
+      height: 100%;
+      overflow: hidden;
+    }
 
-    <div class="content">
-      <p>terms are set.</p>
-      <p>don’t worry, you’re early.</p>
-      <p>pardon the dust.</p>
-    </div>
-  </div>
+    .terminal {
+      padding: 40px;
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #e5e5e5;
+      animation: blink 1s infinite;
+      margin-left: 4px;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" id="terminal"></div>
+
+  <script>
+    const lines = [
+      "booting...",
+      "loading /jereme",
+      "",
+      "establishing connection...",
+      "connection stable.",
+      "",
+      "> whoami",
+      "jereme",
+      "",
+      "> status",
+      "becoming",
+      "",
+      "> accessing /site/"
+    ];
+
+    const terminal = document.getElementById("terminal");
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function typeLine() {
+      if (lineIndex >= lines.length) {
+        setTimeout(() => {
+          window.location.href = "/site/";
+        }, 1500);
+        return;
+      }
+
+      const currentLine = lines[lineIndex];
+
+      if (charIndex < currentLine.length) {
+        terminal.innerHTML += currentLine.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeLine, 30);
+      } else {
+        terminal.innerHTML += "\n";
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(typeLine, 400);
+      }
+    }
+
+    // start typing
+    typeLine();
+  </script>
 </body>
+</html>
