@@ -1,88 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTH4464X6R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NTH4464X6R');
+  </script>
+
   <meta charset="UTF-8" />
-  <title>jereme.xyz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>oh, hi. 👋🏼</title>
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      background: #000;
-      color: #e5e5e5;
-      font-family: "Courier New", monospace;
-      height: 100%;
-      overflow: hidden;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0b0b0b;
+      font-family: "SF Mono", Menlo, monospace;
+      color: #eaeaea;
+      padding: 16px;
+      box-sizing: border-box;
     }
 
-    .terminal {
-      padding: 40px;
-      font-size: 16px;
+    .window {
+      background: #111;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .window-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #1a1a1a;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff5f57; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #28c840; }
+
+    #terminal {
+      padding: 20px;
+      font-size: 14px;
       line-height: 1.6;
-      white-space: pre-wrap;
+      min-height: 120px;
+      word-wrap: break-word;
     }
 
     .cursor {
       display: inline-block;
-      width: 10px;
-      background: #e5e5e5;
-      animation: blink 1s infinite;
+      width: 8px;
+      background: #eaeaea;
       margin-left: 4px;
+      animation: blink 1s infinite;
     }
 
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
       25%, 75% { opacity: 0; }
     }
+
+    /* ICON LINKS */
+    .links {
+      margin-top: 18px;
+      display: flex;
+      gap: 18px;
+      font-size: 18px;
+      opacity: 0.7;
+    }
+
+    .links a {
+      color: #eaeaea;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      opacity: 1;
+    }
+
+    /* SUBFOOTER */
+    .subfooter {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      opacity: 0.55;
+    }
+
+    .subfooter a {
+      color: #eaeaea;
+      text-decoration: none;
+    }
+
+    .subfooter a:hover {
+      opacity: 1;
+    }
+
+    .subfooter span {
+      opacity: 0.35;
+    }
+
+    @media (max-width: 480px) {
+      #terminal { font-size: 13px; padding: 18px; }
+    }
   </style>
 </head>
 <body>
-  <div class="terminal" id="terminal"></div>
+
+  <div class="window">
+    <div class="window-bar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+
+    <div id="terminal"></div>
+  </div>
+
+  <!-- ICON LINKS -->
+  <div class="links">
+    <a href="https://x.com/jeremedotxyz" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+    <a href="https://github.com/jeremedotxyz" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a href="https://open.spotify.com/user/n33yr4uhw04g512be8lr9vq72" target="_blank"><i class="fa-brands fa-spotify"></i></a>
+    <a href="https://www.instagram.com/jeremedotxyz/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.threads.com/@jeremedotxyz" target="_blank"><i class="fa-brands fa-threads"></i></a>
+  </div>
+
+  <!-- SUBFOOTER LINKS -->
+  <div class="subfooter">
+    <a href="/site/moyogi/">moyogi</a>
+    <span>|</span>
+    <a href="/site/pine/">pine</a>
+    <span>|</span>
+    <a href="/site/friends-with-robots/">friends with robots</a>
+    <span>|</span>
+    <a href="/site/nrthrn/">nrthrn</a>
+  </div>
 
   <script>
     const lines = [
-      "booting...",
-      "loading /jereme",
-      "",
-      "establishing connection...",
-      "connection stable.",
-      "",
-      "> whoami",
-      "jereme",
-      "",
-      "> status",
-      "becoming",
-      "",
-      "> accessing /site/"
+      "terms are set.",
+      "handshake complete.",
+      "don't worry, you’re early.",
+      "pardon the dust."
     ];
 
-    const terminal = document.getElementById("terminal");
     let lineIndex = 0;
     let charIndex = 0;
+    const speed = 40;
+    const terminal = document.getElementById("terminal");
 
     function typeLine() {
       if (lineIndex >= lines.length) {
-        setTimeout(() => {
-          window.location.href = "/site/";
-        }, 1500);
+        addCursor();
         return;
       }
 
-      const currentLine = lines[lineIndex];
+      const lineDiv = document.createElement("div");
+      terminal.appendChild(lineDiv);
 
-      if (charIndex < currentLine.length) {
-        terminal.innerHTML += currentLine.charAt(charIndex);
-        charIndex++;
-        setTimeout(typeLine, 30);
-      } else {
-        terminal.innerHTML += "\n";
-        lineIndex++;
-        charIndex = 0;
-        setTimeout(typeLine, 400);
+      function typeChar() {
+        if (charIndex < lines[lineIndex].length) {
+          lineDiv.textContent += lines[lineIndex][charIndex];
+          charIndex++;
+          setTimeout(typeChar, speed);
+        } else {
+          charIndex = 0;
+          lineIndex++;
+          setTimeout(typeLine, 500);
+        }
       }
+
+      typeChar();
     }
 
-    // start typing
+    function addCursor() {
+      const cursor = document.createElement("span");
+      cursor.classList.add("cursor");
+      terminal.appendChild(cursor);
+    }
+
     typeLine();
   </script>
+
 </body>
 </html>
