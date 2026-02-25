@@ -66,15 +66,14 @@
       line-height:1.65;
       color:var(--muted);
       white-space:pre-wrap;
-
-      /* 🔥 THIS FIXES ALIGNMENT */
       text-align:left;
+      min-height:90px;
     }
 
     .cursor{
       display:inline-block;
       width:6px;
-      transform: translateY(1px);
+      margin-left:2px;
       animation: blink 1.2s steps(2, jump-none) infinite;
     }
 
@@ -120,9 +119,7 @@
         </div>
       </div>
 
-      <div class="screen">
-        <span id="typed"></span><span class="cursor">▌</span>
-      </div>
+      <div class="screen" id="typed"></div>
     </div>
   </main>
 
@@ -151,7 +148,6 @@
       for (let i = 0; i < line.length; i++) {
         el.textContent += line[i];
 
-        // 🐢 SLOWER + MORE HUMAN
         const base = rand(45, 85);
         const extra =
           line[i] === "." ? rand(180, 260) :
@@ -163,15 +159,22 @@
     }
 
     async function run() {
-      await new Promise(r => setTimeout(r, 700)); // slower intro pause
+      await new Promise(r => setTimeout(r, 700));
 
       for (let i = 0; i < lines.length; i++) {
         await typeLine(lines[i]);
+
         if (i < lines.length - 1) {
           el.textContent += "\n";
-          await new Promise(r => setTimeout(r, rand(400, 900))); // longer line pause
+          await new Promise(r => setTimeout(r, rand(400, 900)));
         }
       }
+
+      // add cursor AFTER typing (fixes alignment perfectly)
+      const cursor = document.createElement("span");
+      cursor.textContent = "▌";
+      cursor.className = "cursor";
+      el.appendChild(cursor);
     }
 
     run();
