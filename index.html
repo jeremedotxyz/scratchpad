@@ -1,137 +1,139 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTH4464X6R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NTH4464X6R');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>oh, hi.</title>
-
+  <title>oh, hi. 👋🏼</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root{
-      --bg:#000;
-      --fg:#eaeaea;
-      --muted:rgba(255,255,255,.62);
-      --card:rgba(255,255,255,.05);
-      --border:rgba(255,255,255,.12);
-      --shadow:rgba(0,0,0,.65);
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0b0b0b;
+      font-family: "SF Mono", Menlo, monospace;
+      color: #eaeaea;
+      padding: 16px;
+      box-sizing: border-box;
     }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--fg);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
+    .window {
+      background: #111;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      width: 100%;
+      max-width: 560px;
     }
-
-    main{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:48px 18px;
+    .window-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #1a1a1a;
     }
-
-    .terminal{
-      width:min(520px, 92vw);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
-      border:1px solid var(--border);
-      border-radius:16px;
-      box-shadow:0 18px 70px var(--shadow);
-      padding:18px;
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
     }
-
-    .chrome{
-      display:flex;
-      align-items:center;
-      margin-bottom:14px;
+    .red { background: #ff5f57; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #28c840; }
+    #terminal {
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 120px;
+      word-wrap: break-word;
     }
-
-    .dots{
-      display:flex;
-      gap:7px;
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      background: #eaeaea;
+      margin-left: 4px;
+      animation: blink 1s infinite;
     }
-
-    .dot{width:10px;height:10px;border-radius:999px}
-    .dot.red{background:#ff5f56}
-    .dot.yellow{background:#ffbd2e}
-    .dot.green{background:#27c93f}
-
-    .screen{
-      font-size:13px;
-      line-height:1.65;
-      color:var(--muted);
-      white-space:pre-wrap;
-      text-align:left;
-      min-height:90px;
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
     }
-
-    .cursor{
-      display:inline-block;
-      width:6px;
-      margin-left:2px;
-      animation: blink 1.2s steps(2, jump-none) infinite;
+    .links {
+      margin-top: 18px;
+      display: flex;
+      gap: 18px;
+      font-size: 18px;
+      opacity: 0.7;
     }
-
-    @keyframes blink { 50% { opacity: 0; } }
-
-    footer{
-      text-align:center;
-      padding:18px 16px 22px;
-      font-size:12px;
-      color:var(--muted);
+    .links a {
+      color: #eaeaea;
+      text-decoration: none;
     }
-
-    .links{
-      display:flex;
-      justify-content:center;
-      gap:8px;
-      align-items:center;
+    .links a:hover {
+      opacity: 1;
     }
-
-    .links a{
-      color:var(--muted);
-      text-decoration:none;
-      transition:.18s ease;
+    /* PROJECT LINKS */
+    .project-links {
+      margin-top: 14px;
+      display: flex;
+      gap: 0;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      opacity: 0.45;
     }
-
-    .links a:hover{
-      color:var(--fg);
+    .project-links a {
+      color: #eaeaea;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
-
-    .links span{opacity:.5}
+    .project-links a:hover {
+      opacity: 1;
+    }
+    .project-links .sep {
+      margin: 0 8px;
+      opacity: 0.4;
+    }
+    @media (max-width: 480px) {
+      #terminal { font-size: 13px; padding: 18px; }
+    }
   </style>
 </head>
-
 <body>
-
-  <main>
-    <div class="terminal">
-      <div class="chrome">
-        <div class="dots">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-        </div>
-      </div>
-
-      <div class="screen" id="typed"></div>
+  <div class="window">
+    <div class="window-bar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
     </div>
-  </main>
-
-  <footer>
-    <div class="links">
-      <a href="/friends-with-robots">fw/r</a><span>|</span>
-      <a href="/pine">pine</a><span>|</span>
-      <a href="/nrthrn">nrthrn</a><span>|</span>
-      <a href="/moyogi">moyogi</a>
-    </div>
-  </footer>
-
+    <div id="terminal"></div>
+  </div>
+  <!-- ICON LINKS -->
+  <div class="links">
+    <a href="https://x.com/jeremedotxyz" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+    <a href="https://github.com/jeremedotxyz" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a href="https://open.spotify.com/user/n33yr4uhw04g512be8lr9vq72" target="_blank"><i class="fa-brands fa-spotify"></i></a>
+    <a href="https://www.instagram.com/jeremedotxyz/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.threads.com/@jeremedotxyz" target="_blank"><i class="fa-brands fa-threads"></i></a>
+  </div>
+  <!-- PROJECT LINKS -->
+  <div class="project-links">
+    <a href="#">fw/r</a>
+    <span class="sep">|</span>
+    <a href="#">pine</a>
+    <span class="sep">|</span>
+    <a href="#">nrthrn</a>
+    <span class="sep">|</span>
+    <a href="#">moyogi</a>
+  </div>
   <script>
     const lines = [
       "terms are set.",
@@ -139,46 +141,36 @@
       "don't worry, you're early.",
       "pardon the dust."
     ];
-
-    const el = document.getElementById("typed");
-
-    const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-    async function typeLine(line) {
-      for (let i = 0; i < line.length; i++) {
-        el.textContent += line[i];
-
-        const base = rand(45, 85);
-        const extra =
-          line[i] === "." ? rand(180, 260) :
-          line[i] === "," ? rand(120, 180) :
-          0;
-
-        await new Promise(r => setTimeout(r, base + extra));
+    let lineIndex = 0;
+    let charIndex = 0;
+    const speed = 40;
+    const terminal = document.getElementById("terminal");
+    function typeLine() {
+      if (lineIndex >= lines.length) {
+        addCursor();
+        return;
       }
-    }
-
-    async function run() {
-      await new Promise(r => setTimeout(r, 700));
-
-      for (let i = 0; i < lines.length; i++) {
-        await typeLine(lines[i]);
-
-        if (i < lines.length - 1) {
-          el.textContent += "\n";
-          await new Promise(r => setTimeout(r, rand(400, 900)));
+      const lineDiv = document.createElement("div");
+      terminal.appendChild(lineDiv);
+      function typeChar() {
+        if (charIndex < lines[lineIndex].length) {
+          lineDiv.textContent += lines[lineIndex][charIndex];
+          charIndex++;
+          setTimeout(typeChar, speed);
+        } else {
+          charIndex = 0;
+          lineIndex++;
+          setTimeout(typeLine, 500);
         }
       }
-
-      // add cursor AFTER typing (fixes alignment perfectly)
-      const cursor = document.createElement("span");
-      cursor.textContent = "▌";
-      cursor.className = "cursor";
-      el.appendChild(cursor);
+      typeChar();
     }
-
-    run();
+    function addCursor() {
+      const cursor = document.createElement("span");
+      cursor.classList.add("cursor");
+      terminal.appendChild(cursor);
+    }
+    typeLine();
   </script>
-
 </body>
 </html>
