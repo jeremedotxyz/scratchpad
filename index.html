@@ -101,7 +101,7 @@ function makeFogPatch(randomY) {
 }
 
 // ── Rain ──────────────────────────────────────────────────
-const RAIN_COUNT = 280;
+const RAIN_COUNT = 350;
 let rain = [];
 for (let i = 0; i < RAIN_COUNT; i++) rain.push(makeRain(true));
 
@@ -109,9 +109,9 @@ function makeRain(randomY) {
   return {
     x:     Math.random() * (window.innerWidth + 200) - 100,
     y:     randomY ? Math.random() * window.innerHeight : -20,
-    len:   12 + Math.random() * 20,
-    speed: 5  + Math.random() * 7,
-    alpha: 0.25 + Math.random() * 0.35,
+    len:   4  + Math.random() * 8,
+    speed: 2  + Math.random() * 3,
+    alpha: 0.30 + Math.random() * 0.40,
   };
 }
 
@@ -136,7 +136,7 @@ function draw() {
     ctx.moveTo(r.x, r.y);
     ctx.lineTo(r.x + r.len * 0.18, r.y + r.len);
     ctx.strokeStyle = `rgba(180,225,200, ${r.alpha})`;
-    ctx.lineWidth = 1.0;
+    ctx.lineWidth = 0.8;
     ctx.stroke();
   }
   ctx.restore();
