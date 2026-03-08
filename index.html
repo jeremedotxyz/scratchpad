@@ -1,10 +1,17 @@
-const client = createClient({
-  endpoint: "http://localhost:8899",
-  websocketEndpoint: "ws://localhost:8900",
-  commitment: "confirmed"
-});
+npm install @solana/wallet-adapter-react @solana/wallet-adapter-react-ui @solana/wallet-adapter-wallets @solana/web3.js
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import "@solana/wallet-adapter-react-ui/styles.css";
 
-const splToken = client.splToken({
-  mint: mint.address,
-  tokenProgram: "auto"
-});
+export default function App({ Component, pageProps }) {
+  return (
+    <ConnectionProvider endpoint="http://localhost:8899">
+      <WalletProvider wallets={[]} autoConnect>
+        <WalletModalProvider>
+          <Component {...pageProps} />
+        </WalletModalProvider>
+      </WalletProvider>
+    </ConnectionProvider>
+  );
+}
