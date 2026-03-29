@@ -11,15 +11,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0f;
-      --bg2: #0f0d18;
-      --fg: #e8e0f0;
-      --dim: #5a5068;
-      --accent: #b89aff;
-      --accent-2: #9b6dff;
-      --accent-glow: rgba(184,154,255,0.15);
-      --purple-mid: #7c5cbf;
-      --border: #1e1a2e;
+      --bg: #2a0a3a;
+      --bg2: #3a0f50;
+      --fg: #f0e8e8;
+      --dim: #c0b0d0;
+      --accent: #ffb8ff;
+      --accent-2: #ff9bff;
+      --accent-glow: rgba(255,184,255,0.15);
+      --purple-mid: #bf7cf0;
+      --border: #4a1a5e;
       --px: 'Share Tech Mono', 'Courier New', monospace;
     }
 
@@ -50,7 +50,13 @@
 
     #scanlines {
       position: fixed; inset: 0; z-index: 2; pointer-events: none;
-      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(100,60,160,0.035) 2px, rgba(100,60,160,0.035) 4px);
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(255, 184, 255, 0.03) 2px,
+        rgba(255, 184, 255, 0.03) 4px
+      );
     }
 
     /* ── Nav ── */
@@ -68,7 +74,7 @@
 
     nav.scrolled {
       border-color: var(--border);
-      background: rgba(10,10,15,0.92);
+      background: rgba(42,10,58,0.92);
       backdrop-filter: blur(8px);
     }
 
@@ -129,7 +135,7 @@
       letter-spacing: 0.04em;
       line-height: 0.95;
       color: var(--fg);
-      text-shadow: 0 0 60px rgba(184,154,255,0.12);
+      text-shadow: 0 0 60px rgba(255,184,255,0.12);
       opacity: 0;
       animation: fadeUp 0.7s ease 0.35s forwards;
     }
@@ -525,117 +531,4 @@
       </div>
       <div class="stats reveal">
         <div class="stat">
-          <div class="stat-num">18<span style="color:var(--dim);font-size:1rem;">+</span></div>
-          <div class="stat-label">years of experience</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">4</div>
-          <div class="stat-label">active ventures</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">∞</div>
-          <div class="stat-label">lines of code shipped</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Ventures -->
-  <section id="ventures">
-    <div class="section-tag reveal">002 — ventures</div>
-    <h2 class="section-title reveal">what i'm<br>building.</h2>
-    <div class="ventures-grid reveal">
-      <div class="venture-card">
-        <div class="venture-name">friends w/ robots</div>
-        <div class="venture-role">founder · creative director</div>
-        <div class="venture-desc">Creative studio at the edge of AI and culture. Building tools, experiences, and brands for the next era.</div>
-      </div>
-      <div class="venture-card">
-        <div class="venture-name">pine</div>
-        <div class="venture-role">founder · cto</div>
-        <div class="venture-desc">PNW-rooted brand with a no-references brief. Lowercase type, quiet confidence, deep roots.</div>
-      </div>
-      <div class="venture-card">
-        <div class="venture-name">moyogi</div>
-        <div class="venture-role">founder · cto</div>
-        <div class="venture-desc">Bonsai-philosophy applied to product. Small, deliberate, alive. Growing slowly on purpose.</div>
-      </div>
-      <div class="venture-card">
-        <div class="venture-name">nrthrn</div>
-        <div class="venture-role">founder · cto</div>
-        <div class="venture-desc">Northern-facing. Minimal signal, maximum clarity. Find it at nrthrn.xyz.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Recs -->
-  <section id="recs">
-    <div class="section-tag reveal">003 — signal received</div>
-    <h2 class="section-title reveal">what people<br>say.</h2>
-    <div class="recs-list">
-      <div class="rec-card reveal">
-        <div class="rec-author">colleague · meta</div>
-        <div class="rec-title">Portal Hardware PM · 2019–2022</div>
-        <div class="rec-body">"Jereme operates at a level where product sense and creative vision are indistinguishable. The kind of PM you don't replace — you build around."</div>
-      </div>
-      <div class="rec-card reveal">
-        <div class="rec-author">collaborator · fw/r</div>
-        <div class="rec-title">Creative Partner</div>
-        <div class="rec-body">"He sees the finished thing before anyone else. Then he builds it. Then he's already thinking about what's next."</div>
-      </div>
-      <div class="rec-card reveal">
-        <div class="rec-author">engineer · nrthrn</div>
-        <div class="rec-title">Technical Collaborator</div>
-        <div class="rec-body">"Ships fast, sweats the details, never loses the thread of what something is supposed to feel like. Rare."</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Contact -->
-  <section id="contact">
-    <div class="section-tag reveal">004 — contact</div>
-    <h2 class="section-title reveal">let's<br>connect.</h2>
-    <a href="mailto:jer@jereme.xyz" class="contact-email reveal">jer@jereme.xyz</a>
-    <div class="contact-links reveal">
-      <a href="https://www.threads.com/@jeremedotxyz" target="_blank">threads</a>
-      <a href="https://www.instagram.com/jeremedotxyz/" target="_blank">instagram</a>
-      <a href="https://github.com/jeremedotxyz" target="_blank">github</a>
-      <a href="latlong.html">lat/long</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <span>jereme henderson © 2021–2026</span>
-    <span>always on<span class="blink">_</span></span>
-  </footer>
-
-  <script>
-    /* Nav scroll */
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    });
-
-    /* Scroll reveal */
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    revealEls.forEach(el => observer.observe(el));
-  </script>
-
-</body>
-</html>
+          <div class="stat-num">18<span style="color:var(--dim);font-size:1rem;">+</
