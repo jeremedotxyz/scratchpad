@@ -33,7 +33,6 @@
       min-height: 100vh;
     }
 
-    /* ── overlays ── */
     #crt-vignette {
       position: fixed; inset: 0; z-index: 3; pointer-events: none;
       background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.1) 100%);
@@ -70,7 +69,6 @@
     }
     body { animation: flicker 10s infinite; }
 
-    /* ── nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
@@ -92,7 +90,6 @@
       color: var(--border);
     }
 
-    /* ── hero ── */
     #hero {
       min-height: 100vh;
       display: grid;
@@ -124,11 +121,39 @@
       letter-spacing: -0.01em;
       line-height: 0.92;
       color: var(--fg);
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.35s forwards;
+      display: flex;
+      align-items: baseline;
+      white-space: nowrap;
     }
 
     .hero-name .amber { color: var(--amber); }
+
+    /* each letter */
+    .letter {
+      display: inline-block;
+      opacity: 0;
+      animation: somersaultIn 0.75s cubic-bezier(0.22, 1.2, 0.36, 1) forwards;
+    }
+
+    /* dot gets extra drama */
+    .letter-dot {
+      animation: somersaultInDot 0.95s cubic-bezier(0.22, 1.35, 0.36, 1) forwards;
+    }
+
+    @keyframes somersaultIn {
+      0%   { opacity: 0; transform: translateX(-160px) rotate(-360deg); }
+      60%  { opacity: 1; transform: translateX(6px) rotate(10deg); }
+      78%  { transform: translateX(-3px) rotate(-4deg); }
+      100% { opacity: 1; transform: translateX(0) rotate(0deg); }
+    }
+
+    @keyframes somersaultInDot {
+      0%   { opacity: 0; transform: translateX(-200px) rotate(-720deg) scale(1.5); }
+      55%  { opacity: 1; transform: translateX(12px) rotate(20deg) scale(1.15); }
+      72%  { transform: translateX(-6px) rotate(-8deg) scale(0.92); }
+      88%  { transform: translateX(3px) rotate(3deg) scale(1.04); }
+      100% { opacity: 1; transform: translateX(0) rotate(0deg) scale(1); }
+    }
 
     .hero-tagline {
       margin-top: 2.5rem;
@@ -139,7 +164,6 @@
       max-width: 380px;
       line-height: 2.2;
       opacity: 0;
-      animation: fadeUp 0.8s ease 0.5s forwards;
     }
 
     .hero-bottom {
@@ -148,7 +172,6 @@
       align-items: flex-end;
       padding-bottom: 2.5rem;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.9s forwards;
     }
 
     .hero-location {
@@ -157,30 +180,13 @@
       text-transform: uppercase;
       color: var(--border);
     }
-
     .hero-location::before { content: '↓ '; color: var(--amber); }
 
-    .hero-scroll-hint {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--border);
-    }
-
-    /* ── ventures ── */
     #ventures {
-      position: relative;
-      z-index: 10;
+      position: relative; z-index: 10;
       padding: 10rem 3rem;
       max-width: 1100px;
       margin: 0 auto;
-    }
-
-    .ventures-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 5rem;
     }
 
     .ventures-label {
@@ -189,19 +195,9 @@
       text-transform: uppercase;
       color: var(--border);
     }
-
     .ventures-label::before { content: '// '; color: var(--amber); opacity: 0.6; }
 
-    .ventures-count {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      color: var(--border);
-    }
-
-    /* large typographic list */
-    .venture-list {
-      list-style: none;
-    }
+    .venture-list { list-style: none; }
 
     .venture-item {
       border-top: 1px solid var(--border);
@@ -210,27 +206,15 @@
       align-items: center;
       gap: 2rem;
       padding: 1.6rem 0;
-      transition: background 0.2s;
       cursor: default;
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.5s ease, transform 0.5s ease, background 0.2s;
     }
-
-    .venture-item.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .venture-item.visible { opacity: 1; transform: translateY(0); }
     .venture-item:last-child { border-bottom: 1px solid var(--border); }
 
-    .venture-num {
-      font-size: 0.5rem;
-      letter-spacing: 0.15em;
-      color: var(--border);
-      align-self: center;
-    }
-
+    .venture-num { font-size: 0.5rem; letter-spacing: 0.15em; color: var(--border); align-self: center; }
     .venture-name {
       font-size: clamp(1.4rem, 4vw, 2.6rem);
       letter-spacing: 0.06em;
@@ -238,117 +222,70 @@
       color: var(--fg);
       transition: color 0.2s;
     }
-
     .venture-item:hover .venture-name { color: var(--amber); }
-
     .venture-role {
-      font-size: 0.55rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--border);
-      text-align: right;
-      transition: color 0.2s;
+      font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--border); text-align: right; transition: color 0.2s;
     }
-
     .venture-item:hover .venture-role { color: var(--dim); }
 
-    /* ── contact ── */
     #contact {
-      position: relative;
-      z-index: 10;
+      position: relative; z-index: 10;
       padding: 10rem 3rem 8rem;
       max-width: 1100px;
       margin: 0 auto;
     }
 
     .contact-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--border);
-      margin-bottom: 4rem;
-      opacity: 0;
-      transform: translateY(10px);
+      font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--border); margin-bottom: 4rem;
+      opacity: 0; transform: translateY(10px);
       transition: opacity 0.6s, transform 0.6s;
     }
-
     .contact-label.visible { opacity: 1; transform: translateY(0); }
     .contact-label::before { content: '// '; color: var(--amber); opacity: 0.6; }
 
     .contact-line {
-      opacity: 0;
-      transform: translateY(12px);
+      opacity: 0; transform: translateY(12px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .contact-line.visible { opacity: 1; transform: translateY(0); }
 
     .contact-big {
       font-size: clamp(1rem, 3vw, 1.8rem);
-      letter-spacing: 0.06em;
-      color: var(--dim);
-      line-height: 1.9;
-      max-width: 600px;
-      margin-bottom: 4rem;
+      letter-spacing: 0.06em; color: var(--dim);
+      line-height: 1.9; max-width: 600px; margin-bottom: 4rem;
     }
-
     .contact-big a {
-      color: var(--fg);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1px;
+      color: var(--fg); text-decoration: none;
+      border-bottom: 1px solid var(--border); padding-bottom: 1px;
       transition: color 0.2s, border-color 0.2s;
     }
+    .contact-big a:hover { color: var(--amber); border-color: var(--amber); }
 
-    .contact-big a:hover {
-      color: var(--amber);
-      border-color: var(--amber);
-    }
-
-    .contact-socials {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-    }
-
+    .contact-socials { display: flex; gap: 2.5rem; flex-wrap: wrap; }
     .contact-socials a {
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--border);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--border); text-decoration: none; transition: color 0.2s;
     }
-
     .contact-socials a:hover { color: var(--amber); }
 
-    /* ── footer ── */
     footer {
       position: relative; z-index: 10;
       border-top: 1px solid var(--border);
       padding: 1.8rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
     }
+    footer span { font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--border); }
 
-    footer span {
-      font-size: 0.52rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--border);
-    }
-
-    .blink {
-      animation: blink 1.2s step-end infinite;
-      color: var(--amber);
-    }
+    .blink { animation: blink 1.2s step-end infinite; color: var(--amber); }
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
     @keyframes fadeUp {
       from { opacity:0; transform:translateY(14px); }
       to   { opacity:1; transform:translateY(0); }
     }
 
-    /* ── mobile ── */
     @media (max-width: 640px) {
       nav, #hero, #ventures, #contact { padding-left: 1.5rem; padding-right: 1.5rem; }
       .venture-item { grid-template-columns: 2rem 1fr; }
@@ -370,24 +307,17 @@
     <span class="nav-right">upper left coast<span class="blink">_</span></span>
   </nav>
 
-  <!-- Hero -->
   <section id="hero">
     <div class="hero-main">
       <div class="hero-eyebrow">signal active · pnw</div>
-      <h1 class="hero-name">
-        jereme<span class="amber">.xyz</span>
-      </h1>
-      <p class="hero-tagline">
+      <h1 class="hero-name" id="hero-name"></h1>
+      <p class="hero-tagline" id="hero-tagline">
         builder. founder.<br>
         always on.
       </p>
     </div>
-
   </section>
 
-
-
-  <!-- Contact -->
   <section id="contact">
     <div class="contact-label reveal-el">signal</div>
     <div class="contact-big contact-line reveal-el">
@@ -408,13 +338,43 @@
   </footer>
 
   <script>
+    // Build the hero name letter by letter
+    // Order: xyz first, then jereme, then dot last
+    // Each group is rendered in DOM order (jereme . xyz) but animated by delay
+
+    const nameEl = document.getElementById('hero-name');
+
+    // Define the three groups with their start delays (seconds)
+    // xyz lands first, jereme second, dot last
+    const groups = [
+      { chars: 'jereme', amber: false, startDelay: 0.9,  step: 0.07 },
+      { chars: '.',      amber: true,  startDelay: 2.2,  step: 0,    isDot: true },
+      { chars: 'xyz',    amber: true,  startDelay: 0.4,  step: 0.07 },
+    ];
+
+    groups.forEach(group => {
+      [...group.chars].forEach((char, i) => {
+        const span = document.createElement('span');
+        span.className = 'letter' + (group.isDot ? ' letter-dot' : '') + (group.amber ? ' amber' : '');
+        span.textContent = char;
+        const delay = group.startDelay + (i * group.step);
+        span.style.animationDelay = delay + 's';
+        nameEl.appendChild(span);
+      });
+    });
+
+    // Fade in tagline and bottom after all letters have landed
+    // Last letter: dot at 2.2s, duration ~0.95s → done ~3.15s
+    const tagline = document.getElementById('hero-tagline');
+    tagline.style.animation = 'fadeUp 0.8s ease 3.4s forwards';
+
     // nav scroll
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
     });
 
-    // staggered venture items
+    // venture reveal
     const items = document.querySelectorAll('.venture-item');
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
