@@ -976,15 +976,13 @@
   document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%,-50%) scale(2)');
   document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%,-50%) scale(1)');
 
-  // fade-up on scroll
-  const fadeEls = document.querySelectorAll('.fade-up');
+  // fade-up on scroll — add class first, then observe
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  fadeEls.forEach(el => observer.observe(el));
-  // mark all sections
+  }, { threshold: 0.08 });
   document.querySelectorAll('section, .section-header').forEach(el => {
     el.classList.add('fade-up');
+    observer.observe(el);
   });
 
   // brief engine
